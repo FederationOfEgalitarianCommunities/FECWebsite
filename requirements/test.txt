@@ -1,0 +1,2 @@
+-r base.txt
+splinter[django]>=0.6
