@@ -1,6 +1,25 @@
 from __future__ import absolute_import, unicode_literals
 from django.core.exceptions import ImproperlyConfigured
 
+import os
+
+
+# FEC Customizations
+SITE_TITLE = "Federation of Egalitarian Communities"
+SITE_TAGLINE = "A new way of living is possible."
+SEARCH_MODEL_CHOICES = ()
+
+
+# Utility Functions
+def get_env_variable(var_name):
+    """Get the environmental variable or raise an exception."""
+    try:
+        return os.environ.get(var_name)
+    except KeyError:
+        error_msg = "Set the {0} environmental variable.".format(var_name)
+        raise ImproperlyConfigured(error_msg)
+
+
 ######################
 # MEZZANINE SETTINGS #
 ######################
@@ -84,6 +103,8 @@ USE_SOUTH = True
 ########################
 # MAIN DJANGO SETTINGS #
 ########################
+
+SECRET_KEY = get_env_variable("DJANGO_SECRET_KEY")
 
 # People who get code error notifications.
 # In the format (('Full Name', 'email@example.com'),
@@ -235,9 +256,6 @@ INSTALLED_APPS = (
 
     "thefec",
 
-    "lettuce.django",
-    "django_nose",
-
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -371,10 +389,3 @@ else:
     set_dynamic_settings(globals())
 
 
-def get_env_variable(var_name):
-    """Get the environmental variable or raise an exception."""
-    try:
-        return os.environ.get(var_name)
-    except KeyError:
-        error_msg = "Set the {0} environmental variable.".format(var_name)
-        raise ImproperlyConfigured(error_msg)

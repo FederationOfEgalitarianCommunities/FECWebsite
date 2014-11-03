@@ -12,13 +12,14 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-branches',
+    '--cover-package=thefec,communities',
     '--with-progressive',
 ]
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'test.db',
+        'NAME': 'memory://testdb',
     }
 }
 
