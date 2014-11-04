@@ -8,7 +8,7 @@ class GeneralPageTests(SeleniumTestCase):
     """Test General Expectations for Every Page."""
     def setUp(self):
         """Visit the home page."""
-        self.selenium.get('{}{}'.format(self.live_server_url, '/'))
+        self.selenium.get(self.live_server_url + '/')
 
     def test_title_contains_fec_full_name(self):
         """The title should contain the FEC's full name."""

@@ -4,9 +4,15 @@ from django.core.exceptions import ImproperlyConfigured
 import os
 
 
-# FEC Customizations
+######################
+# FEC Customizations #
+######################
+
+# Title & Tagline
 SITE_TITLE = "Federation of Egalitarian Communities"
 SITE_TAGLINE = "A new way of living is possible."
+
+# Remove the
 SEARCH_MODEL_CHOICES = ()
 
 
@@ -387,5 +393,3 @@ except ImportError:
     pass
 else:
     set_dynamic_settings(globals())
-
-
