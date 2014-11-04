@@ -46,3 +46,14 @@ class GeneralPageTests(SeleniumTestCase):
             "div.container div.row div.col-md-10.middle")
         self.assertEqual(len(main_content), 1,
                          "The middle content is not the correct column size.")
+
+    def test_default_footer_content_is_removed(self):
+        """The default footer content should be removed."""
+        footer = self.selenium.find_element_by_tag_name("footer")
+        self.assertNotIn("Powered by Mezzanine and Django", footer.text)
+        self.assertNotIn("Theme by Bootstrap", footer.text)
+
+    def test_footer_copyright_exists(self):
+        """The copyright notice in the footer should be correct."""
+        footer = self.selenium.find_element_by_tag_name("footer")
+        self.assertIn("Copyright 1999-", footer.text)
