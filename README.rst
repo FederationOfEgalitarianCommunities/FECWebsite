@@ -1,7 +1,7 @@
 Federation of Egalitarian Communities Website
 ==============================================
 
-The mezzanine project that thefec.org runs on.
+This is the Mezzanine project that powers ``thefec.org``.
 
 Quickstart
 -----------
@@ -16,8 +16,16 @@ Create a new virtualenv::
 
 Install python dependencies w/ ``pip``::
 
-    pip install -r requirements.txt
+    pip install -r requirements/local.txt
+
+Build the full documentation::
+
+    cd docs/
+    make html
 
 Start the dev server::
 
+    cd ../fec
     ./manage.py runserver 0.0.0.0:8000
+
+Read the documentation at ``docs/_build/html/index.html`` for more information.
