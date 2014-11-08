@@ -21,6 +21,8 @@ urlpatterns = i18n_patterns("",
 
 urlpatterns += patterns('',
 
+    ("^communities/", include("communities.urls")),
+
     # HOMEPAGE AS STATIC TEMPLATE
     # ---------------------------
     # This pattern simply loads the index.html template. It isn't

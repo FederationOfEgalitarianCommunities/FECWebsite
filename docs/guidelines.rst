@@ -43,20 +43,10 @@ Code should attempt to be idiomatic/pythonic, for example:
 For more information and full coverage of conventions, please read :pep:`8`,
 :pep:`257`, :pep:`20` and the `Django Coding Style Documentation`_.
 
-There are tools available to help assess compliance to these conventions, such
-as ``pep8`` and ``pylint``. Both of these tools are installed via ``pip``:
+You can use ``prospector`` to check your code style::
 
-.. code-block:: bash
-
-    $ pip install pep8
-    $ pip install pylint
-
-You may then run ``pep8`` on files to determine their compliance:
-
-.. code-block:: bash
-
-    $ pep8 core/utils.py
-    core/utils.py:26:80: E501 line too long (116 > 79 characters)
+    pip install -r requirements/local.txt
+    prospector
 
 
 Version Control

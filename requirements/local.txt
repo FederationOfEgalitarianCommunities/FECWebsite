@@ -2,5 +2,9 @@
 
 django-debug-toolbar>=1.2
 django-extensions>=1.4
+
+prospector>=0.7
+pylint-django>=0.5
+
 Sphinx>=1.2
 sphinx-bootstrap-theme>=0.4

@@ -12,8 +12,20 @@ import os
 SITE_TITLE = "Federation of Egalitarian Communities"
 SITE_TAGLINE = "A new way of living is possible."
 
-# Remove the
+# Remove the Model-dropdown for the search
 SEARCH_MODEL_CHOICES = ()
+TEMPLATE_ACCESSIBLE_SETTINGS = (
+    'MEDIA_URL',
+    # Defaults
+    'ACCOUNTS_APPROVAL_REQUIRED', 'ACCOUNTS_VERIFICATION_REQUIRED',
+    'ADMIN_MENU_COLLAPSED', 'BITLY_ACCESS_TOKEN', 'BLOG_USE_FEATURED_IMAGE',
+    'COMMENTS_DISQUS_SHORTNAME', 'COMMENTS_NUM_LATEST',
+    'COMMENTS_DISQUS_API_PUBLIC_KEY', 'COMMENTS_DISQUS_API_SECRET_KEY',
+    'COMMENTS_USE_RATINGS', 'DEV_SERVER', 'FORMS_USE_HTML5',
+    'GRAPPELLI_INSTALLED', 'GOOGLE_ANALYTICS_ID', 'JQUERY_FILENAME',
+    'JQUERY_UI_FILENAME', 'LOGIN_URL', 'LOGOUT_URL', 'SITE_TITLE',
+    'SITE_TAGLINE', 'USE_L10N'
+)
 
 
 # Utility Functions
@@ -39,12 +51,24 @@ def get_env_variable(var_name):
 
 # Controls the ordering and grouping of the admin menu.
 #
-# ADMIN_MENU_ORDER = (
-#     ("Content", ("pages.Page", "blog.BlogPost",
-#        "generic.ThreadedComment", ("Media Library", "fb_browse"),)),
-#     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
-#     ("Users", ("auth.User", "auth.Group",)),
-# )
+ADMIN_MENU_ORDER = (
+    ("Content",
+        ("communities.Community",
+         "pages.Page",
+         "blog.BlogPost",
+         "generic.ThreadedComment",
+         ("Media Library", "fb_browse"),)
+     ),
+    ("Site",
+        ("sites.Site",
+         "redirects.Redirect",
+         "conf.Setting")
+     ),
+    ("Users",
+        ("auth.User",
+         "auth.Group",)
+     ),
+)
 
 # A three item sequence, each containing a sequence of template tags
 # used to render the admin dashboard.
@@ -261,6 +285,7 @@ TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"),)
 INSTALLED_APPS = (
 
     "thefec",
+    "communities",
 
     "django.contrib.admin",
     "django.contrib.auth",

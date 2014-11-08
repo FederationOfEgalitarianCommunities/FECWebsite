@@ -1,0 +1,31 @@
+output_format: text
+
+inherits:
+    - strictness_veryhigh
+    - full_pep8
+    - no_test_warnings
+
+ignore:
+    - ^docs/
+    - ^fec/thefec/
+    - ^fec/wsgi.py
+    - ^fec/manage.py
+    - ^fec/.*/tests.py
+    - ^fec/functional_tests/
+
+pylint:
+    enable:
+        - C0111     # Missing docstring
+        - C0112     # Empty docstring
+    disable:
+        - R0901     # Too many ancestors
+        - R0903     # Too few public methods
+        - R0904     # Too many public methods
+
+pyflakes:
+    enable:
+        - FL0007
+
+frosted:
+    enable:
+        - E401

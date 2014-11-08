@@ -1,8 +1,8 @@
 -r base.txt
 
 django-nose>=1.2
-django-selenium>=0.9
 nose-progressive>= 1.5
+
 coverage>=3.7
 
 selenium>=2.44

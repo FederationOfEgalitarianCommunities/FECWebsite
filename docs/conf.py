@@ -47,9 +47,12 @@ extensions = [
 ]
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'Python': ('http://docs.python.org/', None),
-                       'Mezzanine': ('http://mezzanine.jupo.org/docs/', None),
-                       'Selenium': ('https://selenium.googlecode.com/git/docs/api/py/', None),}
+intersphinx_mapping = {
+    'django': ('http://docs.djangoproject.com/en/1.6/', 'http://docs.djangoproject.com/en/1.6/_objects/'),
+    'mezzanine': ('http://mezzanine.jupo.org/docs/', None),
+    'python': ('http://docs.python.org/2.7', None),
+    'selenium': ('http://selenium.googlecode.com/git/docs/api/py/', None),
+}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

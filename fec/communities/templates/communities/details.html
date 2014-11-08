@@ -1,0 +1,105 @@
+{% extends "pages/page.html" %}
+{% comment %}
+  A `community` variable is expected. A `page` variable will be automatically
+  passed by Mezzanine if a `Page` matches the URL.
+{% endcomment %}
+
+{% load communities_tags mezzanine_tags staticfiles %}
+
+
+{% block extra_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static "mezzanine/css/magnific-popup.css" %}">
+{% endblock extra_css %}
+
+
+{% block meta_title %}{{ community.title }}{% endblock %}
+{% block title %}
+  {% editable community.title %}{% endeditable %}
+{% endblock %}
+
+
+<!-- Breadcrumbs -->
+{% block breadcrumb_menu %}
+  {{ block.super }}
+  <li class="active">{{ community.title }}</li>
+{% endblock %}
+
+
+
+{% block main %}
+
+<div class="row">
+  <!-- Full Description -->
+  <div class="col-sm-6 col-md-6 col-xl-4 full-description">
+  {% if community.full_description %}
+    {% editable community.full_description %}
+    {{ community.full_description|richtext_filters|safe }}
+    {% endeditable %}
+  {% else %}
+    {% editable community.short_description %}
+    {{ community.short_description }}
+    {% endeditable %}
+  {% endif %}
+  </div>
+  <!-- Profile Picture -->
+  <div class="col-sm-6 col-md-6 col-xl-8">
+    <div class="row">
+      <div class="col-xs-12">
+        {% if community.profile_image %}
+          {% editable community.profile_image %}
+          <span class="pull-right img-responsive">
+            {% community_profile_picture_thumbnail community 600 375 %}
+          </span>
+          {% endeditable %}
+        {% endif %}
+      </div>
+      <div class="col-xs-12">
+        <!-- Description List -->
+        {% editable community.email community.website community.phone community.year_founded community.number_of_adults community.number_of_children %}
+        {% community_info_description_list community %}
+        {% endeditable %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Gallery -->
+<div class="row gallery">
+  {% with community.images.all as images %}
+  {% for image in images %}
+    <div class="col-xs-4 col-sm-3">
+      <a class="thumbnail" rel="#image-{{ image.id }}" title="{{ image.description }}" href="{{ image.file.url }}">
+        <img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail image.file 131 75 %}" />
+      </a>
+    </div>
+  {% endfor %}
+  {% endwith %}
+</div>
+
+{% endblock %}
+
+
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static "mezzanine/js/magnific-popup.js" %}"></script>
+<script>
+$(document).ready(function() {
+    /* Simple Lightbox for the Profile Image */
+    $('.profile-image').magnificPopup({
+            type: 'image',
+            titleSrc: 'title',
+            closeOnContentClick: true,
+      });
+    /* Gallery Lightbox for the Gallery Images */
+    $('.gallery').magnificPopup({
+        delegate: 'a',
+        type: 'image',
+        gallery: {
+            enabled: true,
+        }
+    });
+});
+</script>
+{% endblock %}

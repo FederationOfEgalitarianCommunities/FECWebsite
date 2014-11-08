@@ -1,0 +1,32 @@
+/* FEC CSS Customizations */
+
+
+/* Justify Text */
+.text-justify {
+  text-align: justify;
+}
+
+
+/* Community Listings Customizations */
+/* Remove Top Margin for Alignment w/ Top of Sidebar */
+h2#member-communities {
+  margin-top: 0;
+}
+/* Remove Top Margin to Reduce Space Between Image Thumbnail and Header */
+.thumbnail .caption h4.community-name, {
+  margin-top: 0;
+}
+/* Remove Top Padding to Reduce Space Between Image Thumbnail and Header */
+.thumbnail .caption.community-info {
+  padding-top: 0;
+}
+/* Reduce Bottom Padding to Reduce Space Between Image Thumbnail and Header */
+.community-listings-thumbnail .profile-image img {
+  margin-bottom: 10px;
+}
+
+/* Community Details Customizations */
+/* Remove Bottom Margin from Description List Address */
+dd.address address, dd.address address p {
+  margin-bottom: 0;
+}

@@ -1,0 +1,50 @@
+{% load mezzanine_tags %}
+
+{% comment %}
+  A template for the `community_info_thumbnail_block` inclusion tag.
+  `community` and `MEDIA_URL` context variables are expected.
+{% endcomment %}
+
+<div class="thumbnail">
+
+
+{% if community.profile_image %}
+  <span class="community-listings-thumbnail">
+    <a class="profile-image" rel="#image-{{ community.profile_image.id }}" title="{{ community.profile_image.description }}" href="{{ community.profile_image.url }}">
+      <img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail community.profile_image 400 250 %}" />
+    </a>
+  </span>
+{% endif %}
+
+<div class="caption community-info">
+  <h4 class="community-name">
+    <a href="{{ community.get_absolute_url }}">{{ community.title }}</a>
+    {% if community.year_founded %}
+      <small>({{ community.year_founded }})</small>
+    {% endif %}
+  </h4>
+  {% if community.number_of_adults > 0 or community.number_of_children > 0 or community.general_location %}
+    <h5><em>
+      {% if community.number_of_adults > 0 or community.number_of_children > 0 %}
+        <span class="population">
+          {% if community.number_of_adults > 0 %}
+            {{ community.number_of_adults }} Adult{{ community.number_of_adults|pluralize }}
+          {% endif %}
+          {% if community.number_of_children > 0 %}
+            {% if community.number_of_adults > 0 %} and {% endif %}
+            {{ community.number_of_children }} Child{{ community.number_of_children|pluralize:"ren" }}
+          {% endif %}
+        </span>
+      {% endif %}
+      {% if community.general_location %}
+        in <span class="location">{{ community.general_location }}</span>
+      {% endif %}
+    </em></h5>
+  {% endif %}
+  {% if community.short_description %}
+    <p class="text-justify">{{ community.short_description }}</p>
+  {% endif %}
+</div>
+
+
+</div>

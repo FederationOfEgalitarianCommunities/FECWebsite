@@ -1,6 +1,5 @@
 from .base import *
 
-
 SOUTH_TESTS_MIGRATE = False
 
 INSTALLED_APPS += (
@@ -12,7 +11,7 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-branches',
-    '--cover-package=thefec,communities',
+    '--cover-package=communities',
     '--with-progressive',
 ]
 

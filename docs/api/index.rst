@@ -10,4 +10,5 @@ available to contributors.
     :maxdepth: 2
 
     core
+    communities
     functional_tests

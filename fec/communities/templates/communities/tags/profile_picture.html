@@ -1,0 +1,11 @@
+{% comment %}
+  This template renders a thumbnail for a Community's profile_image.
+
+  It expects a `community`, `width`, `height` and `MEDIA_URL` in the context.
+{% endcomment %}
+{% load mezzanine_tags %}
+
+
+<a class="profile-image" rel="#image-{{ community.profile_image.id }}" title="{{ community.profile_image.description }}" href="{{ community.profile_image.url }}">
+  <img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail community.profile_image width height %}" />
+</a>

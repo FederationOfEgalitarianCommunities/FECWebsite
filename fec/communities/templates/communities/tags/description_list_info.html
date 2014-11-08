@@ -1,0 +1,48 @@
+{% comment %}
+  This template is used by the community_info_description_list inclusion
+  template tag to display a description list of a Community's attributes.
+
+  The `community` context variable is expected to be passed.
+{% endcomment %}
+{% load mezzanine_tags %}
+
+<dl class="dl-horizontal">
+  <!-- Email -->
+  {% if community.email %}
+    <dt>Email</dt>
+    <dd class="email"><a href="mailto:{{ community.email }}">
+        {{ community.email }}
+    </a></dd>
+  {% endif %}
+  <!-- Website -->
+  {% if community.website %}
+    <dt>Website</dt>
+    <dd class="website"><a href="{{ community.website }}" target="_blank">
+      {{ community.website }}
+    </a></dd>
+  {% endif %}
+  <!-- Address -->
+  {% if community.address %}
+    <dt>Address</dt>
+    <dd class="address"><address>{{ community.address|linebreaks }}</address>
+  {% endif %}
+  <!-- Phone Number -->
+  {% if community.phone %}
+    <dt>Phone Number</dt>
+    <dd class="phone">{{ community.phone }}</dd>
+  {% endif %}
+  <!-- Year -->
+  {% if community.year_founded %}
+    <dt>Founded</dt>
+    <dd class="founded">{{ community.year_founded }}</dd>
+  {% endif %}
+  <!-- Population -->
+  {% if community.number_of_adults > 0 %}
+    <dt>Adults</dt>
+    <dd class="adults">{{ community.number_of_adults }}</dd>
+  {% endif %}
+  {% if community.number_of_children > 0 %}
+    <dt>Children</dt>
+    <dd class="children">{{ community.number_of_children }}</dd>
+  {% endif %}
+</dl>

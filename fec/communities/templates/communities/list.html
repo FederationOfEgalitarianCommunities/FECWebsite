@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% load communities_tags mezzanine_tags staticfiles %}
+
+{% comment %}
+  A `community_list` variable is expected. A `page` variable will be
+  automatically passed by Mezzanine if a `Page` matches the URL.
+{% endcomment %}
+
+{% load i18n mezzanine_tags keyword_tags %}
+
+
+{% block extra_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static "mezzanine/css/magnific-popup.css" %}">
+{% endblock extra_css %}
+
+
+{% block meta_title %}{% trans "Our Communities" %}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for page as keywords %}
+  {% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+  {% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ page.description }}
+{% endmetablock %}{% endblock %}
+
+
+{% block title %}{% trans "Our Communities" %}{% endblock %}
+
+{% block main %}
+
+<h2 id="member-communities">Member Communities</h2>
+<div class="gallery row">
+  {% for community in community_list %}
+    <div class="col-sm-6 col-lg-4">
+      {% community_info_thumbnail_block community %}
+    </div>
+  {% endfor %}
+</div>
+
+{% if in_dialog_list %}
+  <h2 id="in-dialog-communities">Communities In Dialogue</h2>
+  <div class="gallery row">
+    {% for community in in_dialog_list %}
+      <div class="col-sm-6 col-lg-4">
+        {% community_info_thumbnail_block community %}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% endblock %}
+
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static "mezzanine/js/magnific-popup.js" %}"></script>
+<script>
+$(document).ready(function() {
+    $('.gallery').find('.profile-image').each(function() {
+        $(this).magnificPopup({
+            type: 'image',
+            titleSrc: 'title',
+            closeOnContentClick: true,
+        })
+    });
+});
+</script>
+{% endblock %}

@@ -1,6 +1,4 @@
 """This module contains functional tests for the Home Page."""
-from selenium.common.exceptions import NoSuchElementException
-
 from core.utils import SeleniumTestCase
 
 
