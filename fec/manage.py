@@ -7,7 +7,7 @@ import sys
 
 # Corrects some pathing issues in various contexts, such as cron jobs,
 # and the project layout still being in Django 1.3 format.
-from thefec.settings.base import PROJECT_ROOT
+from core.settings.base import PROJECT_ROOT
 sys.path.append(os.path.abspath(os.path.join(PROJECT_ROOT, "..")))
 
 
@@ -22,6 +22,6 @@ for i, arg in enumerate(sys.argv):
 
 # Run Django.
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "thefec.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
     from django.core.management import execute_from_command_line
     execute_from_command_line(sys.argv)

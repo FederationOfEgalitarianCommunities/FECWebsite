@@ -239,7 +239,7 @@ DATABASES = {
 import os
 
 # Full filesystem path to the project.
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname('../../' + os.path.abspath(__file__))
 
 # Name of the directory for the project.
 PROJECT_DIRNAME = PROJECT_ROOT.split(os.sep)[-1]
@@ -269,7 +269,7 @@ MEDIA_URL = STATIC_URL + "media/"
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, *MEDIA_URL.strip("/").split("/"))
 
 # Package/module name to import the root urlpatterns from for the project.
-ROOT_URLCONF = "thefec.urls"
+ROOT_URLCONF = "core.urls"
 
 # Put strings here, like "/home/html/django_templates"
 # or "C:/www/django/templates".
@@ -284,7 +284,7 @@ TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"),)
 
 INSTALLED_APPS = (
 
-    "thefec",
+    "core",
     "communities",
 
     "django.contrib.admin",

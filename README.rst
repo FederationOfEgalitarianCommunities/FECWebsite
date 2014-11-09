@@ -21,18 +21,18 @@ Install python dependencies w/ ``pip``::
 Set environmental variables to match your configuration::
 
     export DJANGO_SECRET_KEY=fourtwenty
-    export DJANGO_SETTINGS_MODULE=thefec.settings.local
+    export DJANGO_SETTINGS_MODULE=core.settings.local
     export DB_NAME=FEC
     export DB_USER=myuser
 
 Create the database and start the dev server::
 
-    cd ../fec
+    cd fec
     ./manage.py createdb --noinput
     ./manage.py runserver 0.0.0.0:8000
 
-Contribute
------------
+Documentation
+--------------
 
 Build the full documentation::
 
@@ -41,7 +41,21 @@ Build the full documentation::
 
 Read the docs at ``docs/_build/html/index.html``.
 
+Tests
+------
+
+Install the test dependencies::
+
+    pip install -r requirements/test.txt
+    cd fec
+    ./manage.py test --settings=core.settings.test
+
+Contribute
+-----------
+
+
 Template overrides and sitewide items go in ``core``.
 
-Write tests, maintain 100% test coverage. Update docs when necessary. Use
-``prospector`` to check your code style.
+Write tests, maintain 100% test coverage. Update docs when necessary.
+
+Run ``prospector`` in the base directory to check out your code style.
