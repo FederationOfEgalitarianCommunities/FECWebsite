@@ -11,3 +11,11 @@ core.utils module
     :members:
     :undoc-members:
     :show-inheritance:
+
+core.templatetags.core_filters module
+--------------------------------------
+
+.. automodule:: core.templatetags.core_filters
+    :members:
+    :undoc-members:
+    :show-inheritance:
