@@ -27,7 +27,8 @@ class GeneralPageTests(SeleniumTestCase):
         self.selenium.set_window_size(1680, 1050)
         tagline = self.selenium.find_element_by_css_selector(
             "div.navbar-header p.navbar-text")
-        self.assertTrue(tagline.is_displayed(), "The tagline is not displayed.")
+        self.assertTrue(tagline.is_displayed(),
+                        "The tagline is not displayed.")
         self.assertEqual(tagline.text, "A new way of living is possible.",
                          "The tagline is not correct.")
 

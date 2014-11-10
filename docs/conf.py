@@ -29,7 +29,7 @@ import sphinx_bootstrap_theme
 sys.path.append(os.path.abspath('../fec/'))
 
 # Setup Django settings/environment
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "thefec.settings.local")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.local")
 
 
 # -- General configuration ------------------------------------------------

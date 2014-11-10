@@ -1,7 +1,6 @@
 """This module contains functional tests that validate Community Pages."""
 import time
 
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 from mezzanine.core.templatetags.mezzanine_tags import thumbnail
 
@@ -14,11 +13,12 @@ class CommunityDetailPageTests(SeleniumTestCase):
     def setUp(self):
         """Create a Community to test with and visit it's detail's page."""
         self.darmok = Community.objects.create(
-            title="Darmok", year_founded=2014, general_location="Rural Tenagra",
-            number_of_adults=20, number_of_children=3,
+            title="Darmok", year_founded=2014,
+            general_location="Rural Tenagra", number_of_adults=20,
             short_description="A dude from a Star Trek episode",
             profile_image=create_test_image(), email="darmok@tenagra.com",
-            phone="(555)555-5555", website="http://hello.com",
+            number_of_children=3, phone="(555)555-5555",
+            website="http://hello.com",
             address="123 Easy St.\nSomewhere, AK 21030",
             full_description="Hello, I am the full description"
         )
@@ -115,8 +115,9 @@ class CommunityListPageTests(SeleniumTestCase):
     def setUp(self):
         """Create several Communities and visit the Community Listings Page."""
         self.darmok = Community.objects.create(
-            title="Darmok", year_founded=2014, general_location="Rural Tenagra",
-            number_of_adults=20, number_of_children=3,
+            title="Darmok", year_founded=2014,
+            general_location="Rural Tenagra", number_of_adults=20,
+            number_of_children=3,
             short_description="A dude from a Star Trek episode",
             profile_image=create_test_image()
         )
@@ -205,7 +206,7 @@ class CommunityListPageTests(SeleniumTestCase):
             caption.find_element_by_css_selector, ".population")
 
     def test_section_contains_short_description(self):
-        """The community's shorter description should appear in it's section."""
+        """The community's shorter description should appear in the section."""
         section_description = self.selenium.find_element_by_css_selector(
             ".thumbnail .caption p")
         self.assertEqual(self.darmok.short_description,

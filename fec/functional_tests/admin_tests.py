@@ -1,11 +1,5 @@
 """This module contains functional tests applicable to the Admin Backend."""
-import time
-
-from django.test.utils import override_settings
-from selenium.webdriver.common.keys import Keys
-
 from core.utils import SeleniumTestCase
-from communities.models import Community
 
 
 class GeneralAdminPageTests(SeleniumTestCase):
@@ -34,8 +28,8 @@ class CommunityAdminPageTests(SeleniumTestCase):
 
     def test_community_link_is_in_the_admin_menu(self):
         """A link to modify Communities should be under Content in the menu."""
-        content_menu_link = self.selenium.find_element_by_link_text("Content")
-        content_submenu = content_menu_link.parent.find_element_by_css_selector(
+        content_menu = self.selenium.find_element_by_link_text("Content")
+        content_submenu = content_menu.parent.find_element_by_css_selector(
             "ul.dropdown-menu-menu")
         self.assertIn("Communities", content_submenu.text)
 

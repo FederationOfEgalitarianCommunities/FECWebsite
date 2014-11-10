@@ -108,7 +108,7 @@ Create the initial database by running ``createdb``:
 
 .. code-block:: bash
 
-    $ export DJANGO_SETTINGS_MODULE=thefec.settings.local
+    $ export DJANGO_SETTINGS_MODULE=core.settings.local
     $ cd fec
     $ ./manage.py createdb
 
@@ -133,7 +133,7 @@ After making changes, run the test suite with ``manage.py``:
 
 .. code-block:: bash
 
-    $ export DJANGO_SETTINGS_MODULE=thefec.settings.test
+    $ export DJANGO_SETTINGS_MODULE=core.settings.test
     $ ./manage.py test
 
 Every test should pass before you commit your changes.

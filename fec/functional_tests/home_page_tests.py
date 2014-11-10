@@ -12,7 +12,8 @@ class HomePageTests(SeleniumTestCase):
         """The content's header should welcome the user to the FEC website."""
         header = self.selenium.find_element_by_css_selector(".middle h2")
         self.assertEqual(
-            header.text, "Welcome to the Federation of Egalitarian Communities!"
+            header.text,
+            "Welcome to the Federation of Egalitarian Communities!"
         )
 
     def test_content_has_introduction(self):

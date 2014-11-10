@@ -141,7 +141,7 @@ class Community(Displayable):
         return reverse('community_detail', kwargs={'slug': self.slug})
 
 
-class CommunityImage(Orderable):
+class CommunityImage(Orderable, object):
     """A model for :class:`Community` gallery images.
 
     This has been ripped and repurposed from
