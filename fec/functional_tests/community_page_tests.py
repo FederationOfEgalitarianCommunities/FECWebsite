@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from mezzanine.core.templatetags.mezzanine_tags import thumbnail
 
 from core.utils import SeleniumTestCase, create_test_image
-from communities.models import Community, CommunityImage
+from communities.models import Community, CommunityImage, CommunityFeed
 
 
 class CommunityDetailPageTests(SeleniumTestCase):
@@ -24,7 +24,9 @@ class CommunityDetailPageTests(SeleniumTestCase):
         )
         self.darmok_gallery_image = CommunityImage.objects.create(
             community=self.darmok, file="Test")
-        self.darmok_gallery_image.save()
+        self.darmok_rss_feed = CommunityFeed.objects.create(
+            community=self.darmok,
+            url="http://www.feedforall.com/sample-feed.xml")
 
         self.selenium.get(self.live_server_url +
                           self.darmok.get_absolute_url())
@@ -48,7 +50,7 @@ class CommunityDetailPageTests(SeleniumTestCase):
         image_element = self.selenium.find_element_by_css_selector(
             ".profile-image img")
 
-        profile_image_url = thumbnail(self.darmok.profile_image.url, 600, 375)
+        profile_image_url = thumbnail(self.darmok.profile_image.url, 600, 0)
 
         self.assertEqual(image_element.get_attribute('src'),
                          self.live_server_url + '/static/media/' +
@@ -108,6 +110,19 @@ class CommunityDetailPageTests(SeleniumTestCase):
         self.assertEqual(image.get_attribute('src'),
                          self.live_server_url + '/static/media/' +
                          gallery_image_url)
+
+    def test_page_contains_blog_posts(self):
+        """The community's blog posts should appear on the page."""
+        blog_posts = self.selenium.find_elements_by_css_selector(
+            ".community-blog-posts .community-blog-post")
+        self.assertNotEqual(blog_posts, [])
+
+    def test_page_contains_latest_blog_post(self):
+        """The community's latest blog post should appear first."""
+        blog_posts = self.selenium.find_elements_by_css_selector(
+            ".community-blog-posts .community-blog-post")
+        self.assertIn("FeedScout enables you to view RSS/ATOM/RDF feeds from",
+                      blog_posts[0].text)
 
 
 class CommunityListPageTests(SeleniumTestCase):

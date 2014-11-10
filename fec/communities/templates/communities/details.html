@@ -4,7 +4,7 @@
   passed by Mezzanine if a `Page` matches the URL.
 {% endcomment %}
 
-{% load communities_tags mezzanine_tags staticfiles %}
+{% load core_filters communities_tags mezzanine_tags cache staticfiles %}
 
 
 {% block extra_css %}
@@ -48,13 +48,13 @@
       <div class="col-xs-12">
         {% if community.profile_image %}
           {% editable community.profile_image %}
-          <span class="pull-right img-responsive">
-            {% community_profile_picture_thumbnail community 600 375 %}
+          <span class="img-responsive">
+            {% community_profile_picture_thumbnail community 600 0 %}
           </span>
           {% endeditable %}
         {% endif %}
       </div>
-      <div class="col-xs-12">
+      <div class="col-xs-12 community-description-list">
         <!-- Description List -->
         {% editable community.email community.website community.phone community.year_founded community.number_of_adults community.number_of_children %}
         {% community_info_description_list community %}
@@ -64,18 +64,59 @@
   </div>
 </div>
 
+<!-- Blog Posts -->
+{# Each blog post should be an ``entry`` returned by ``feedparser``. #}
+{% cache 86400 blog_posts community.slug %}
+{% with community.get_latest_blog_posts as blog_posts %}
+{% if blog_posts %}
+  <h2 class="community-latest-updates">Latest Updates</h2>
+  <div class="row community-blog-posts">
+    {% for blog_post in blog_posts %}
+      {% if blog_post.description|richtext_filters %}
+      <div class="community-blog-post col-xs-12">
+        <h3>{{ blog_post.title }}
+          {% if blog_post.author %}
+            <small>by {{ blog_post.author }}{% if blog_post.published%},
+              {{ blog_post.published|timesince|get_first_by:"," }} ago{% endif %}
+            </small>
+          {% endif %}
+        </h3>
+        <p>{{ blog_post.description|richtext_filters|safe }}</p>
+        <div class="pull-left">
+          <a href="{{ blog_post.comments }}" target="_blank">
+            <button class="btn btn-link btn-xs">
+              {% if blog_post.slash_comments %}
+                {{ blog_post.slash_comments }} Comment{{ blog_post.slash_comments|pluralize }}</button></a>
+              {% else %}
+                Comments</button></a>
+              {% endif %}
+            </button></a>
+          <a href="{{ blog_post.link }}" target="_blank">
+            <button class="btn btn-link btn-xs">Read More</button></a>
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+{% endwith %}
+{% endcache %}
+
 <!-- Gallery -->
-<div class="row gallery">
-  {% with community.images.all as images %}
+{% with community.images.all as images %}
+{% if images %}
+  <h2>Gallery</h2>
+  <div class="row gallery">
   {% for image in images %}
     <div class="col-xs-4 col-sm-3">
-      <a class="thumbnail" rel="#image-{{ image.id }}" title="{{ image.description }}" href="{{ image.file.url }}">
-        <img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail image.file 131 75 %}" />
-      </a>
+    <a class="thumbnail" rel="#image-{{ image.id }}" title="{{ image.description }}" href="{{ image.file.url }}">
+      <img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail image.file 131 75 %}" />
+    </a>
     </div>
   {% endfor %}
-  {% endwith %}
-</div>
+  </div>
+{% endif %}
+{% endwith %}
 
 {% endblock %}
 

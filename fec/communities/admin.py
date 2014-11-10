@@ -2,12 +2,17 @@
 from django.contrib import admin
 from mezzanine.core.admin import DisplayableAdmin, TabularDynamicInlineAdmin
 
-from .models import Community, CommunityImage
+from .models import Community, CommunityImage, CommunityFeed
 
 
 class CommunityImageInline(TabularDynamicInlineAdmin):
     """An Inline Table Row representing a :class:`~.models.CommunityImage`."""
     model = CommunityImage
+
+
+class CommunityFeedInline(TabularDynamicInlineAdmin):
+    """An Inline Table Row representing a :class:`~.models.CommunityFeed`."""
+    model = CommunityFeed
 
 
 class CommunityAdmin(DisplayableAdmin):
@@ -19,7 +24,7 @@ class CommunityAdmin(DisplayableAdmin):
         ``Contact`` section.
 
     """
-    inlines = [CommunityImageInline]
+    inlines = [CommunityFeedInline, CommunityImageInline]
     fieldsets = (
         (None, {
             "fields": [("title", "profile_image"),

@@ -2,7 +2,47 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from .models import Community
+from .models import Community, CommunityFeed
+
+
+class CommunityModelTests(TestCase):
+    """Test the Community Model Methods."""
+    def setUp(self):
+        """Create a Community and RSS Feed."""
+        self.community = Community.objects.create(title="Dreamland")
+        CommunityFeed.objects.create(
+            community=self.community,
+            url="http://www.feedforall.com/sample-feed.xml")
+
+    def test_get_latest_blog_posts_returns_latest_posts(self):
+        """get_latest_blog_posts should return the 5 latest posts."""
+        bps = self.community.get_latest_blog_posts()
+        post_titles = [
+            'Recommended Web Based Feed Reader Software',
+            'Recommended Desktop Feed Reader Software',
+            'RSS Resources',
+        ]
+        self.assertSequenceEqual([post.title for post in bps], post_titles)
+
+
+class CommunityFeedModelTests(TestCase):
+    """Test the CommunityFeed Model Methods."""
+    def setUp(self):
+        """Create a Community and RSS Feed."""
+        self.community = Community.objects.create(title="Dreamland")
+        self.feed = CommunityFeed.objects.create(
+            community=self.community,
+            url="http://www.feedforall.com/sample-feed.xml")
+
+    def test_get_blog_posts_returns_feeds_posts(self):
+        """get_blog_posts should return all posts from the CommunityFeed."""
+        bps = self.feed.get_blog_posts()
+        post_titles = [
+            'RSS Resources',
+            'Recommended Desktop Feed Reader Software',
+            'Recommended Web Based Feed Reader Software',
+        ]
+        self.assertEqual([post.title for post in bps], post_titles)
 
 
 class CommunityDetailViewTests(TestCase):

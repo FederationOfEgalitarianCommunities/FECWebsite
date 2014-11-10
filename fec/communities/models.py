@@ -1,13 +1,12 @@
 """This module contains data models related to Communities."""
+from datetime import datetime
 from string import punctuation
+from time import mktime
 
 from django.core.urlresolvers import reverse
-import django.db.models as models
-try:
-    from django.utils.encoding import force_text
-except ImportError:
-    # Django < 1.5
-    from django.utils.encoding import force_unicode as force_text
+from django.db import models
+from django.utils.encoding import force_text
+import feedparser
 from mezzanine.core.models import Displayable, Orderable
 from mezzanine.core.fields import RichTextField, FileField
 from mezzanine.utils.models import upload_to
@@ -140,6 +139,22 @@ class Community(Displayable):
                            kwargs={'slug': self.slug})
         return reverse('community_detail', kwargs={'slug': self.slug})
 
+    def get_latest_blog_posts(self):
+        """Return a list of the Community's latest ``blog posts``.
+
+        What exactly consitutes a ``blog_post`` is defined by the
+        :func:`CommunityFeed.get_blog_posts` function.
+
+        :returns: A list of ``blog post`` dictionaries.
+
+        """
+        feeds = self.feeds.all()
+        blog_posts = []
+        _ = [blog_posts.append(post) for feed in feeds
+             for post in feed.get_blog_posts()]
+        blog_posts.sort(key=lambda x: x.published, reverse=True)
+        return blog_posts[:5]
+
 
 class CommunityImage(Orderable, object):
     """A model for :class:`Community` gallery images.
@@ -182,3 +197,40 @@ class CommunityImage(Orderable, object):
                             for i, s in enumerate(name)])
             self.description = name
         super(CommunityImage, self).save(*args, **kwargs)
+
+
+class CommunityFeed(Orderable, object):
+    """A model for :class:`Community` RSS and Atom feeds.
+
+    .. attribute:: url
+
+        The URL of the RSS Feed
+
+    .. attribute:: community
+
+        The :class:`Community` the feed belongs to.
+
+    """
+    url = models.URLField(help_text='The Feed\'s URL.')
+    community = models.ForeignKey(Community, related_name="feeds")
+
+    class Meta(object):
+        """Set the colloquial name to ``Feed``."""
+        verbose_name = "Feed"
+        verbose_name_plural = "Feeds"
+
+    def get_blog_posts(self):
+        """Return all blog posts from the :attr:`url`.
+
+        This modifies the ``published`` attribute to be a datetime instead of
+        the Feed's date string.
+
+        :returns: A list of ``blog posts``.
+        """
+        parsed_feed = feedparser.parse(self.url)
+        posts = parsed_feed.entries
+        for post in posts:
+            published_datetime = datetime.fromtimestamp(mktime(
+                post['published_parsed']))
+            post['published'] = published_datetime
+        return posts

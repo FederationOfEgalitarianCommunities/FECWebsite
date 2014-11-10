@@ -114,6 +114,7 @@ def create_test_image():
     image_file.seek(0)
 
     return ContentFile(image_file.read(), 'test.png')
+create_test_image.__test__ = False      # Nose thinks this is a test.
 
 
 def check_pep8(file_list):

@@ -30,3 +30,12 @@ h2#member-communities {
 dd.address address, dd.address address p {
   margin-bottom: 0;
 }
+/* Reduce Margins to Reduce Space Around the Latest Updates Header */
+h2.community-latest-updates {
+  margin-top: 10px;
+  margin-bottom: -10px;
+}
+/* Reduce Bottom Margin to Reduce the Space Above the Latest Updates Header */
+div.community-description-list dl {
+  margin-bottom: 10px;
+}
