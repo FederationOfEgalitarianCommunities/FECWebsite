@@ -1,0 +1,48 @@
+{% comment %}
+  Render the categorys_docs_and_cats inclusion tag.
+
+  Expects a `category` variable.
+{% endcomment %}
+
+{% load documents_tags %}
+
+
+<!-- Documents -->
+{% with category.documents.published as documents %}
+{% if documents.exists %}
+<div class="row" id="documents">
+    {% document_list_group documents %}
+</div>
+{% endif %}
+{% endwith %}
+
+
+<!-- Child Categories -->
+{% with category.children.all as children %}
+{% if children %}
+  <div class="row">
+    <div class="panel-group" role="tablist" id="children">
+      {% for child in children %}
+        {% if child.documents.exists %}
+            <div class="panel panel-default child-category">
+              <div class="panel-heading" role="tab">
+                <h4 class="panel-title" id="{{ child.slug }}">
+                  <a href="#collapse-{{ child.slug }}" data-toggle="collapse" data-parent="#children">
+                    {{ child.title }}
+                  </a>
+                  <small><a href="{{ child.get_absolute_url }}">
+                    <span class="glyphicon glyphicon-share-alt pull-right"></span>
+                  </a></small>
+                </h4>
+              </div>
+              <div id="collapse-{{ child.slug }}" class="panel-collapse collapse {% if forloop.first %}in{% endif %}"
+                  role="tabpanel">
+                {% document_list_group child.documents.published %}
+              </div>
+            </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+{% endwith %}

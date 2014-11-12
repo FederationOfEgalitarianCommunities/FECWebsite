@@ -1,0 +1,47 @@
+{% extends "pages/page.html" %}
+{% comment %}
+  This template renders a Document and it's details.
+
+  It expects a `document` variable in the context.
+{% endcomment %}
+
+{% load documents_tags mezzanine_tags %}
+
+
+<!-- Title -->
+{% block meta_title %}{{ document.title }}{% endblock %}
+{% block title %}
+  {% editable document.title %}{% endeditable %}
+{% endblock %}
+
+
+<!-- Breadcrumbs -->
+{% block breadcrumb_menu %}
+  {{ block.super }}
+  {% category_breadcrumbs document.category is_active=False %}
+  <li class="active">{{ document.title }}</li>
+{% endblock %}
+
+
+{% block main %}
+<!-- Shared By -->
+{% if document.community %}
+  {% editable document.community %}
+  <h5>Shared by
+    <a href="{{ document.community.get_absolute_url }}">
+      {{ document.community.title }}
+    </a>
+  </h5>
+  {% endeditable %}
+{% endif %}
+
+<!-- Document Contents -->
+<div class="row" id="document-contents">
+  <div class="col-sm-12">
+    {% editable document.contents %}
+    {{ document.contents|richtext_filters|safe }}
+    {% endeditable %}
+  </div>
+</div>
+
+{% endblock %}

@@ -7,6 +7,10 @@
 }
 
 
+
+/* Communities */
+
+
 /* Community Listings Customizations */
 /* Remove Top Margin for Alignment w/ Top of Sidebar */
 h2#member-communities {
@@ -38,4 +42,55 @@ h2.community-latest-updates {
 /* Reduce Bottom Margin to Reduce the Space Above the Latest Updates Header */
 div.community-description-list dl {
   margin-bottom: 10px;
+}
+/* Fixed Height Documents Table
+ * http://stackoverflow.com/a/22855568/1998376
+ */
+.header-fixed {
+    width: 100%
+}
+.header-fixed > thead,
+.header-fixed > tbody,
+.header-fixed > thead > tr,
+.header-fixed > tbody > tr,
+.header-fixed > thead > tr > th,
+.header-fixed > tbody > tr > td {
+    display: block;
+}
+.header-fixed > tbody > tr:after,
+.header-fixed > thead > tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+.header-fixed > tbody {
+    overflow-y: auto;
+    height: 150px;
+}
+.header-fixed > tbody > tr > td,
+.header-fixed > thead > tr > th {
+    width: 50%;
+    float: left;
+}
+
+
+
+/* Documents */
+
+
+/* Document Category Details Customizations */
+/* Remove the Bottom Margin From the Collapseable List Groups */
+div#children .panel ul.list-group {
+  margin-bottom: 0;
+}
+/* Remove the Left and Right Borders from List Groups in Panels */
+div#children .panel ul.list-group li {
+  border-width: 1px 0 0 0;
+}
+
+/* Root Document Listing Customizations */
+/* Remove the Bottom Border from the Root Category Tabs */
+ul#root-category-tabs {
+  border-bottom-width: 0;
 }

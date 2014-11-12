@@ -101,6 +101,45 @@ class SeleniumTestCase(LiveServerTestCase):
         """
         self.assertRaises(NoSuchElementException, selector_function, *args)
 
+    def assertItemIsInAdminMenu(self, item_name, sub_menu):
+        """Assert that an item is in the specified admin sub menu.
+
+        :param item_name: The name of the menu item. E.g., Pages, Comments.
+        :type item_name: string
+        :param sub_menu: The name of the admin sub menu. E.g., Content, Site.
+        :type sub_menu: string
+
+        """
+        sub_menu_link = self.selenium.find_element_by_link_text(sub_menu)
+        sub_menu_items = sub_menu_link.find_elements_by_xpath("../ul/li")
+        print sub_menu_items
+        self.assertTrue(any(item.text == item_name for item in sub_menu_items),
+                        'Could not find the Menu Item "{0}" in the "{1}" Menu'.
+                        format(item_name, sub_menu))
+
+    def assertActiveBreadcrumbEquals(self, expected_text):
+        """Assert that the expected_text is the active breadcrumb's text.
+
+        :param expected_text: The expected text of the active breadcrumb.
+        :type expected_text: string
+
+        """
+        active_crumb = self.selenium.find_element_by_css_selector(
+            "ul.breadcrumb li.active")
+        self.assertEqual(expected_text, active_crumb.text,
+                         'The Active Breadcrumb Text was "{0}" instead of '
+                         '"{1}"'.format(active_crumb.text, expected_text))
+
+    def assertInactiveBreadcrumbEquals(self, expected_text):
+        """Assert that the expected_text is an inactive breadcrumb."""
+        breadcrumbs = self.selenium.find_elements_by_css_selector(
+            "ul.breadcrumb li")
+        inactive = [x for x in breadcrumbs if "active" not in
+                    x.get_attribute("class")]
+        self.assertTrue(any(crumb.text == expected_text for crumb in inactive),
+                        'Could not find "{0}" in any breadcrumbs.'.format(
+                            expected_text))
+
 
 def create_test_image():
     """Create a 500x500px image for use in tests.

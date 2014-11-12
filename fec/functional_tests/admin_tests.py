@@ -28,10 +28,7 @@ class CommunityAdminPageTests(SeleniumTestCase):
 
     def test_community_link_is_in_the_admin_menu(self):
         """A link to modify Communities should be under Content in the menu."""
-        content_menu = self.selenium.find_element_by_link_text("Content")
-        content_submenu = content_menu.parent.find_element_by_css_selector(
-            "ul.dropdown-menu-menu")
-        self.assertIn("Communities", content_submenu.text)
+        self.assertItemIsInAdminMenu("Communities", "Content")
 
     def test_publishing_fieldset_is_hidden_by_default(self):
         """The publishing fieldset should exist and be hidden by default."""
@@ -48,3 +45,18 @@ class CommunityAdminPageTests(SeleniumTestCase):
         fieldset_headers = self.selenium.find_elements_by_css_selector(
             "fieldset.collapse-closed h2.collapse-toggle")
         self.assertIn("Contact", [fh.text for fh in fieldset_headers])
+
+
+class DocumentAdminPageTests(SeleniumTestCase):
+    """Test Expectations for the Document Admin Pages."""
+    def setUp(self):
+        """Visit the admin page and login."""
+        self.create_admin_and_login()
+
+    def test_document_category_link_is_in_the_admin_menu(self):
+        """A link to modify Document Categories should be under Documents."""
+        self.assertItemIsInAdminMenu("Categories", "Systems & Structures")
+
+    def test_document_link_is_in_the_admin_menu(self):
+        """A link to modify Documents should be under the Documents Menu."""
+        self.assertItemIsInAdminMenu("Documents", "Systems & Structures")

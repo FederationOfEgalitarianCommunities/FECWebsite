@@ -24,6 +24,7 @@ urlpatterns += patterns(
     '',
 
     ("^communities/", include("communities.urls")),
+    ("^systems-and-structures/", include("documents.urls")),
 
     # HOMEPAGE AS STATIC TEMPLATE
     # ---------------------------

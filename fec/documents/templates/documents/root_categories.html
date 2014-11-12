@@ -1,0 +1,36 @@
+{% extends "pages/page.html" %}
+{% comment %}
+  A `root_categories` variable is expected.
+{% endcomment %}
+
+{% load documents_tags_extras mezzanine_tags %}
+
+
+{% block main %}
+
+<!-- Root Category Tabs -->
+<ul class="nav nav-tabs" role="tablist" id="root-category-tabs">
+  {% for category in root_categories %}
+    {% if category.documents.exists or category.children.exists %}
+      <li role="presentation" {% if forloop.first %}class="active"{% endif %}>
+        <a id="{{ category.slug }}-tab" href="#{{ category.slug }}" role="tab" data-toggle="tab">
+          {{ category.title }}
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>
+
+<!-- Document & Sub-Category Tab Panes -->
+<div class="tab-content">
+  {% for category in root_categories %}
+    {% if category.documents.exists or category.children.exists %}
+      <div role="tabpanel" class="tab-pane fade {% if forloop.first %}in active{% endif %}"
+          id="{{ category.slug }}">
+        {% categorys_docs_and_cats category %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% endblock %}

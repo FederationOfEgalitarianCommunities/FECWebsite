@@ -1,0 +1,26 @@
+{% extends "pages/page.html" %}
+{% comment %}
+  A `document_category` variable is expected. A `page` variable will be
+  automatically passed by Mezzanine if a `Page` matches the URL.
+{% endcomment %}
+
+{% load documents_tags documents_tags_extras mezzanine_tags %}
+
+
+<!-- Title -->
+{% block meta_title %}{{ document_category.title }}{% endblock %}
+{% block title %}
+  {% editable document_category.title %}{% endeditable %}
+{% endblock %}
+
+
+<!-- Breadcrumbs -->
+{% block breadcrumb_menu %}
+  {{ block.super }}
+  {% category_breadcrumbs document_category is_active=True %}
+{% endblock %}
+
+
+{% block main %}
+  {% categorys_docs_and_cats document_category %}
+{% endblock %}

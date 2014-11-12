@@ -11,7 +11,7 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-branches',
-    '--cover-package=communities',
+    '--cover-package=communities,documents',
     '--with-progressive',
 ]
 

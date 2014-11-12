@@ -6,6 +6,7 @@ from mezzanine.core.templatetags.mezzanine_tags import thumbnail
 
 from core.utils import SeleniumTestCase, create_test_image
 from communities.models import Community, CommunityImage, CommunityFeed
+from documents.models import Document, DocumentCategory
 
 
 class CommunityDetailPageTests(SeleniumTestCase):
@@ -27,6 +28,10 @@ class CommunityDetailPageTests(SeleniumTestCase):
         self.darmok_rss_feed = CommunityFeed.objects.create(
             community=self.darmok,
             url="http://www.feedforall.com/sample-feed.xml")
+        doc_cat = DocumentCategory.objects.create(title="Hello There!")
+        self.document = Document.objects.create(
+            title="Darmok & Jalad", category=doc_cat, community=self.darmok,
+            contents="Treaty of Algeron, 2311")
 
         self.selenium.get(self.live_server_url +
                           self.darmok.get_absolute_url())
@@ -39,11 +44,9 @@ class CommunityDetailPageTests(SeleniumTestCase):
         """The page header should be the Community's Name."""
         self.assertPageHeaderEquals(self.darmok.title)
 
-    def test_community_name_is_in_breadcrumbs(self):
+    def test_community_name_is_active_breadcrumb(self):
         """The community name should be active in the breadcrumb menu."""
-        active_crumb = self.selenium.find_element_by_css_selector(
-            "ul.breadcrumb li.active")
-        self.assertEqual(self.darmok.title, active_crumb.text)
+        self.assertActiveBreadcrumbEquals(self.darmok.title)
 
     def test_page_contains_profile_image(self):
         """The community's profile picture should be on the page."""
@@ -123,6 +126,12 @@ class CommunityDetailPageTests(SeleniumTestCase):
             ".community-blog-posts .community-blog-post")
         self.assertIn("FeedScout enables you to view RSS/ATOM/RDF feeds from",
                       blog_posts[0].text)
+
+    def test_page_contains_documents(self):
+        """The community's documents should appear in a table."""
+        documents = self.selenium.find_elements_by_css_selector(
+            "#community-documents .table tbody tr")
+        self.assertIn(self.document.title, documents[0].text)
 
 
 class CommunityListPageTests(SeleniumTestCase):

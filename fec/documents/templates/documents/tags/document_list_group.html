@@ -1,0 +1,18 @@
+{% comment %}
+  This template renders a list group of Documents.
+
+  It expects a `documents` variable in the context.
+{% endcomment %}
+
+<ul class="list-group">
+{% for document in documents %}
+  <li class="list-group-item" id="{{ document.slug }}">
+    <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
+    {% if document.community %}
+      <small>from <a href="{{ document.community.get_absolute_url }}">
+        {{ document.community.title }}
+      </a></small>
+    {% endif %}
+  </li>
+{% endfor %}
+</ul>

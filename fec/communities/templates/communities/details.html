@@ -102,6 +102,7 @@
 {% endwith %}
 {% endcache %}
 
+
 <!-- Gallery -->
 {% with community.images.all as images %}
 {% if images %}
@@ -114,6 +115,34 @@
     </a>
     </div>
   {% endfor %}
+  </div>
+{% endif %}
+{% endwith %}
+
+
+<!-- Systems & Structures Documents -->
+{% with community.documents.all as documents %}
+{% if documents.exists %}
+  <h2>Documents</h2>
+  <div class="row" id="community-documents">
+    <div class="col-sm-12">
+      <table class="table table-condensed table-striped header-fixed">
+        <thead>
+          <th>Name</th>
+          <th>Category</th>
+        </thead>
+        <tbody>
+          {% for document in documents|dictsort:"title" %}
+            <tr>
+              <td><a href="{{ document.get_absolute_url }}">
+                {{ document.title }}
+              </a></td>
+              <td>{{ document.category }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 {% endif %}
 {% endwith %}

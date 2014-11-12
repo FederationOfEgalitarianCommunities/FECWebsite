@@ -219,6 +219,9 @@ class CommunityFeed(Orderable, object):
         verbose_name = "Feed"
         verbose_name_plural = "Feeds"
 
+    def __unicode__(self):
+        return self.url
+
     def get_blog_posts(self):
         """Return all blog posts from the :attr:`url`.
 

@@ -11,4 +11,5 @@ available to contributors.
 
     core
     communities
+    documents
     functional_tests

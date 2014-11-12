@@ -14,6 +14,7 @@ class Pep8Tests(TestCase):
             'functional_tests/home_page_tests.py',
             'functional_tests/admin_tests.py',
             'functional_tests/community_page_tests.py',
+            'functional_tests/document_tests.py',
         ])
 
         self.assertEqual(result.total_errors, 0,
@@ -24,8 +25,8 @@ class Pep8Tests(TestCase):
         result = check_pep8([
             'core/urls.py',
             'core/utils.py',
+            'core/templatetags/core_filters.py',
             'core/tests.py',
-
         ])
 
         self.assertEqual(result.total_errors, 0,
@@ -44,3 +45,16 @@ class Pep8Tests(TestCase):
 
         self.assertEqual(result.total_errors, 0,
                          "PEP8 issues were found in the communities package.")
+
+    def test_documents_pep8_compliance(self):
+        """The documents package should be PEP8 compliant."""
+        result = check_pep8([
+            'documents/admin.py',
+            'documents/models.py',
+            'documents/views.py',
+            'documents/urls.py',
+            'documents/templatetags/documents_tags.py',
+        ])
+
+        self.assertEqual(result.total_errors, 0,
+                         "PEP8 issues were found in the documents package.")

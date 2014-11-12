@@ -1,8 +1,8 @@
 communities package
 ====================
 
-This package is responsible for the :class:`Community` model, including the
-listing and detail views.
+This package is responsible for the :class:`~communities.models.Community`
+model, including the listing and detail views.
 
 
 Models

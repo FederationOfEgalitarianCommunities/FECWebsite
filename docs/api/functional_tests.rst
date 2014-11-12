@@ -28,3 +28,11 @@ functional_tests.home_page_tests module
     :members:
     :undoc-members:
     :show-inheritance:
+
+functional_tests.community_page_tests module
+---------------------------------------------
+
+.. automodule:: functional_tests.community_page_tests
+    :members:
+    :undoc-members:
+    :show-inheritance:

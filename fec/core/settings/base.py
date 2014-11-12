@@ -57,16 +57,24 @@ ADMIN_MENU_ORDER = (
          "pages.Page",
          "blog.BlogPost",
          "generic.ThreadedComment",
-         ("Media Library", "fb_browse"),)
+         ("Media Library", "fb_browse"),
+         )
+     ),
+    ("Systems & Structures",
+        ("documents.Document",
+         "documents.DocumentCategory",
+         ),
      ),
     ("Site",
         ("sites.Site",
          "redirects.Redirect",
-         "conf.Setting")
+         "conf.Setting",
+         )
      ),
     ("Users",
         ("auth.User",
-         "auth.Group",)
+         "auth.Group",
+         )
      ),
 )
 
@@ -286,6 +294,7 @@ INSTALLED_APPS = (
 
     "core",
     "communities",
+    "documents",
 
     "django.contrib.admin",
     "django.contrib.auth",
