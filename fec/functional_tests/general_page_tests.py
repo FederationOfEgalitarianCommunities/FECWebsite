@@ -1,6 +1,5 @@
 """This module contains functional tests applicable for every Page."""
 from mezzanine.pages.models import Link
-from selenium.common.exceptions import NoSuchElementException
 
 from core.utils import SeleniumTestCase
 
@@ -71,4 +70,4 @@ class GeneralPageTests(SeleniumTestCase):
     def test_footer_copyright_exists(self):
         """The copyright notice in the footer should be correct."""
         footer = self.selenium.find_element_by_tag_name("footer")
-        self.assertIn("Copyright 1999-", footer.text)
+        self.assertIn(u"1999 \u2013 2014", footer.text)
