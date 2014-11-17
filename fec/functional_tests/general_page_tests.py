@@ -1,6 +1,8 @@
 """This module contains functional tests applicable for every Page."""
 from mezzanine.pages.models import Link
+from selenium.webdriver.common.keys import Keys
 
+from communities.models import Community
 from core.utils import SeleniumTestCase
 
 
@@ -71,3 +73,31 @@ class GeneralPageTests(SeleniumTestCase):
         """The copyright notice in the footer should be correct."""
         footer = self.selenium.find_element_by_tag_name("footer")
         self.assertIn(u"1999 \u2013 2014", footer.text)
+
+
+class SearchResultsPageTests(SeleniumTestCase):
+    """Test General Expectations for the Search Results Page."""
+    def setUp(self):
+        """Create a Community and visit the home page."""
+        Community.objects.create(title="sentry")
+        self.selenium.get(self.live_server_url + '/')
+
+    def test_empty_results_doesnt_contain_search_type(self):
+        """The search type should not be displayed when no results exist."""
+        query_box = self.selenium.find_element_by_css_selector(
+            'input[name="q"]')
+        query_box.send_keys("no result")
+        query_box.send_keys(Keys.RETURN)
+
+        content = self.selenium.find_element_by_css_selector(".middle p")
+        self.assertNotIn("Everything", content.text)
+
+    def test_results_dont_contain_search_type(self):
+        """The search type should not be displayed when results exist."""
+        query_box = self.selenium.find_element_by_css_selector(
+            'input[name="q"]')
+        query_box.send_keys("sentry")
+        query_box.send_keys(Keys.RETURN)
+
+        content = self.selenium.find_element_by_css_selector(".middle p")
+        self.assertNotIn("Everything", content.text)
