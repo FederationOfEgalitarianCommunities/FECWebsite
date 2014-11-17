@@ -29,7 +29,7 @@ class SeleniumTestCase(LiveServerTestCase):
         cls.selenium = webdriver.Remote(
             command_executor="http://127.0.0.1:4444/wd/hub",
             desired_capabilities=DesiredCapabilities.CHROME)
-        cls.selenium.implicitly_wait(3)
+        cls.selenium.implicitly_wait(1)
         super(SeleniumTestCase, cls).setUpClass()
 
     @classmethod
