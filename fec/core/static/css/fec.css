@@ -30,6 +30,11 @@ h2#member-communities {
 }
 
 /* Community Details Customizations */
+/* Center the Profile Image (for small screens) */
+#community-detail-profile-image img {
+  margin-left: auto;
+  margin-right: auto;
+}
 /* Remove Bottom Margin from Description List Address */
 dd.address address, dd.address address p {
   margin-bottom: 0;
