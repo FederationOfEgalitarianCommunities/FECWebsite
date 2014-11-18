@@ -81,16 +81,17 @@
         </h3>
         <p>{{ blog_post.description|richtext_filters|safe }}</p>
         <div class="pull-left">
-          <a href="{{ blog_post.comments }}" target="_blank">
-            <button class="btn btn-link btn-xs">
-              {% if blog_post.slash_comments %}
-                {{ blog_post.slash_comments }} Comment{{ blog_post.slash_comments|pluralize }}</button></a>
-              {% else %}
-                Comments</button></a>
-              {% endif %}
-            </button></a>
-          <a href="{{ blog_post.link }}" target="_blank">
-            <button class="btn btn-link btn-xs">Read More</button></a>
+          <a href="{{ blog_post.comments }}" target="_blank"><button class="btn btn-link btn-xs">
+            {% if blog_post.slash_comments %}
+              {{ blog_post.slash_comments }} Comment{{ blog_post.slash_comments|pluralize }}
+            {% else %}
+              Comments
+            {% endif %}
+            <small><span class="glyphicon glyphicon-comment"></span></small>
+          </button></a>
+          <a href="{{ blog_post.link }}" target="_blank"><button class="btn btn-link btn-xs">
+            Read More <small><span class="glyphicon glyphicon-new-window"></span></small>
+          </button></a>
         </div>
       </div>
       {% endif %}
