@@ -42,9 +42,11 @@
     {% endeditable %}
   {% endif %}
   </div>
-  <!-- Profile Picture -->
+
+
   <div class="col-sm-6 col-md-6 col-xl-8">
     <div class="row">
+      <!-- Profile Picture -->
       <div class="col-xs-12" id="community-detail-profile-image">
         {% if community.profile_image %}
           {% editable community.profile_image %}
@@ -52,8 +54,10 @@
           {% endeditable %}
         {% endif %}
       </div>
+
+
+      <!-- Description List -->
       <div class="col-xs-12 community-description-list">
-        <!-- Description List -->
         {% editable community.email community.website community.phone community.year_founded community.number_of_adults community.number_of_children %}
         {% community_info_description_list community %}
         {% endeditable %}
@@ -61,6 +65,53 @@
     </div>
   </div>
 </div>
+
+
+<!-- Systems & Structures Documents -->
+{% with community.documents.all as documents %}
+{% if documents.exists %}
+  <h2>Documents</h2>
+  <div class="row" id="community-documents">
+    <div class="col-sm-12">
+      <table class="table table-condensed table-striped header-fixed">
+        <thead>
+          <th>Name</th>
+          <th>Category</th>
+        </thead>
+        <tbody>
+          {% for document in documents|dictsort:"title" %}
+            <tr>
+              <td><a href="{{ document.get_absolute_url }}">
+                {{ document.title }}
+              </a></td>
+              <td>{{ document.category }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endif %}
+{% endwith %}
+
+
+<!-- Gallery -->
+{% with community.images.all as images %}
+{% if images %}
+  <h2>Gallery</h2>
+  <div class="row gallery">
+  {% for image in images %}
+    <div class="col-xs-4 col-sm-3">
+    <a class="thumbnail" rel="#image-{{ image.id }}" 
+       title="{{ image.description }}" href="{{ image.file.url }}">
+      <img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail image.file 131 75 %}" />
+    </a>
+    </div>
+  {% endfor %}
+  </div>
+{% endif %}
+{% endwith %}
+
 
 <!-- Blog Posts -->
 {# Each blog post should be an ``entry`` returned by ``feedparser``. #}
@@ -100,51 +151,6 @@
 {% endif %}
 {% endwith %}
 {% endcache %}
-
-
-<!-- Gallery -->
-{% with community.images.all as images %}
-{% if images %}
-  <h2>Gallery</h2>
-  <div class="row gallery">
-  {% for image in images %}
-    <div class="col-xs-4 col-sm-3">
-    <a class="thumbnail" rel="#image-{{ image.id }}" title="{{ image.description }}" href="{{ image.file.url }}">
-      <img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail image.file 131 75 %}" />
-    </a>
-    </div>
-  {% endfor %}
-  </div>
-{% endif %}
-{% endwith %}
-
-
-<!-- Systems & Structures Documents -->
-{% with community.documents.all as documents %}
-{% if documents.exists %}
-  <h2>Documents</h2>
-  <div class="row" id="community-documents">
-    <div class="col-sm-12">
-      <table class="table table-condensed table-striped header-fixed">
-        <thead>
-          <th>Name</th>
-          <th>Category</th>
-        </thead>
-        <tbody>
-          {% for document in documents|dictsort:"title" %}
-            <tr>
-              <td><a href="{{ document.get_absolute_url }}">
-                {{ document.title }}
-              </a></td>
-              <td>{{ document.category }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-{% endif %}
-{% endwith %}
 
 {% endblock %}
 
