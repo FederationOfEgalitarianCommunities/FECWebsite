@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
-{% load pages_tags mezzanine_tags i18n future staticfiles %}
+{% load communities_tags pages_tags mezzanine_tags i18n future staticfiles cache %}
 
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -19,15 +19,10 @@
 <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
 <link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
 <link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
+<link rel="stylesheet" href="{% static "mezzanine/css/magnific-popup.css" %}">
 {% if LANGUAGE_BIDI %}
 <link rel="stylesheet" href="{% static "css/rtl.css" %}">
 {% endif %}
-{% ifinstalled cartridge.shop %}
-<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
-{% if LANGUAGE_BIDI %}
-<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
-{% endif %}
-{% endifinstalled %}
 <link rel="stylesheet" href="{% static "css/fec.css" %}">
 {% block extra_css %}{% endblock %}
 {% endcompress %}
@@ -36,6 +31,22 @@
 <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
 <script src="{% static "js/bootstrap.js" %}"></script>
 <script src="{% static "js/bootstrap-extras.js" %}"></script>
+<!-- Footer Lightboxes -->
+<script src="{% static "mezzanine/js/magnific-popup.js" %}"></script>
+<script>
+$(document).ready(function() {
+    /* Simple Lightbox for the Profile Image */
+    $('.profile-image').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+      });
+    $('#footer-random-photo').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+      });
+
+});
+</script>
 {% block extra_js %}{% endblock %}
 {% endcompress %}
 
@@ -109,19 +120,82 @@
 </div>
 </div>
 
+
+<!-- Footer -->
 <footer>
 <div class="container">
-{% page_menu "pages/menus/footer.html" %}
+<div class="row site-info">
+  <!-- Community Spotlight -->
+  {% nevercache %}
+  {% cache 86400 community_spotlight %}
+  {% community_random as random_community %}
+  {% if random_community %}
+    <div class="col-sm-4" id="footer-community-spotlight">
+      <div class="media">
+        {% if random_community.profile_image %}
+          <div class="pull-left">
+            {% community_profile_picture_thumbnail random_community 85 85 %}
+          </div>
+        {% endif %}
+          <h4 class="media-heading" id="spotlight-community-name">
+            <a href="{{ random_community.get_absolute_url }}">
+              {{ random_community.title }}
+            </a>
+          </h4>
+          {% if random_community.number_of_adults > 0 or random_community.number_of_children > 0 or random_community.general_location %}
+            <em>{% community_population_and_location random_community %}</em>
+          {% endif %}
+          <p>{{ random_community.full_description|striptags|truncatewords:35 }}</p>
+      </div>
+    </div>
+  {% endif %}
+  {% endcache %}
+  {% endnevercache %}
 
-<div class="row">
-<p class="site-info text-center">
-    <span class="glyphicon glyphicon-copyright-mark"></span>
-    <strong>FEC 1999 &ndash; 2014</strong>
-    {% ifinstalled mezzanine.mobile %}
-    <span class="separator">|</span>
-    <a href="{% url "set_device" "mobile" %}?next={{ request.path }}">{% trans "View Mobile Site" %}</a>
-    {% endifinstalled %}
-</p>
+  <!-- Photos of Us -->
+  {% nevercache %}
+  {% community_random_image as random_image %}
+  {% if random_image %}
+    <div class="col-sm-4 text-center">
+        <a rel="#image-{{ random_image.id }}" title="{{ random_image.description }}"
+           href="{{ random_image.file.url }}" id="footer-random-photo">
+          <img class="img-responsive image-center" id="#image-{{ random_image.id}}"
+               src="{{ MEDIA_URL }}{% thumbnail random_image.file 360 215 %}" />
+        </a>
+        <div>
+          <small><em>
+              Posted by
+              <a href="{{ random_image.community.get_absolute_url }}">
+                {{ random_image.community.title }}
+              </a>
+          </em></small>
+        </div>
+    </div>
+  {% endif %}
+  {% endnevercache %}
+
+  <!-- Copyright & Contact -->
+  <div class="col-sm-4 text-center">
+    <p>Please visit our sister organization, the Fellowship for Intentional Community
+      <br />
+      <a href="http://www.ic.org/" target="_blank" id="fic-link">
+        <img class="image-center" src="{% static "img/fic_logo.png" %}"
+             alt="The Fellowship for Intentional Community Website" />
+      </a>
+    </p>
+    <div>
+      <span class="glyphicon glyphicon-copyright-mark"></span> 1999&ndash;2014
+      <br />
+      <a href="mailto:webmaster@thefec.org?subject=FEC%20Website%20Bug%20Report">Report a Bug</a>
+      <br />
+      <a href="mailto:secretary@thefec.org?subject=FEC%20Website%20Contact">Contact Us</a>
+      <br />
+      <a href="{% url "blog_post_feed" format="rss" %}">
+        <img class="image-center" src="{% static "img/rss_icon.png" %}"
+             alt="The FEC RSS Feed" />
+      </a>
+    </div>
+  </div>
 </div>
 </div>
 </footer>

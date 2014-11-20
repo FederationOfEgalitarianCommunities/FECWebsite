@@ -6,6 +6,22 @@
   text-align: justify;
 }
 
+/* Center an Image */
+.image-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+/* Footer */
+
+
+/* Remove Bottom Margin from Community Spotlight Profile Image */
+div#footer-community-spotlight img {
+  margin-bottom: 0px;
+}
+
 
 
 /* Communities */
@@ -52,7 +68,7 @@ div.community-description-list dl {
  * http://stackoverflow.com/a/22855568/1998376
  */
 .header-fixed {
-    width: 100%
+  width: 100%
 }
 .header-fixed > thead,
 .header-fixed > tbody,
@@ -60,23 +76,23 @@ div.community-description-list dl {
 .header-fixed > tbody > tr,
 .header-fixed > thead > tr > th,
 .header-fixed > tbody > tr > td {
-    display: block;
+   display: block;
 }
 .header-fixed > tbody > tr:after,
 .header-fixed > thead > tr:after {
-    content: ' ';
-    display: block;
-    visibility: hidden;
-    clear: both;
+  content: ' ';
+  display: block;
+  visibility: hidden;
+  clear: both;
 }
 .header-fixed > tbody {
-    overflow-y: auto;
-    height: 150px;
+  overflow-y: auto;
+  height: 150px;
 }
 .header-fixed > tbody > tr > td,
 .header-fixed > thead > tr > th {
-    width: 50%;
-    float: left;
+  width: 50%;
+  float: left;
 }
 
 

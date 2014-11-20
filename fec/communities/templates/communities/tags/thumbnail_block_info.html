@@ -1,4 +1,4 @@
-{% load mezzanine_tags %}
+{% load mezzanine_tags communities_tags %}
 
 {% comment %}
   A template for the `community_info_thumbnail_block` inclusion tag.
@@ -25,20 +25,7 @@
   </h4>
   {% if community.number_of_adults > 0 or community.number_of_children > 0 or community.general_location %}
     <h5><em>
-      {% if community.number_of_adults > 0 or community.number_of_children > 0 %}
-        <span class="population">
-          {% if community.number_of_adults > 0 %}
-            {{ community.number_of_adults }} Adult{{ community.number_of_adults|pluralize }}
-          {% endif %}
-          {% if community.number_of_children > 0 %}
-            {% if community.number_of_adults > 0 %} and {% endif %}
-            {{ community.number_of_children }} Child{{ community.number_of_children|pluralize:"ren" }}
-          {% endif %}
-        </span>
-      {% endif %}
-      {% if community.general_location %}
-        in <span class="location">{{ community.general_location }}</span>
-      {% endif %}
+      {% community_population_and_location community %}
     </em></h5>
   {% endif %}
   {% if community.short_description %}

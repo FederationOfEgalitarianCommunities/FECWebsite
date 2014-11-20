@@ -2,25 +2,21 @@
 from django import template
 from django.conf import settings
 
+from communities.models import Community, CommunityImage
+
 
 register = template.Library()
 
 
-@register.inclusion_tag('communities/tags/thumbnail_block_info.html')
-def community_info_thumbnail_block(community):
-    """Render information about the community in a thumbnail and caption.
+@register.inclusion_tag('communities/tags/population_and_location_text.html')
+def community_population_and_location(community):
+    """Render information about the community's population and location.
 
-    Includes the :attr:`~..models.Community.title`,
-    :attr:`~..models.Community.year_founded`, ``population``,
-    :attr:`~..models.Community.general_location` and
-    :attr:`~..models.Community.short_description`.
-
-    :param community: The Community whose profile picture should be shown.
+    :param community: The Community to use
     :type community: :class:`..models.Community`
 
     """
-    return {'community': community,
-            'MEDIA_URL': settings.MEDIA_URL}
+    return {'community': community}
 
 
 @register.inclusion_tag('communities/tags/description_list_info.html')
@@ -55,3 +51,17 @@ def community_profile_picture_thumbnail(community, width, height):
             'width': width,
             'height': height,
             'MEDIA_URL': settings.MEDIA_URL}
+
+
+@register.assignment_tag
+def community_random_image():
+    """Return a random Communityimage."""
+    images = CommunityImage.objects.order_by('?')
+    return images[0] if images else None
+
+
+@register.assignment_tag
+def community_random():
+    """Return a random Community."""
+    communities = Community.objects.order_by('?')
+    return communities[0] if communities else None

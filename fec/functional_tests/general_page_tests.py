@@ -1,8 +1,9 @@
 """This module contains functional tests applicable for every Page."""
+from mezzanine.core.templatetags.mezzanine_tags import thumbnail
 from mezzanine.pages.models import Link
 from selenium.webdriver.common.keys import Keys
 
-from communities.models import Community
+from communities.models import Community, CommunityImage
 from core.utils import SeleniumTestCase
 
 
@@ -10,7 +11,7 @@ class GeneralPageTests(SeleniumTestCase):
     """Test General Expectations for Every Page."""
     def setUp(self):
         """Create a page and visit the home page."""
-        Link.objects.create(title="Blog", in_menus=[1, 2, 3])
+        Link.objects.create(title="Blog", in_menus=[1, 2])
         self.selenium.get(self.live_server_url + '/')
 
     def test_title_contains_fec_full_name(self):
@@ -63,16 +64,52 @@ class GeneralPageTests(SeleniumTestCase):
         self.assertEqual(len(main_content), 1,
                          "The middle content is not the correct column size.")
 
+
+class FooterTests(SeleniumTestCase):
+    """Test Expectations for the Page Footer."""
+    def setUp(self):
+        """Create a page & community and visit the home page."""
+        Link.objects.create(title="Blog", in_menus=[1, 2])
+        self.darmok = Community.objects.create(
+            title="Darmok", number_of_adults=4, number_of_children=20,
+            full_description="This is the description.")
+        self.darmok_gallery_image = CommunityImage.objects.create(
+            community=self.darmok, file="Test")
+        self.selenium.get(self.live_server_url + '/')
+
     def test_default_footer_content_is_removed(self):
         """The default footer content should be removed."""
         footer = self.selenium.find_element_by_tag_name("footer")
         self.assertNotIn("Powered by Mezzanine and Django", footer.text)
         self.assertNotIn("Theme by Bootstrap", footer.text)
 
+    def test_community_spotlight_information_is_correct(self):
+        """The Community Spotlight should contain the correct information."""
+        spotlight = self.selenium.find_element_by_css_selector(
+            '#footer-community-spotlight')
+        self.assertIn(self.darmok.title, spotlight.text)
+        self.assertIn(str(self.darmok.number_of_adults), spotlight.text)
+        self.assertIn(str(self.darmok.number_of_children), spotlight.text)
+        self.assertIn(self.darmok.full_description, spotlight.text)
+
+    def test_random_community_photo_exists(self):
+        """A random Community's Gallery Image should be shown."""
+        image = self.selenium.find_element_by_css_selector(
+            "#footer-random-photo img")
+        thumbnail_url = thumbnail(self.darmok_gallery_image, 360, 215)
+        self.assertEqual(self.live_server_url + '/static/media/' +
+                         thumbnail_url,
+                         image.get_attribute("src"))
+
+    def test_fic_link_exists(self):
+        """A link to the FIC website should exist."""
+        fic_link = self.selenium.find_element_by_css_selector("#fic-link")
+        self.assertEqual("http://www.ic.org/", fic_link.get_attribute("href"))
+
     def test_footer_copyright_exists(self):
-        """The copyright notice in the footer should be correct."""
+        """The copyright notice should be correct."""
         footer = self.selenium.find_element_by_tag_name("footer")
-        self.assertIn(u"1999 \u2013 2014", footer.text)
+        self.assertIn(u"1999\u20132014", footer.text)
 
 
 class SearchResultsPageTests(SeleniumTestCase):
