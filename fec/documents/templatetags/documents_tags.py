@@ -1,5 +1,8 @@
 """This module contains template includes associated with Documents."""
 from django import template
+from django.db.models import Count
+
+from ..models import Document, DocumentCategory
 
 
 register = template.Library()
@@ -27,3 +30,16 @@ def category_breadcrumbs(category, is_active=False):
 
     """
     return {'category': category, 'is_active': is_active}
+
+
+@register.assignment_tag
+def documents_newest():
+    """Return the 5 newest Documents."""
+    return Document.objects.all().order_by('-created')[:3]
+
+
+@register.assignment_tag
+def categories_top():
+    """Return the 5 DocumentCategories with the highest number of documents."""
+    return DocumentCategory.objects.annotate(
+        document_count=Count('document')).order_by('-document_count')[:5]

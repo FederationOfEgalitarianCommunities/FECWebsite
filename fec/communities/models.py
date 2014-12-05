@@ -145,6 +145,9 @@ class Community(Displayable):
         What exactly consitutes a ``blog_post`` is defined by the
         :func:`CommunityFeed.get_blog_posts` function.
 
+        A `community` attribute is added to each post containing the parent
+        :class:`Community`.
+
         :returns: A list of ``blog post`` dictionaries.
 
         """
@@ -152,6 +155,7 @@ class Community(Displayable):
         blog_posts = []
         _ = [blog_posts.append(post) for feed in feeds
              for post in feed.get_blog_posts()]
+        _ = [setattr(post, "community", self) for post in blog_posts]
         blog_posts.sort(key=lambda x: x.published, reverse=True)
         return blog_posts[:5]
 

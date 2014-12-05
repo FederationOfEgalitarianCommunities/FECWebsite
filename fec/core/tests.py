@@ -40,6 +40,7 @@ class Pep8Tests(TestCase):
             'communities/views.py',
             'communities/urls.py',
             'communities/templatetags/communities_tags.py',
+            'communities/templatetags/communities_tags_extras.py',
             'communities/tests.py',
         ])
 
@@ -54,6 +55,7 @@ class Pep8Tests(TestCase):
             'documents/views.py',
             'documents/urls.py',
             'documents/templatetags/documents_tags.py',
+            'documents/templatetags/documents_tags_extras.py',
         ])
 
         self.assertEqual(result.total_errors, 0,

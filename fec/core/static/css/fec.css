@@ -28,8 +28,8 @@ div#footer-community-spotlight img {
 
 
 /* Community Listings Customizations */
-/* Remove Top Margin for Alignment w/ Top of Sidebar */
-h2#member-communities {
+/* Remove Top Margins for Alignment w/ Top of Sidebar */
+h2#member-communities, h3#all-latest-blog-posts-sidebar {
   margin-top: 0;
 }
 /* Remove Top Margin to Reduce Space Between Image Thumbnail and Header */
@@ -109,9 +109,19 @@ div#children .panel ul.list-group {
 div#children .panel ul.list-group li {
   border-width: 1px 0 0 0;
 }
+/* Remove the Top Margin from the First Sidebar Header */
+h3#newest-documents-sidebar-header {
+  margin-top: 0;
+}
 
 /* Root Document Listing Customizations */
 /* Remove the Bottom Border from the Root Category Tabs */
 ul#root-category-tabs {
   border-bottom-width: 0;
+}
+
+/* Document Detail Customizations */
+/* Remove the Top Margin from the First Sidebar Header */
+h3#related-documents-sidebar-header {
+  margin-top: 0;
 }

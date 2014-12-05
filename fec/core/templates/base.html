@@ -107,15 +107,15 @@ $(document).ready(function() {
 <div class="container">
 <div class="row">
 
-<div class="col-md-2 left">
-    {% block left_panel %}
-    <div class="panel panel-default tree">{% page_menu "pages/menus/tree.html" %}</div>
+<div class="col-xs-12 col-md-9 middle">
+    {% block main %}{% endblock %}
+</div>
+
+<div class="hidden-xs hidden-sm col-md-3 right">
+    {% block right_panel %}
     {% endblock %}
 </div>
 
-<div class="col-md-10 middle">
-    {% block main %}{% endblock %}
-</div>
 
 </div>
 </div>
@@ -157,19 +157,19 @@ $(document).ready(function() {
   {% community_random_image as random_image %}
   {% if random_image %}
     <div class="col-sm-4 text-center">
-        <a rel="#image-{{ random_image.id }}" title="{{ random_image.description }}"
-           href="{{ random_image.file.url }}" id="footer-random-photo">
-          <img class="img-responsive image-center" id="#image-{{ random_image.id}}"
-               src="{{ MEDIA_URL }}{% thumbnail random_image.file 360 215 %}" />
-        </a>
-        <div>
-          <small><em>
-              Posted by
-              <a href="{{ random_image.community.get_absolute_url }}">
-                {{ random_image.community.title }}
-              </a>
-          </em></small>
-        </div>
+      <a rel="#image-{{ random_image.id }}" title="{{ random_image.description }}"
+         href="{{ random_image.file.url }}" id="footer-random-photo">
+        <img class="img-responsive image-center" id="#image-{{ random_image.id}}"
+             src="{{ MEDIA_URL }}{% thumbnail random_image.file 360 215 %}" />
+      </a>
+      <div>
+        <small><em>
+          Posted by
+          <a href="{{ random_image.community.get_absolute_url }}">
+            {{ random_image.community.title }}
+          </a>
+        </em></small>
+      </div>
     </div>
   {% endif %}
   {% endnevercache %}

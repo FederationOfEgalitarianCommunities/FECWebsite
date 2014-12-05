@@ -1,6 +1,9 @@
 """This module contains data models related to Documents."""
+import random
+
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import Q
 from mezzanine.core.fields import RichTextField
 from mezzanine.core.models import Displayable, Slugged, Orderable
 from mezzanine.utils.urls import admin_url
@@ -55,6 +58,17 @@ class Document(Displayable):
     def get_absolute_url(self):
         """Return the detail page of the Document."""
         return reverse('document_detail', kwargs={'slug': self.slug})
+
+    def related_documents(self):
+        """Return 5 random Documents with the same category or tag."""
+        keywords = self.keywords.all()
+        documents = set(
+            Document.objects.filter((Q(keywords__keyword__in=keywords) |
+                                     Q(category=self.category)) &
+                                    ~Q(id=self.id))
+        )
+        sample_size = 5 if len(documents) > 5 else len(documents)
+        return random.sample(documents, sample_size)
 
 
 class DocumentCategory(Orderable, Slugged):

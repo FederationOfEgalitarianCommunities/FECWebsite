@@ -65,3 +65,26 @@ def community_random():
     """Return a random Community."""
     communities = Community.objects.order_by('?')
     return communities[0] if communities else None
+
+
+@register.assignment_tag
+def community_all_latest_blog_posts(limit=5):
+    """Return the latest Blog Posts of all the Communities."""
+    communities = Community.objects.all()
+    posts = []
+    _ = [posts.extend(community.get_latest_blog_posts()) for community in
+         communities]
+    posts.sort(key=lambda post: post.published, reverse=True)
+    return posts
+
+
+@register.assignment_tag
+def community_fec_members():
+    """Return a list of all FEC member communities."""
+    return Community.objects.filter(is_community_in_dialog=False)
+
+
+@register.assignment_tag
+def community_communities_in_dialog():
+    """Return a list of all FEC Communities in dialog"""
+    return Community.objects.filter(is_community_in_dialog=True)

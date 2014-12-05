@@ -96,7 +96,6 @@ ADMIN_MENU_ORDER = (
 
 PAGE_MENU_TEMPLATES = (
     (1, "Top navigation bar", "pages/menus/dropdown.html"),
-    (2, "Left-hand tree", "pages/menus/tree.html"),
 )
 
 # A sequence of fields that will be injected into Mezzanine's (or any

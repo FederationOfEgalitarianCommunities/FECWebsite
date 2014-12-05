@@ -45,3 +45,37 @@
 </div>
 
 {% endblock %}
+
+
+{% block right_panel %}
+  <!-- Related Documents -->
+  {% with document.related_documents as related_documents %}
+    {% if related_documents %}
+      <h3 class="text-center" id="related-documents-sidebar-header">
+        Related Documents
+      </h3>
+      <ul class="list-group">
+        {% for related_document in related_documents %}
+          <li class="list-group-item">
+            <a href="{{ related_document.get_absolute_url }}">
+              {{ related_document.title }}
+            </a>
+            <small>
+              in
+              <a href="{{ related_document.category.get_absolute_url }}">
+                {{ related_document.category.title }}
+              </a>
+            </small>
+          </li>
+
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <!-- Top Categories -->
+  {% include "documents/includes/top_categories_list_group.html" %}
+
+  <!-- Tag Cloud -->
+  {% include "documents/includes/tag_cloud.html" %}
+{% endblock %}

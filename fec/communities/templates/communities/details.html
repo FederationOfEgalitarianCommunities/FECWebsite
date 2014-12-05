@@ -64,6 +64,7 @@
 <!-- Systems & Structures Documents -->
 {% with community.documents.all as documents %}
 {% if documents.exists %}
+  <a id="documents"></a>
   <h2>Documents</h2>
   <div class="row" id="community-documents">
     <div class="col-sm-12">
@@ -92,6 +93,7 @@
 <!-- Gallery -->
 {% with community.images.all as images %}
 {% if images %}
+  <a id="gallery"></a>
   <h2>Gallery</h2>
   <div class="row gallery">
   {% for image in images %}
@@ -112,6 +114,7 @@
 {% cache 86400 blog_posts community.slug %}
 {% with community.get_latest_blog_posts as blog_posts %}
 {% if blog_posts %}
+  <a id="latest-updates"></a>
   <h2 class="community-latest-updates">Latest Updates</h2>
   <div class="row community-blog-posts">
     {% for blog_post in blog_posts %}
@@ -145,6 +148,54 @@
 {% endif %}
 {% endwith %}
 {% endcache %}
+
+{% endblock %}
+
+
+{% block right_panel %}
+
+<!-- Anchor Links -->
+<ul class="nav nav-stacked text-center">
+  {% if community.documents.exists %}
+    <li role="presentation"><a href="#documents">Documents</a><li>
+  {% endif %}
+  {% if community.images.exists %}
+    <li role="presentation"><a href="#gallery">Gallery</a><li>
+  {% endif %}
+  {% if community.feeds %}
+    <li role="presentation"><a href="#latest-updates">Latest Updates</a><li>
+  {% endif %}
+</ul>
+
+<!-- Member Communities -->
+<h4 class="text-center">Member Communities</h4>
+{% community_fec_members as fec_communities %}
+<ul class="list-group">
+  {% for community in fec_communities %}
+    <li class="list-group-item text-center">
+      <a href="{{ community.get_absolute_url }}">
+        {{ community.title }}
+      </a>
+      <br />
+      <small><em>{% community_population_and_location community %}</em></small>
+    </li>
+  {% endfor %}
+</ul>
+
+<!-- Communities in Dialog -->
+{% community_communities_in_dialog as in_dialog_communities %}
+{% if in_dialog_communities %}
+  <h4 class="text-center">Communities in Dialogue</h4>
+  <ul class="list-group">
+    {% for community in in_dialog_communities %}
+      <li class="list-group-item text-center">
+        <a href="{{ community.get_absolute_url }}">
+          {{ community.title }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
 
 {% endblock %}
 

@@ -49,18 +49,21 @@ class GeneralPageTests(SeleniumTestCase):
             "ul.nav li#dropdown-menu-home")
 
     def test_home_link_in_left_sidebar_is_removed(self):
-        """The Home link in the left sidebar should be removed."""
+        """The Home link in the sidebar should be removed."""
         self.assertElementDoesNotExist(
             self.selenium.find_element_by_css_selector,
             "ul.nav li#tree-menu-home")
 
-    def test_right_sidebar_is_removed(self):
-        """The right sidebar should be removed and main content expanded."""
+    def test_left_sidebar_is_removed(self):
+        """The left sidebar should be removed."""
         self.assertElementDoesNotExist(
             self.selenium.find_element_by_css_selector,
-            "div.container div.row div.col-md-3.right")
+            "div.container div.row div.col-md-2.left")
+
+    def test_main_content_is_correct_size(self):
+        """The main content should be the correct size."""
         main_content = self.selenium.find_elements_by_css_selector(
-            "div.container div.row div.col-md-10.middle")
+            "div.container div.row div.col-md-9.middle")
         self.assertEqual(len(main_content), 1,
                          "The middle content is not the correct column size.")
 

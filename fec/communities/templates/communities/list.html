@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load communities_tags communities_tags_extras mezzanine_tags staticfiles %}
+{% load communities_tags communities_tags_extras mezzanine_tags staticfiles cache %}
 
 {% comment %}
   A `community_list` variable is expected. A `page` variable will be
@@ -55,6 +55,29 @@
   </div>
 {% endif %}
 
+{% endblock %}
+
+
+{% block right_panel %}
+
+<!-- Latest Blog Posts Widget -->
+{% nevercache %}
+{% cache 86400 all_latest_blog_posts_widget %}
+{% community_all_latest_blog_posts as blog_posts %}
+  <h3 id="all-latest-blog-posts-sidebar">Latest Blog Posts</h3>
+  <ul class="list-group">
+    {% for post in blog_posts %}
+      <li class="list-group-item">
+        <a href="{{ post.link }}" target="_blank">{{ post.title }}</a> by
+        {{ post.author }} from
+        <a href="{{ post.community.get_absolute_url }}">{{ post.community.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endcache %}
+{% endnevercache %}
+
+{{ block.super }}
 {% endblock %}
 
 

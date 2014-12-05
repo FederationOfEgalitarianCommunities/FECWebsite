@@ -1,0 +1,29 @@
+{% comment %}
+  Display the Newest Documents and Top Categories
+{% endcomment %}
+
+{% load documents_tags %}
+
+
+<!-- Newest Documents Widget -->
+<h3 class="text-center" id="newest-documents-sidebar-header">Newest Documents</h3>
+<ul class="list-group">
+  {% documents_newest as newest_documents %}
+  {% for document in newest_documents %}
+    <li class="list-group-item">
+      <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
+      <small>
+        by
+        <a href="{{ document.community.get_absolute_url }}">{{ document.community }}</a>
+        in
+        <a href="{{ document.category.get_absolute_url }}">{{ document.category.title }}</a>
+      </small>
+    </li>
+  {% endfor %}
+</ul>
+
+<!-- Top Categories -->
+{% include "documents/includes/top_categories_list_group.html" %}
+
+<!-- Tag Cloud -->
+{% include "documents/includes/tag_cloud.html" %}

@@ -1,0 +1,19 @@
+{% comment %}
+  Display the Top Document Categories
+{% endcomment %}
+
+{% load documents_tags %}
+
+
+<h3 class="text-center">Top Categories</h3>
+<ul class="list-group">
+{% categories_top as top_categories %}
+  {% for top_category in top_categories %}
+    <li class="list-group-item">
+      <a href="{{ top_category.get_absolute_url }}">{{ top_category.title }}</a>
+      <small>
+        ({{ top_category.document_count }} Document{{ top_category.document_count|pluralize }})
+      </small>
+    </li>
+  {% endfor %}
+</ul>
