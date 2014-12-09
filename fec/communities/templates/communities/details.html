@@ -111,6 +111,7 @@
 
 <!-- Blog Posts -->
 {# Each blog post should be an ``entry`` returned by ``feedparser``. #}
+{% nevercache %}
 {% cache 86400 blog_posts community.slug %}
 {% with community.get_latest_blog_posts as blog_posts %}
 {% if blog_posts %}
@@ -148,6 +149,7 @@
 {% endif %}
 {% endwith %}
 {% endcache %}
+{% endnevercache %}
 
 {% endblock %}
 
