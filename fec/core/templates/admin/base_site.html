@@ -1,3 +1,12 @@
 {% overextends "admin/base_site.html" %}
 
+{% load staticfiles %}
+
+
+{% block extrahead %}
+  {{ block.super }}
+  <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+{% endblock %}
+
+
 {% block title %}{{ title }} | FEC Admin{% endblock %}
