@@ -12,6 +12,60 @@
   margin-right: auto;
 }
 
+/* Allows Setting Child Height to 100% Without Specifying Parent Height */
+html, body {
+  height: 100%;
+}
+
+
+
+/* Site Header */
+
+/* Bring the Header Closer to the Top of the Page */
+body {
+  padding-top: 25px;
+}
+
+/* Add Some Breathing Room to the Bottom of the Site Header */
+div#site-header {
+  margin-bottom: 10px;
+}
+
+/* Remove the Top Spacing for the Tag Line */
+span#site-tagline {
+  margin-top: 0;
+  padding-top: 5px;
+}
+
+/* Emphasize the Site Title */
+div#site-header .h1 {
+  font-weight: 800;
+}
+
+/* Vertical Align the Site Title on Small+ Screens */
+div#site-header #site-title .h1 {
+  height: 120px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/* Reduce the Spacing Around the Site Title on Extra-Small Screens */
+div#site-header .visible-xs .h1 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+/* Align the Search Box with the Bottom of the Header */
+#site-tagline-search {
+  position: relative;
+  height: 120px;
+}
+form#site-search input {
+  position: absolute;
+  bottom: 5px;
+  left: -20px;
+}
+
 
 
 /* Footer */

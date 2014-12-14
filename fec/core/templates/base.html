@@ -16,9 +16,8 @@
 {% endifinstalled %}
 
 {% compress css %}
-<link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+<link rel="stylesheet" type="text/less" href="{% static "less/fec.less" %}">
 <link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
-<link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
 <link rel="stylesheet" href="{% static "mezzanine/css/magnific-popup.css" %}">
 {% if LANGUAGE_BIDI %}
 <link rel="stylesheet" href="{% static "css/rtl.css" %}">
@@ -33,18 +32,25 @@
 <script src="{% static "js/bootstrap-extras.js" %}"></script>
 <!-- Footer Lightboxes -->
 <script src="{% static "mezzanine/js/magnific-popup.js" %}"></script>
+<!-- Sticky Navbar -->
+<script src="{% static "js/jquery.sticky.js"%}"></script>
 <script>
 $(document).ready(function() {
-    /* Simple Lightbox for the Profile Image */
+    /* Simple Lightboxs for the Profile & Random Images */
     $('.profile-image').magnificPopup({
-          type: 'image',
-          closeOnContentClick: true,
-      });
+        type: 'image',
+        closeOnContentClick: true,
+    });
     $('#footer-random-photo').magnificPopup({
-          type: 'image',
-          closeOnContentClick: true,
-      });
-
+        type: 'image',
+        closeOnContentClick: true,
+    });
+    /* Make the Navigation Stick to the Top of the Window When Scroll Past */
+    $('#navigation').sticky({
+        topSpacing: 0,
+        getWidthFrom: "#body",
+        responsiveWidth: true,
+    });
 });
 </script>
 {% block extra_js %}{% endblock %}
@@ -60,27 +66,73 @@ $(document).ready(function() {
 
 <body id="{% block body_id %}body{% endblock %}">
 
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-<div class="container">
-<div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+<!-- Site Header -->
+<div class="container" id="site-header">
+  <div class="col-sm-7 col-md-8">
+    <!-- Horizontal Logo + Title -->
+    <div class="hidden-xs media" id="site-logo-title">
+      <a href="/" class="pull-left">
+        <img class="" alt="FEC Logo" src="{% static "img/fec_logo.png" %}"  style="height:120px;"/>
+      </a>
+      <div class="media-body" id="site-title">
+        <div class="media-heading h1">
+          Federation of<br />
+          Egalitarian Communities
+        </div>
+      </div>
+    </div>
+    <!-- Stacked Logo + Title -->
+    <div class="visible-xs">
+      <a href="/">
+        <img class="image-center img-responsive" alt="FEC Logo"
+             src="{% static "img/fec_logo.png" %}"  style="height:75px;" />
+      </a>
+      <div class="h1 text-center">Federation of Egalitarian Communities</div>
+    </div>
+  </div>
+
+  <div class="hidden-xs col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1"
+       id="site-tagline-search">
+    <!-- Tag Line -->
+    <span class="navbar-text pull-right" id="site-tagline">{{ settings.SITE_TAGLINE }}</span>
+    <!-- Search Form -->
+    <form action="{% url "search" %}" class="pull-right"
+          id="site-search" role="search">
+      <div class="form-group">
+        <input placeholder="{% trans "Search" %}" type="text" name="q"
+               value="{{ request.REQUEST.q }}" />
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Nav Bar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation"
+     id="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse"
+              data-target=".navbar-collapse">
         <span class="sr-only">{% trans "Toggle Navigation" %}</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-    </button>
-    {% if settings.SITE_TITLE %}<a class="navbar-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
-    {% if settings.SITE_TAGLINE %}<p class="navbar-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %}
+      </button>
+    </div>
+    <div class="navbar-collapse collapse">
+      {% page_menu "pages/menus/dropdown.html" %}
+      <!-- Search Form -->
+      <div class="visible-xs">
+        {% search_form "all" %}
+      </div>
+    </div>
+  </div>
 </div>
-<div class="navbar-collapse collapse">
-    {% search_form "all" %}
-    {% page_menu "pages/menus/dropdown.html" %}
-</div>
-</div>
-</div>
+
 
 <div class="container">
 
+<!-- Messages -->
 {% nevercache %}
 {% if messages %}
 <div class="messages">
@@ -94,8 +146,12 @@ $(document).ready(function() {
 {% endif %}
 {% endnevercache %}
 
+
+<!-- Page Title -->
 <h1>{% block title %}{% endblock %}</h1>
 
+
+<!-- Breadcrumbs -->
 <ul class="breadcrumb">
 {% spaceless %}
 {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
@@ -103,6 +159,7 @@ $(document).ready(function() {
 </ul>
 
 </div>
+
 
 <div class="container">
 <div class="row">
@@ -115,7 +172,6 @@ $(document).ready(function() {
     {% block right_panel %}
     {% endblock %}
 </div>
-
 
 </div>
 </div>

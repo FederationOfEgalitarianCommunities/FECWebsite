@@ -14,6 +14,13 @@ Create a new virtualenv::
 
     mkvirtualenv fec
 
+Install the ``lessc`` ``LESS`` compiler for your system::
+
+    # Arch Linux
+    pacman -S nodejs-less
+    # Debian
+    apt-get install node-less
+
 Install python dependencies w/ ``pip``::
 
     pip install -r requirements/local.txt

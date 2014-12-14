@@ -19,18 +19,11 @@ class GeneralPageTests(SeleniumTestCase):
         self.assertIn('Federation of Egalitarian Communities',
                       self.selenium.title)
 
-    def test_tagline_is_hidden_on_small_screens(self):
-        """The tagline should not be visible on small screens."""
-        self.selenium.set_window_size(300, 150)
-        tagline = self.selenium.find_element_by_css_selector(
-            "div.navbar-header p.navbar-text")
-        self.assertFalse(tagline.is_displayed(), "The tagline is displayed.")
-
     def test_tagline_is_visible_and_correct_on_large_screens(self):
         """The tagline should be the FEC's slogan."""
         self.selenium.set_window_size(1680, 1050)
         tagline = self.selenium.find_element_by_css_selector(
-            "div.navbar-header p.navbar-text")
+            "#site-tagline")
         self.assertTrue(tagline.is_displayed(),
                         "The tagline is not displayed.")
         self.assertEqual(tagline.text, "A new way of living is possible.",

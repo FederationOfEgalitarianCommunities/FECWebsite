@@ -27,6 +27,11 @@ TEMPLATE_ACCESSIBLE_SETTINGS = (
     'SITE_TAGLINE', 'USE_L10N'
 )
 
+# Compile LESS Files
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+
 
 # Utility Functions
 def get_env_variable(var_name):

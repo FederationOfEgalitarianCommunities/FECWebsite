@@ -1,0 +1,23 @@
+/* Import the Base Bootstrap files */
+@import "bootstrap/bootstrap.less";
+@import "bootstrap/theme.less";
+
+
+/* Variables */
+/* Set Correct Font Path */
+@icon-font-path:                "../../fonts/";
+
+/* Set Small Screen Width to Correct Size for Navbar Breaking */
+@screen-sm:                     812px;
+
+
+/* Customizations */
+/* Center Align the Navbar Links */
+@media (min-width: @screen-sm){
+  .navbar-nav{
+      margin: 0 auto;
+      display: table;
+      table-layout: fixed;
+      float:none;
+  }
+}
