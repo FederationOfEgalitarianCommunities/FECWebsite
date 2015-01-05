@@ -9,14 +9,14 @@ register = template.Library()
 
 
 @register.inclusion_tag('documents/tags/document_list_group.html')
-def document_list_group(documents):
+def document_list_group(documents, show_tags=True):
     """Render the Category's Documents as a Bootstrap list group.
 
     :param documents: The Documents to be shown.
     :type documents: A list of :class:`..models.Document`
 
     """
-    return {'documents': documents}
+    return {'documents': documents, 'show_tags': show_tags}
 
 
 @register.inclusion_tag('documents/tags/category_breadcrumbs.html')

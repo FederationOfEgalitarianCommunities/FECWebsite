@@ -2,7 +2,7 @@
 from django.conf.urls import patterns, url
 
 from .views import (DocumentDetail, DocumentCategoryDetail,
-                    RootDocumentCategoryList)
+                    RootDocumentCategoryList, DocumentTagList)
 
 
 urlpatterns = patterns(
@@ -19,4 +19,9 @@ urlpatterns = patterns(
     url(r'^category/(?P<slug>[-_\w]+)/$',
         DocumentCategoryDetail.as_view(),
         name="document_category_detail"),
+
+    url(r'^tag/(?P<tag>[-_\w\s]+)/$',
+        DocumentTagList.as_view(),
+        name="document_tag_list"),
+
 )

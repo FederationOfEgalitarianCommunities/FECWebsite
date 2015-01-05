@@ -1,0 +1,34 @@
+{% extends "pages/page.html" %}
+{% comment %}
+  Render a list of Documents.
+
+  Expects a `tag` and `documents` variable.
+{% endcomment %}
+
+{% load documents_tags %}
+
+
+{# Title #}
+{% block meta_title %}{{ tag.title }}{% endblock %}
+{% block title %}
+  {{ tag.title }}
+{% endblock %}
+
+
+{# Breadcrumbs #}
+{% block breadcrumb_menu %}
+  {{ block.super }}
+  <li>Tag: {{ tag.title }}</li>
+{% endblock %}
+
+
+{# Documents #}
+{% block main %}
+  {% document_list_group documents show_tags=False %}
+{% endblock %}
+
+
+{# Right Sidebar #}
+{% block right_panel %}
+  {% include "documents/includes/category_sidebar.html" %}
+{% endblock %}

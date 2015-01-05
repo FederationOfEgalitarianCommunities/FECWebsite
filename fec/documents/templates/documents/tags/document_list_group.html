@@ -3,15 +3,27 @@
 
   It expects a `documents` variable in the context.
 {% endcomment %}
+{% load keyword_tags %}
+
 
 <ul class="list-group">
 {% for document in documents %}
   <li class="list-group-item" id="{{ document.slug }}">
+    {# Title #}
     <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
+    {# Community #}
     {% if document.community %}
       <small>from <a href="{{ document.community.get_absolute_url }}">
         {{ document.community.title }}
       </a></small>
+    {% endif %}
+    {# Tags #}
+    {% keywords_for document as keywords %}
+    {% if keywords and show_tags %}
+    <small>
+      ({% for keyword in keywords %}<a
+        href="{% url "document_tag_list" tag=keyword.title %}">{{ keyword.title }}</a>{% if not forloop.last %}, {% endif %}{% endfor %})
+    </small>
     {% endif %}
   </li>
 {% endfor %}

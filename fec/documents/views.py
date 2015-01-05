@@ -64,3 +64,26 @@ class RootDocumentCategoryList(ListView):
         """Return only Categories with no parent."""
         return DocumentCategory.objects.filter(parent=None).select_related(
             'children', 'documents', 'child__documents')
+
+
+class DocumentTagList(ListView):
+    """Shows a listing of :class:`.models.Document <Documents>` for a keyword.
+
+    The keyword should be passed in with the ``tag`` kwarg.
+
+    The default template is ``documents/document_tag_list.html``.
+
+    """
+    context_object_name = 'documents'
+    template_name = 'documents/document_tag_list.html'
+
+    def get_queryset(self):
+        """Return only Documents with the specified ``tag``."""
+        tag = self.kwargs['tag']
+        return Document.objects.filter(keywords__keyword__title__iexact=tag)
+
+    def get_context_data(self, **kwargs):
+        """Add the tag name to the context."""
+        context = super(DocumentTagList, self).get_context_data(**kwargs)
+        context['tag'] = self.kwargs['tag']
+        return context

@@ -5,7 +5,7 @@
   It expects a `document` variable in the context.
 {% endcomment %}
 
-{% load documents_tags mezzanine_tags %}
+{% load documents_tags mezzanine_tags keyword_tags %}
 
 
 <!-- Title -->
@@ -33,6 +33,17 @@
     </a>
   </h5>
   {% endeditable %}
+{% endif %}
+
+<!-- Tags -->
+{% keywords_for document as keywords %}
+{% if keywords %}
+<h5>
+  Tags:
+  {% for keyword in keywords %}<a
+    href="{% url "document_tag_list" tag=keyword.title %}">{{ keyword.title }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
+</h5>
+<br />
 {% endif %}
 
 <!-- Document Contents -->
