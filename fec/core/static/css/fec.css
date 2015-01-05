@@ -55,6 +55,11 @@ div#site-header .visible-xs .h1 {
   margin-bottom: 5px;
 }
 
+/* Reduce the Width of the Search Box */
+form#site-search input {
+  width: 175px;
+}
+
 /* Align the Search Box with the Bottom of the Header */
 #site-tagline-search {
   position: relative;
@@ -63,7 +68,7 @@ div#site-header .visible-xs .h1 {
 form#site-search input {
   position: absolute;
   bottom: 5px;
-  left: -20px;
+  left: 75px;
 }
 
 
