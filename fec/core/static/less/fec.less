@@ -11,13 +11,24 @@
 @screen-sm:                     812px;
 
 
-/* Customizations */
+/* General Customizations */
+
 /* Center Align the Navbar Links */
-@media (min-width: @screen-sm){
+@media (min-width: @grid-float-breakpoint) {
   .navbar-nav{
       margin: 0 auto;
       display: table;
       table-layout: fixed;
       float:none;
+  }
+}
+
+
+/* Community Customizations */
+
+/* Center Align the Community's RSS Icon with respect to the Definition List */
+#community-detail-main-rss img {
+  @media (min-width: @grid-float-breakpoint) {
+    margin-left: (@dl-horizontal-offset - 17);
   }
 }

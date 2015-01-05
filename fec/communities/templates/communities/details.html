@@ -56,6 +56,18 @@
         {% community_info_description_list community %}
         {% endeditable %}
       </div>
+
+      <!-- Community's RSS Icon -->
+      {% with community.feeds.all|first as community_feed %}
+        {% if community_feed %}
+          <div class="col-xs-12" id="community-detail-main-rss">
+            <a href="{{ community_feed.url }}" target="_blank">
+              <img src="{% static "img/rss_icon.png" %}"
+                  alt="{{ community.title }} RSS Feed" />
+            </a>
+          </div>
+        {% endif %}
+      {% endwith %}
     </div>
   </div>
 </div>
