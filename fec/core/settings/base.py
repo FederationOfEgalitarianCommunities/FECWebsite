@@ -14,6 +14,11 @@ SITE_TAGLINE = "A new way of living is possible."
 
 # Remove the Model-dropdown for the search
 SEARCH_MODEL_CHOICES = ()
+
+# Remove Ratings from Comments
+COMMENTS_USE_RATINGS = False
+
+# Specify Settings Available in Templates
 TEMPLATE_ACCESSIBLE_SETTINGS = (
     'MEDIA_URL',
     # Defaults
@@ -27,7 +32,7 @@ TEMPLATE_ACCESSIBLE_SETTINGS = (
     'SITE_TAGLINE', 'USE_L10N'
 )
 
-# Compile LESS Files
+# Compile LESS Files using lessc
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
