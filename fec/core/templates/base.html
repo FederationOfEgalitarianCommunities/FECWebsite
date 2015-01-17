@@ -208,27 +208,7 @@ $(document).ready(function() {
   {% endcache %}
   {% endnevercache %}
 
-  <!-- Photos of Us -->
-  {% nevercache %}
-  {% community_random_image as random_image %}
-  {% if random_image %}
-    <div class="col-sm-4 text-center">
-      <a rel="#image-{{ random_image.id }}" title="{{ random_image.description }}"
-         href="{{ random_image.file.url }}" id="footer-random-photo">
-        <img class="img-responsive image-center" id="#image-{{ random_image.id}}"
-             src="{{ MEDIA_URL }}{% thumbnail random_image.file 360 215 %}" />
-      </a>
-      <div>
-        <small><em>
-          Posted by
-          <a href="{{ random_image.community.get_absolute_url }}">
-            {{ random_image.community.title }}
-          </a>
-        </em></small>
-      </div>
-    </div>
-  {% endif %}
-  {% endnevercache %}
+  <hr class="visible-xs">
 
   <!-- Copyright & Contact -->
   <div class="col-sm-4 text-center">
@@ -252,6 +232,30 @@ $(document).ready(function() {
       </a>
     </div>
   </div>
+
+  <hr class="visible-xs">
+
+  <!-- Photos of Us -->
+  {% nevercache %}
+  {% community_random_image as random_image %}
+  {% if random_image %}
+    <div class="col-sm-4 text-center">
+      <a rel="#image-{{ random_image.id }}" title="{{ random_image.description }}"
+         href="{{ random_image.file.url }}" id="footer-random-photo">
+        <img class="img-responsive image-center" id="#image-{{ random_image.id}}"
+             src="{{ MEDIA_URL }}{% thumbnail random_image.file 360 215 %}" />
+      </a>
+      <div>
+        <small><em>
+          Posted by
+          <a href="{{ random_image.community.get_absolute_url }}">
+            {{ random_image.community.title }}
+          </a>
+        </em></small>
+      </div>
+    </div>
+  {% endif %}
+  {% endnevercache %}
 </div>
 </div>
 </footer>
