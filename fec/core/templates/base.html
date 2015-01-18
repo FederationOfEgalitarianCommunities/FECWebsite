@@ -93,16 +93,19 @@ $(document).ready(function() {
 
   <div class="hidden-xs col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1"
        id="site-tagline-search">
+    <!-- Search Form -->
+    <div class="pull-right">
+      <form action="{% url "search" %}" class="pull-right"
+            id="site-search" role="search">
+        <div class="form-group">
+          <input placeholder="{% trans "Search" %}" type="text" name="q"
+                 value="{{ request.REQUEST.q }}" />
+        </div>
+      </form>
+    </div>
+    <div class="clearfix"></div>
     <!-- Tag Line -->
     <span class="navbar-text pull-right" id="site-tagline">{{ settings.SITE_TAGLINE }}</span>
-    <!-- Search Form -->
-    <form action="{% url "search" %}" class="pull-right"
-          id="site-search" role="search">
-      <div class="form-group">
-        <input placeholder="{% trans "Search" %}" type="text" name="q"
-               value="{{ request.REQUEST.q }}" />
-      </div>
-    </form>
   </div>
 </div>
 

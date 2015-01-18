@@ -60,15 +60,15 @@ form#site-search input {
   width: 175px;
 }
 
-/* Align the Search Box with the Bottom of the Header */
-#site-tagline-search {
-  position: relative;
-  height: 120px;
+/* Move the Tagline Completely to the Right of the Header */
+#site-tagline {
+  margin-right: 0;
 }
-form#site-search input {
-  position: absolute;
-  bottom: 5px;
-  left: 75px;
+
+/* Fix the spacing around the search box */
+form#site-search div.form-group {
+  margin-top: 7.5px;
+  margin-bottom: 0;
 }
 
 
