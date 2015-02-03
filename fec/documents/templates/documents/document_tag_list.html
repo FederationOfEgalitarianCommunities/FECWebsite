@@ -9,16 +9,16 @@
 
 
 {# Title #}
-{% block meta_title %}{{ tag.title }}{% endblock %}
+{% block meta_title %}{{ tag }}{% endblock %}
 {% block title %}
-  {{ tag.title }}
+  {{ tag }}
 {% endblock %}
 
 
 {# Breadcrumbs #}
 {% block breadcrumb_menu %}
   {{ block.super }}
-  <li>Tag: {{ tag.title }}</li>
+  <li>Tag: {{ tag }}</li>
 {% endblock %}
 
 
