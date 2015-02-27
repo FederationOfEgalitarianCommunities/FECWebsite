@@ -1,7 +1,8 @@
 Federation of Egalitarian Communities Website
 ==============================================
 
-This is the Mezzanine project that powers ``thefec.org``.
+This is the Mezzanine project that powers http://thefec.org.
+
 
 Quickstart
 -----------
@@ -27,7 +28,7 @@ Install python dependencies w/ ``pip``::
 
 Set environmental variables to match your configuration::
 
-    export DJANGO_SECRET_KEY=fourtwenty
+    export DJANGO_SECRET_KEY=fourtytwo
     export DJANGO_SETTINGS_MODULE=core.settings.local
     export DB_NAME=FEC
     export DB_USER=myuser
@@ -38,15 +39,19 @@ Create the database and start the dev server::
     ./manage.py createdb --noinput
     ./manage.py runserver 0.0.0.0:8000
 
+
 Documentation
 --------------
 
-Build the full documentation::
+You can read the documentation at http://fecwebsite.readthedocs.org/.
+
+To build the documentation locally::
 
     cd docs/
     make html
 
-Read the docs at ``docs/_build/html/index.html``.
+Then read the docs at ``docs/_build/html/index.html``.
+
 
 Tests
 ------
@@ -57,9 +62,9 @@ Install the test dependencies::
     cd fec
     ./manage.py test --settings=core.settings.test
 
+
 Contribute
 -----------
-
 
 Template overrides and sitewide items go in ``core``.
 
