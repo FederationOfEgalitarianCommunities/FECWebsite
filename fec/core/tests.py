@@ -32,7 +32,19 @@ class Pep8Tests(TestCase):
         self.assertEqual(result.total_errors, 0,
                          "PEP8 issues were found in the core package.")
 
-    def test_communities_pep8_compliance(self):
+    def test_homepage_pep8(self):
+        """The homepage package should be PEP8 compliant."""
+        result = check_pep8([
+            'homepage/admin.py',
+            'homepage/models.py',
+            'homepage/tests.py',
+            'homepage/views.py',
+        ])
+
+        self.assertEqual(result.total_errors, 0,
+                         "PEP8 issues were found in the homepage package.")
+
+    def test_communities_pep8(self):
         """The communities package should be PEP8 compliant."""
         result = check_pep8([
             'communities/admin.py',

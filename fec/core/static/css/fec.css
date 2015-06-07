@@ -83,6 +83,40 @@ div#footer-community-spotlight img {
 
 
 
+/* Home Page */
+
+/* Center the Lead Text and the Headings */
+h3#lead-text, .homepage-heading {
+  text-align: center;
+}
+
+/* Add some weight to the Section Headings */
+.homepage-heading {
+  font-weight: bold;
+}
+
+/* Center everything in the Newest Community block */
+div#newest-communities {
+  text-align: center;
+}
+
+/* Reduce the spacing in the Newest Community block */
+div#newest-communities h5 {
+  margin: 5px auto;
+}
+div#newest-communities .list-group-item  {
+  padding-top: 2.5px;
+  padding-bottom: 2.5px;
+}
+
+div#latest-news {
+  text-align: center;
+}
+
+div#latest-news h5 {
+  margin-bottom: 2.5px;
+}
+
 /* Communities */
 
 

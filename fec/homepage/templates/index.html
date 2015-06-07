@@ -1,0 +1,76 @@
+{% extends "site.html" %}
+{% load communities_tags blog_tags mezzanine_tags i18n %}
+
+{% block meta_title %}Home{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+  <h1 class="hidden">{% trans "The Federation of Egalitarian Communities" %}</h1>
+  {% include 'includes/messages.html' %}
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      {% editable homepage_content.intro_text %}
+        <h3 id="lead-text">{{ homepage_content.intro_text|safe }}</h3>
+      {% endeditable %}
+    </div>
+
+
+    <!-- Left Side -->
+    <div id='homepage-custom-content'
+         class="{% if homepage_content.only_show_content %}col-md-12{% else %}col-md-6{% endif %}">
+      {% editable homepage_content.content_title homepage_content.content %}
+        <h4 class="homepage-heading">{{ homepage_content.content_title }}</h4>
+        {{ homepage_content.content|safe }}
+      {% endeditable %}
+    </div>
+
+
+    <!-- Right Side -->
+    {% if not homepage_content.only_show_content %}
+      <div class="col-md-6">
+        <!-- Newest Communities -->
+        {% if homepage_content.show_newest_communities %}
+          <div class="col-md-12 col-sm-6">
+            <h4 class="homepage-heading">{% trans "Our Newest Communities" %}</h4>
+            {% community_newest_communities limit=3 as newest_communities %}
+            <div id="newest-communities" class="list-group">
+              {% for community in newest_communities %}
+                <div class="list-group-item">
+                  {% community_blurb community show_picture=False truncate_description_at=25 %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- News -->
+        {% if homepage_content.show_news %}
+          <div id='latest-news-block' class="col-md-12 col-sm-6">
+            <h4 class="homepage-heading">{% trans "Latest News" %}</h4>
+            {% blog_recent_posts 1 as posts %}
+            <div id="latest-news" class="list-group">
+              {% for news in posts %}
+                <div class="list-group-item clearfix">
+                  <h5>
+                    <a href="{{ news.get_absolute_url }}">{{ news.title }}</a>
+                  </h5>
+                  <small><em>{% trans "posted" %} {{ news.publish_date|timesince }} {% trans "ago" %}</em></small>
+                  <p>{{ news.description_from_content|striptags }}
+
+                  <a href="{{ news.get_absolute_url }}" class="btn btn-text btn-xs">Read More</a>
+                  </p>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

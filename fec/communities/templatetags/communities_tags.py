@@ -100,3 +100,9 @@ def community_fec_members():
 def community_communities_in_dialog():
     """Return a list of all FEC Communities in dialog"""
     return Community.objects.filter(is_community_in_dialog=True)
+
+
+@register.assignment_tag
+def community_newest_communities(limit=5):
+    """Return a list of FEC Communities ordered by creation date."""
+    return Community.objects.order_by('-created')[:limit]

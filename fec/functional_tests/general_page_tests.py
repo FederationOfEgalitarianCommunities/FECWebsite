@@ -1,6 +1,6 @@
 """This module contains functional tests applicable for every Page."""
 from mezzanine.core.templatetags.mezzanine_tags import thumbnail
-from mezzanine.pages.models import Link
+from mezzanine.pages.models import Link, Page
 from selenium.webdriver.common.keys import Keys
 
 from communities.models import Community, CommunityImage
@@ -10,9 +10,10 @@ from core.utils import SeleniumTestCase
 class GeneralPageTests(SeleniumTestCase):
     """Test General Expectations for Every Page."""
     def setUp(self):
-        """Create a page and visit the home page."""
+        """Create two pages and visit one."""
         Link.objects.create(title="Blog", in_menus=[1, 2])
-        self.selenium.get(self.live_server_url + '/')
+        Page.objects.create(title='Visit', in_menus=[1, 2])
+        self.selenium.get(self.live_server_url + '/visit/')
 
     def test_title_contains_fec_full_name(self):
         """The title should contain the FEC's full name."""

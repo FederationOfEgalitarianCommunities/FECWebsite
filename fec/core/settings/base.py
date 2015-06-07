@@ -64,6 +64,7 @@ def get_env_variable(var_name):
 ADMIN_MENU_ORDER = (
     ("Content",
         ("communities.Community",
+         ("Homepage", "homepage.HomepageContent"),
          "pages.Page",
          "blog.BlogPost",
          "generic.ThreadedComment",
@@ -303,6 +304,7 @@ INSTALLED_APPS = (
     "core",
     "communities",
     "documents",
+    "homepage",
 
     "django.contrib.admin",
     "django.contrib.auth",
