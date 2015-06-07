@@ -1,0 +1,15 @@
+{% load mezzanine_tags %}
+
+
+{% nevercache %}
+{% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+      <div class="alert alert-dismissable alert-{{ message.tags }}" data-alert="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endnevercache %}
