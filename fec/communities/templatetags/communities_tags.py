@@ -53,6 +53,18 @@ def community_profile_picture_thumbnail(community, width, height):
             'MEDIA_URL': settings.MEDIA_URL}
 
 
+@register.inclusion_tag('communities/tags/community_blurb.html')
+def community_blurb(community, truncate_description_at=35, show_picture=True):
+    """Render a compact blurb for a :class:`~.models.Community`.
+
+    This includes the picture, name, population, general location, and the full
+    description(truncated at the specified amount of words).
+    """
+    return {'community': community,
+            'show_profile_picture': show_picture,
+            'truncate_at': truncate_description_at}
+
+
 @register.assignment_tag
 def community_random_image():
     """Return a random Communityimage."""

@@ -1,0 +1,20 @@
+{% load communities_tags %}
+
+
+<div class="media">
+  {% if community.profile_image and show_profile_picture %}
+    <div class="pull-left">
+      {% community_profile_picture_thumbnail community 85 85 %}
+    </div>
+  {% endif %}
+    <h5 class="media-heading" id="spotlight-community-name">
+      <a href="{{ community.get_absolute_url }}">
+        {{ community.title }}
+      </a>
+    </h5>
+    {% if community.number_of_adults > 0 or community.number_of_children > 0 or community.general_location %}
+      <em>{% community_population_and_location community %}</em>
+    {% endif %}
+    <p>{{ community.full_description|striptags|truncatewords:truncate_at }}</p>
+</div>
+
