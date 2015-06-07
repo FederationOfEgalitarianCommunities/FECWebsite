@@ -106,7 +106,7 @@ class FooterTests(SeleniumTestCase):
     def test_footer_copyright_exists(self):
         """The copyright notice should be correct."""
         footer = self.selenium.find_element_by_tag_name("footer")
-        self.assertIn(u"1999\u20132014", footer.text)
+        self.assertIn(u"1999\u20132015", footer.text)
 
 
 class SearchResultsPageTests(SeleniumTestCase):
