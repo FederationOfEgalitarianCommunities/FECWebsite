@@ -37,6 +37,9 @@ COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
 
+# Always compile static files
+COMPRESS_ENABLED = True
+
 
 # Utility Functions
 def get_env_variable(var_name):
