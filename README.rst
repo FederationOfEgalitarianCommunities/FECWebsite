@@ -80,8 +80,18 @@ Tests
 Install the test dependencies::
 
     pip install -r requirements/test.txt
+
+Then you can start the test runner::
+
     cd fec
     ./manage.py test --settings=core.settings.test
+
+Once completed, the test runner will monitor for file changes & re-run the test
+suite.
+
+You can also run a subset of the tests::
+
+    ./manage.py test communities.tests --settings=core.settings.test
 
 
 Contribute

@@ -13,6 +13,11 @@ NOSE_ARGS = [
     '--cover-branches',
     '--cover-package=communities,documents',
     '--with-progressive',
+    '--with-watcher',
+    '--filetype=.css',
+    '--filetype=.html',
+    '--filetype=.js',
+    '--filetype=.less',
 ]
 
 DATABASES = {
