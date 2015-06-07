@@ -40,6 +40,27 @@ Create the database and start the dev server::
     ./manage.py runserver 0.0.0.0:8000
 
 
+BrowserSync
+------------
+
+BrowserSync lets you sync up actions betweens browsers & automatically reloads
+your browsers when a source file has been modified.
+
+You'll need ``npm`` & ``gulp`` installed::
+
+    pacman -S npm
+    npm install -g gulp
+
+Then install our Gulp dependencies & run ``gulp`` in the project's base
+directory::
+
+    npm install
+    gulp
+
+Gulp will start the Django server for you along with a proxy server that
+injects the BrowserSync code at http://localhost:8010.
+
+
 Documentation
 --------------
 
