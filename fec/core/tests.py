@@ -37,7 +37,6 @@ class Pep8Tests(TestCase):
         result = check_pep8([
             'homepage/admin.py',
             'homepage/models.py',
-            'homepage/tests.py',
             'homepage/views.py',
         ])
 
