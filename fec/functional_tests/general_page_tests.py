@@ -108,6 +108,18 @@ class FooterTests(SeleniumTestCase):
         self.assertIn(str(self.darmok.number_of_children), spotlight.text)
         self.assertIn(self.darmok.full_description, spotlight.text)
 
+    def test_community_spotlight_requires_description(self):
+        """
+        The Community Spotlight should not display Communities without
+        descriptions.
+        """
+        self.darmok.full_description = ''
+        self.darmok.save()
+        self.selenium.refresh()
+        self.assertElementDoesNotExist(
+            self.selenium.find_element_by_css_selector,
+            '#footer-community-spotlight')
+
     def test_random_community_photo_exists(self):
         """A random Community's Gallery Image should be shown."""
         image = self.selenium.find_element_by_css_selector(
