@@ -7,6 +7,12 @@ This is the Mezzanine project that powers http://thefec.org.
     :target: https://travis-ci.org/FederationOfEgalitarianCommunities/FECWebsite
     :alt: Test Status
 
+.. image:: https://coveralls.io/repos/FederationOfEgalitarianCommunities/FECWebsite/badge.svg
+    :target: https://coveralls.io/r/FederationOfEgalitarianCommunities/FECWebsite
+    :alt: Code Coverage Status
+
+
+
 .. image:: https://readthedocs.org/projects/fecwebsite/badge/?version=latest
     :target: https://readthedocs.org/projects/fecwebsite/?badge=latest
     :alt: Documentation Status
