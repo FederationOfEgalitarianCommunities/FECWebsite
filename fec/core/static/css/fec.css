@@ -76,10 +76,23 @@ form#site-search div.form-group {
 /* Footer */
 
 
+/* Make the footer flush with the bottom of the rendered page */
+body {
+  display: table;
+  width: 100%;
+}
+footer {
+  display: table-row;
+  height: 1px;
+}
+
 /* Remove Bottom Margin from Community Spotlight Profile Image */
 div#footer-community-spotlight img {
   margin-bottom: 0px;
 }
+
+/* Make the FIC Logo a separate block from it's surrounding text */
+a#fic-link { display: block; }
 
 
 
