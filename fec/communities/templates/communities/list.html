@@ -68,9 +68,11 @@
   <ul class="list-group">
     {% for post in blog_posts %}
       <li class="list-group-item">
-        <a href="{{ post.link }}" target="_blank">{{ post.title }}</a> by
-        {{ post.author }} from
-        <a href="{{ post.community.get_absolute_url }}">{{ post.community.title }}</a>
+        <a href="{{ post.link }}" target="_blank">{{ post.title }}</a>
+        by {{ post.author }}
+        <small><em>
+          from <a href="{{ post.community.get_absolute_url }}">{{ post.community.title }}</a>
+        </em></small>
       </li>
     {% endfor %}
   </ul>
