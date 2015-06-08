@@ -3,6 +3,10 @@ Federation of Egalitarian Communities Website
 
 This is the Mezzanine project that powers http://thefec.org.
 
+.. image:: https://readthedocs.org/projects/fecwebsite/badge/?version=latest
+    :target: https://readthedocs.org/projects/fecwebsite/?badge=latest
+    :alt: Documentation Status
+
 
 Quickstart
 -----------
