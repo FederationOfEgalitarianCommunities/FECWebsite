@@ -7,5 +7,4 @@ prospector>=0.7
 pylint-django>=0.5
 
 Sphinx>=1.2
-sphinx-bootstrap-theme>=0.4
-django-livereload>=1.2
+sphinx_rtd_theme
