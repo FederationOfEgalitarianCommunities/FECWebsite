@@ -66,20 +66,22 @@ $(document).ready(function() {
       <a href="/" class="pull-left">
         <img class="" alt="FEC Logo" src="{% static "img/fec_logo.png" %}"  style="height:120px;"/>
       </a>
-      <div class="media-body" id="site-title">
-        <div class="media-heading h1">
-          Federation of<br />
-          Egalitarian Communities
+      <a href='/'>
+        <div class="media-body" id="site-title">
+          <div class="media-heading h1">
+            Federation of<br />
+            Egalitarian Communities
+          </div>
         </div>
-      </div>
+      </a>
     </div>
     <!-- Stacked Logo + Title -->
-    <div class="visible-xs">
+    <div class="visible-xs" id="site-logo-title-xs">
       <a href="/">
         <img class="image-center img-responsive" alt="FEC Logo"
              src="{% static "img/fec_logo.png" %}"  style="height:75px;" />
+        <div class="h1 text-center">Federation of Egalitarian Communities</div>
       </a>
-      <div class="h1 text-center">Federation of Egalitarian Communities</div>
     </div>
   </div>
 

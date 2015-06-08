@@ -20,6 +20,25 @@ class GeneralPageTests(SeleniumTestCase):
         self.assertIn('Federation of Egalitarian Communities',
                       self.selenium.title)
 
+    def test_title_links_to_homepage(self):
+        """The title should be a link to the Home Page."""
+        title_link = self.selenium.find_element_by_css_selector(
+            '#site-logo-title a:not(.pull-left)').text
+        self.assertIn('Federation of\nEgalitarian Communities',
+                      title_link,
+                      'Did not find site name in header link.')
+
+    def test_mobile_title_links_to_homepage(self):
+        """The title on a mobile screen should be a link to the Home Page."""
+        self.selenium.set_window_size(320, 568)
+        title_link = self.selenium.find_element_by_css_selector(
+            '#site-logo-title-xs a')
+        self.assertTrue(title_link.is_displayed(),
+                        'The mobile title is not displayed.')
+        self.assertIn('Federation of Egalitarian Communities',
+                      title_link.text,
+                      'Did not find site name in header link.')
+
     def test_tagline_is_visible_and_correct_on_large_screens(self):
         """The tagline should be the FEC's slogan."""
         self.selenium.set_window_size(1680, 1050)
