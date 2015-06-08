@@ -1,0 +1,16 @@
+language: python
+python:
+    - '2.7'
+addons:
+    sauce_connect:
+        username: "TheFederation"
+        access_key:
+            secure: KsYk1OhLSnjC2zt+Tu4HI8euV9/SmVtCu51un0iHvpMHkkSpFLw9iI4FZuOte+IqAHDQVQ9w1qjvSekRQr94Mnm7BBNjHDdQaQBEZjvJPy4HkDskGn8qaZBLTnfH/T/610zVf3REyitR9VOL45I9XJ4bi/eafJSS+Ai/lB6QWIk=
+install:
+    - pip install -r requirements/test.txt
+    - pip install coveralls
+    - pip install Sphinx sphinx_rtd_theme
+script:
+    - cd fec && python manage.py test && cd ../docs && make html
+after_success:
+    coveralls

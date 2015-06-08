@@ -65,7 +65,7 @@ class Document(Displayable):
         documents = set(
             Document.objects.filter((Q(keywords__keyword__in=keywords) |
                                      Q(category=self.category)) &
-                                    ~Q(id=self.id))
+                                    (~Q(id=self.id)))
         )
         sample_size = 5 if len(documents) > 5 else len(documents)
         return random.sample(documents, sample_size)

@@ -1,4 +1,7 @@
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
 from .base import *
+
 
 SOUTH_TESTS_MIGRATE = False
 
@@ -19,6 +22,9 @@ NOSE_ARGS = [
     '--filetype=.js',
     '--filetype=.less',
 ]
+
+SELENIUM_SERVER = "http://127.0.0.1:4444/wd/hub"
+SELENIUM_CAPABILITIES = DesiredCapabilities.CHROME.copy()
 
 DATABASES = {
     'default': {

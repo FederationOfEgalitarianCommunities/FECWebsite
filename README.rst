@@ -3,6 +3,10 @@ Federation of Egalitarian Communities Website
 
 This is the Mezzanine project that powers http://thefec.org.
 
+.. image:: https://travis-ci.org/FederationOfEgalitarianCommunities/FECWebsite.svg?branch=develop
+    :target: https://travis-ci.org/FederationOfEgalitarianCommunities/FECWebsite
+    :alt: Test Status
+
 .. image:: https://readthedocs.org/projects/fecwebsite/badge/?version=latest
     :target: https://readthedocs.org/projects/fecwebsite/?badge=latest
     :alt: Documentation Status

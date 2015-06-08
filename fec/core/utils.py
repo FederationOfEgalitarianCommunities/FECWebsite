@@ -10,7 +10,6 @@ from PIL import Image
 import pep8
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.common.keys import Keys
 
 
@@ -27,8 +26,8 @@ class SeleniumTestCase(LiveServerTestCase):
 
         """
         cls.selenium = webdriver.Remote(
-            command_executor="http://127.0.0.1:4444/wd/hub",
-            desired_capabilities=DesiredCapabilities.CHROME)
+            command_executor=settings.SELENIUM_SERVER,
+            desired_capabilities=settings.SELENIUM_CAPABILITIES)
         cls.selenium.implicitly_wait(1)
         super(SeleniumTestCase, cls).setUpClass()
 
