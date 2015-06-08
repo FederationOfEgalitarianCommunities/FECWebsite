@@ -14,4 +14,4 @@ install:
 script:
     - cd fec && python manage.py test && cd ../docs && make html && cd ..
 after_success:
-    - cd fec && coveralls && cd ..
+    - mv -f fec/.coverage . && coveralls
