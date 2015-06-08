@@ -139,36 +139,11 @@ $(document).ready(function() {
   {% community_random as random_community %}
   {% if random_community %}
     <div class="col-sm-4" id="footer-community-spotlight">
-      {% community_blurb random_community %}
+      {% community_blurb random_community truncate_description_at=50 %}
     </div>
   {% endif %}
   {% endcache %}
   {% endnevercache %}
-
-  <hr class="visible-xs">
-
-  <!-- Copyright & Contact -->
-  <div class="col-sm-4 text-center">
-    <p>Please visit our sister organization, the Fellowship for Intentional Community
-      <br />
-      <a href="http://www.ic.org/" target="_blank" id="fic-link">
-        <img class="image-center" src="{% static "img/fic_logo.png" %}"
-             alt="The Fellowship for Intentional Community Website" />
-      </a>
-    </p>
-    <div>
-      <span class="glyphicon glyphicon-copyright-mark"></span> 1999&ndash;2015
-      <br />
-      <a href="mailto:webmaster@thefec.org?subject=FEC%20Website%20Bug%20Report">Report a Bug</a>
-      <br />
-      <a href="mailto:secretary@thefec.org?subject=FEC%20Website%20Contact">Contact Us</a>
-      <br />
-      <a href="{% url "blog_post_feed" format="rss" %}">
-        <img class="image-center" src="{% static "img/rss_icon.png" %}"
-             alt="The FEC RSS Feed" />
-      </a>
-    </div>
-  </div>
 
   <hr class="visible-xs">
 
@@ -193,6 +168,52 @@ $(document).ready(function() {
     </div>
   {% endif %}
   {% endnevercache %}
+
+  <hr class="visible-xs">
+
+  <!-- Copyright & Contact -->
+  <div class="col-sm-4 text-center">
+    <p>Please visit our sister organization, the Fellowship for Intentional Community
+      <a href="http://www.ic.org/" target="_blank" id="fic-link">
+        <img class="image-center" src="{% static "img/fic_logo.png" %}"
+             alt="The Fellowship for Intentional Community Website" />
+      </a>
+    </p>
+    <div>
+      <div>
+        <!-- Content License -->
+        Original content licensed under
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+          Creative Commons BY-SA 4.0</a>.
+        <!-- Source Code License -->
+        Website source code licensed under
+        <a href="https://www.gnu.org/licenses/gpl.html" target="_blank">
+          GNU GPLv3</a>
+        and
+        <a href="https://github.com/FederationOfEgalitarianCommunities/FECWebsite" target="_blank">
+          available online</a>.
+      </div>
+      <div>
+        <!-- Contact & Report a Bug Links -->
+        <a href="mailto:secretary@thefec.org?subject=FEC%20Website%20Contact">
+          Contact Us</a>
+        <a href="mailto:webmaster@thefec.org?subject=FEC%20Website%20Bug%20Report">
+          Report a Bug</a>
+      </div>
+      <div>
+        <!-- Copyright Year -->
+        <span class="glyphicon glyphicon-copyright-mark"></span> 1999&ndash;2015
+      </div>
+      <div>
+        <!-- Blog RSS Feed -->
+        <a href="{% url "blog_post_feed" format="rss" %}">
+          <img class="image-center" src="{% static "img/rss_icon.png" %}"
+              alt="The FEC RSS Feed" />
+        </a>
+      </div>
+    </div>
+  </div>
+
 </div>
 </div>
 </footer>

@@ -107,3 +107,9 @@ Template overrides and sitewide items go in ``core``.
 Write tests, maintain 100% test coverage. Update docs when necessary.
 
 Run ``prospector`` in the base directory to check out your code style.
+
+
+License
+--------
+
+GPLv3
