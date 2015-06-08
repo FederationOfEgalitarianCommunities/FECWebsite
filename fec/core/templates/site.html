@@ -32,8 +32,6 @@
 <script src="{% static "js/bootstrap-extras.js" %}"></script>
 <!-- Footer Lightboxes -->
 <script src="{% static "mezzanine/js/magnific-popup.js" %}"></script>
-<!-- Sticky Navbar -->
-<script src="{% static "js/jquery.sticky.js"%}"></script>
 <script>
 $(document).ready(function() {
     /* Simple Lightboxs for the Profile & Random Images */
@@ -44,12 +42,6 @@ $(document).ready(function() {
     $('#footer-random-photo').magnificPopup({
         type: 'image',
         closeOnContentClick: true,
-    });
-    /* Make the Navigation Stick to the Top of the Window When Scroll Past */
-    $('#navigation').sticky({
-        topSpacing: 0,
-        getWidthFrom: "#body",
-        responsiveWidth: true,
     });
 });
 </script>
@@ -110,7 +102,7 @@ $(document).ready(function() {
 </div>
 
 <!-- Nav Bar -->
-<div class="navbar navbar-default navbar-static-top" role="navigation"
+<div class="navbar navbar-default" role="navigation"
      id="navigation">
   <div class="container">
     <div class="navbar-header">
