@@ -58,11 +58,15 @@ class HomePageTests(SeleniumTestCase):
             title='Oslard', date_joined=today)
         hidden = Community.objects.create(
             title='Jugulum', date_joined=yesterday)
+        also_hidden = Community.objects.create(
+            title='Shai\'hulud')
 
         self.selenium.get('{}{}'.format(self.live_server_url, '/'))
         html_excluding_footer = self.selenium.find_element_by_css_selector(
             '*:not(footer) > .container > .row').text
         self.assertNotIn(hidden.title, html_excluding_footer,
+                         'Old community found on page.')
+        self.assertNotIn(also_hidden.title, html_excluding_footer,
                          'Old community found on page.')
 
         communities = self.selenium.find_element_by_css_selector(
