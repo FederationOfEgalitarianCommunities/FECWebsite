@@ -1,10 +1,11 @@
 """This module contains functional tests applicable for every Page."""
 from mezzanine.core.templatetags.mezzanine_tags import thumbnail
-from mezzanine.pages.models import Link, Page
+from mezzanine.pages.models import Link, Page, RichTextPage
 from selenium.webdriver.common.keys import Keys
 
 from communities.models import Community, CommunityImage
 from core.utils import SeleniumTestCase
+from homepage.models import HomepageContent
 
 
 class GeneralPageTests(SeleniumTestCase):
@@ -12,8 +13,10 @@ class GeneralPageTests(SeleniumTestCase):
     def setUp(self):
         """Create two pages and visit one."""
         Link.objects.create(title="Blog", in_menus=[1, 2])
-        Page.objects.create(title='Visit', in_menus=[1, 2])
-        self.selenium.get(self.live_server_url + '/visit/')
+        self.rich_page = RichTextPage.objects.create(
+            title='Visit', content='Visit us', in_menus=[1, 2])
+        self.selenium.get(
+            self.live_server_url + self.rich_page.get_absolute_url())
 
     def test_title_contains_fec_full_name(self):
         """The title should contain the FEC's full name."""
@@ -79,6 +82,36 @@ class GeneralPageTests(SeleniumTestCase):
             "div.container div.row div.col-md-9.middle")
         self.assertEqual(len(main_content), 1,
                          "The middle content is not the correct column size.")
+
+    def test_pages_contain_conference_info(self):
+        """
+        The general Pages(not blog posts, documents or communities) should
+        contain the HomepageContent's communities_conference_text.
+        """
+        homepage, _ = HomepageContent.objects.get_or_create()
+        homepage.communities_conference_text = (
+            "This string has a uniqueness rating of over 9000")
+        homepage.save()
+        self.selenium.refresh()
+
+        html = self.selenium.find_element_by_tag_name('html').text
+        self.assertIn(homepage.communities_conference_text, html,
+                      'Could not find Conference text on Page.')
+        self.assertIn('Communities Conference', html,
+                      'Could not find Conference header text on Page.')
+
+    def test_blank_conference_info_is_hidden(self):
+        """
+        The Community Conference Information widget should be hidden if empty.
+        """
+        homepage, _ = HomepageContent.objects.get_or_create()
+        homepage.communities_conference_text = ""
+        homepage.save()
+        self.selenium.refresh()
+
+        html = self.selenium.find_element_by_tag_name('html').text
+        self.assertNotIn('Communities Conference', html,
+                         'Found Conference header text on Page.')
 
 
 class FooterTests(SeleniumTestCase):

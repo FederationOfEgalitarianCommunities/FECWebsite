@@ -1,9 +1,16 @@
 {% overextends "pages/page.html" %}
 
-{% load i18n %}
+{% load homepage_tags mezzanine_tags i18n %}
 
 
 {% block right_panel %}
+
+{% get_homepage_content as homepage_content %}
+{% if homepage_content.communities_conference_text %}
+  <h3 class="text-center">{% trans "Communities Conference" %}</h3>
+  <div>{{ homepage_content.communities_conference_text|richtext_filters|safe }}</div>
+{% endif %}
+
 
 <h3 class="text-center" id="newest-communities-pages-sidebar">
   {% trans "Newest Communities" %}</h3>

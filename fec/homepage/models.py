@@ -40,6 +40,11 @@ class HomepageContent(SiteRelated):
     content = RichTextField(
         help_text="The custom text",
     )
+    communities_conference_text = RichTextField(
+        blank=True,
+        help_text="The text for the Communities Conference sidebar widget.",
+        verbose_name="Communities Conference Widget Text",
+    )
     show_news = models.BooleanField(
         default=True,
         help_text='Display the "News" block?',
