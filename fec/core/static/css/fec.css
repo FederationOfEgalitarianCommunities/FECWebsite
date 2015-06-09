@@ -71,6 +71,11 @@ form#site-search div.form-group {
   margin-bottom: 0;
 }
 
+/* Reduce the spacing between the navigation & page header */
+div.container > h1 {
+  margin-top: 0;
+}
+
 
 
 /* Footer */
@@ -237,6 +242,6 @@ h3#related-documents-sidebar-header {
 /* Pages */
 
 /* Remove the Top Margin from the First Sidebar Header */
-h3#newest-communities-pages-sidebar {
+h3#conference-widget {
   margin-top: 0;
 }
