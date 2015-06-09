@@ -1,0 +1,15 @@
+{% overextends "pages/page.html" %}
+
+{% load i18n %}
+
+
+{% block right_panel %}
+
+<h3 class="text-center" id="newest-communities-pages-sidebar">
+  {% trans "Newest Communities" %}</h3>
+{% include "communities/includes/newest_communities_list_group.html" with limit=5 truncate_description_at=18 %}
+
+<h3 class="text-center">{% trans "Newest Documents" %}</h3>
+{% include "documents/includes/newest_documents_list_group.html" with limit=5 %}
+
+{% endblock %}

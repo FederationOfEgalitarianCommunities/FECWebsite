@@ -1,0 +1,9 @@
+{% load communities_tags %}
+{% community_newest_communities limit=limit|default:3 as newest_communities %}
+<div id="newest-communities" class="list-group">
+  {% for community in newest_communities %}
+    <div class="list-group-item">
+      {% community_blurb community show_picture=False truncate_description_at=truncate_description_at|default:25 %}
+    </div>
+  {% endfor %}
+</div>

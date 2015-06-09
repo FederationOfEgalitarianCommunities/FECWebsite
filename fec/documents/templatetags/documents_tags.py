@@ -33,9 +33,9 @@ def category_breadcrumbs(category, is_active=False):
 
 
 @register.assignment_tag
-def documents_newest():
-    """Return the 5 newest Documents."""
-    return Document.objects.all().order_by('-created')[:3]
+def documents_newest(limit=3):
+    """Return the newest Documents."""
+    return Document.objects.all().order_by('-created')[:limit]
 
 
 @register.assignment_tag

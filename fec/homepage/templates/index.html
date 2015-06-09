@@ -1,10 +1,9 @@
 {% extends "site.html" %}
-{% load communities_tags blog_tags mezzanine_tags i18n %}
+{% load blog_tags mezzanine_tags i18n %}
 
 {% block meta_title %}Home{% endblock %}
 
 {% block content %}
-
 
 <div class="container">
   <h1 class="hidden">{% trans "The Federation of Egalitarian Communities" %}</h1>
@@ -36,14 +35,7 @@
         {% if homepage_content.show_newest_communities %}
           <div class="col-md-12 col-sm-6">
             <h4 class="homepage-heading">{% trans "Our Newest Communities" %}</h4>
-            {% community_newest_communities limit=3 as newest_communities %}
-            <div id="newest-communities" class="list-group">
-              {% for community in newest_communities %}
-                <div class="list-group-item">
-                  {% community_blurb community show_picture=False truncate_description_at=25 %}
-                </div>
-              {% endfor %}
-            </div>
+            {% include "communities/includes/newest_communities_list_group.html" %}
           </div>
         {% endif %}
 

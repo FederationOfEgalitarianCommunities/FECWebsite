@@ -1,0 +1,16 @@
+{% load documents_tags %}
+
+<ul class="list-group">
+  {% documents_newest limit=limit|default:3 as newest_documents %}
+  {% for document in newest_documents %}
+    <li class="list-group-item">
+      <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
+      <small>
+        by
+        <a href="{{ document.community.get_absolute_url }}">{{ document.community }}</a>
+        in
+        <a href="{{ document.category.get_absolute_url }}">{{ document.category.title }}</a>
+      </small>
+    </li>
+  {% endfor %}
+</ul>

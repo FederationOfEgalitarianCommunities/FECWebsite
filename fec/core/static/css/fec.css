@@ -231,3 +231,12 @@ ul#root-category-tabs {
 h3#related-documents-sidebar-header {
   margin-top: 0;
 }
+
+
+
+/* Pages */
+
+/* Remove the Top Margin from the First Sidebar Header */
+h3#newest-communities-pages-sidebar {
+  margin-top: 0;
+}
