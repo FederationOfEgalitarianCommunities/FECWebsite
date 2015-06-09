@@ -102,6 +102,12 @@ class Community(Displayable):
         help_text='Is the Community in a Community in Dialog?',
         verbose_name='Community in Dialog'
     )
+    date_joined = models.DateField(
+        blank=True, null=True,
+        help_text=('The date this Community joined the FEC. '
+                   'Leave blank if not a member'),
+        verbose_name='FEC Member Since'
+    )
     address = models.TextField(
         blank=True,
         help_text='The full address of the Community.',

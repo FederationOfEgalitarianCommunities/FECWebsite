@@ -16,7 +16,6 @@ NOSE_ARGS = [
     '--cover-branches',
     '--cover-package=communities,documents,homepage',
     '--with-progressive',
-    '--with-watcher',
     '--filetype=.css',
     '--filetype=.html',
     '--filetype=.js',

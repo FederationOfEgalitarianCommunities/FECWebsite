@@ -1,4 +1,5 @@
 """This module contains functional tests for the Home Page."""
+import datetime
 from django.contrib.auth import get_user_model
 from mezzanine.core.models import CONTENT_STATUS_PUBLISHED
 from mezzanine.blog.models import BlogPost
@@ -47,10 +48,16 @@ class HomePageTests(SeleniumTestCase):
 
     def test_new_communities_are_shown(self):
         """The 3 newest communities are shown."""
-        hidden = Community.objects.create(title='Kalamazoo')
-        community1 = Community.objects.create(title='Kirtan')
-        community2 = Community.objects.create(title='Oslard')
-        community3 = Community.objects.create(title='Jugulum')
+        today = datetime.date.today()
+        yesterday = today - datetime.timedelta(days=1)
+        community1 = Community.objects.create(
+            title='Kalamazoo', date_joined=today)
+        community2 = Community.objects.create(
+            title='Kirtan', date_joined=today)
+        community3 = Community.objects.create(
+            title='Oslard', date_joined=today)
+        hidden = Community.objects.create(
+            title='Jugulum', date_joined=yesterday)
 
         self.selenium.get('{}{}'.format(self.live_server_url, '/'))
         html_excluding_footer = self.selenium.find_element_by_css_selector(

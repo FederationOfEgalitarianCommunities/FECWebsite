@@ -46,7 +46,7 @@ class CommunityAdmin(DisplayableAdmin):
                        ("short_description", "full_description"),
                        ("general_location", "year_founded"),
                        ("number_of_adults", "number_of_children"),
-                       "is_community_in_dialog"],
+                       ("is_community_in_dialog", "date_joined")],
         }),
         ("Contact", {
             "fields": ["address", "website", "email", "phone"],
