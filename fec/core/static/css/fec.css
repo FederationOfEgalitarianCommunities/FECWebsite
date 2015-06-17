@@ -99,6 +99,11 @@ div#footer-community-spotlight img {
 /* Make the FIC Logo a separate block from it's surrounding text */
 a#fic-link { display: block; }
 
+/* Add some empty space to the very bottom */
+footer .container {
+  padding-bottom: 1.25em;
+}
+
 
 
 /* Home Page */
