@@ -41,8 +41,16 @@
     <div class="col-sm-6 col-lg-4">
       {% community_info_thumbnail_block community %}
     </div>
+    {# Leave space at bottom of short columns #}
+    {% if forloop.counter|divisibleby:2 %}
+      <div class='clearfix visible-sm'></div>
+    {% endif %}
+    {% if forloop.counter|divisibleby:3 %}
+      <div class='clearfix visible-lg'></div>
+    {% endif %}
   {% endfor %}
 </div>
+
 
 {% if in_dialog_list %}
   <h2 id="in-dialog-communities">Communities In Dialogue</h2>
@@ -51,6 +59,13 @@
       <div class="col-sm-6 col-lg-4">
         {% community_info_thumbnail_block community %}
       </div>
+      {# Leave space at bottom of short columns #}
+      {% if forloop.counter|divisibleby:2 %}
+        <div class='clearfix visible-sm'></div>
+      {% endif %}
+      {% if forloop.counter|divisibleby:3 %}
+        <div class='clearfix visible-lg'></div>
+      {% endif %}
     {% endfor %}
   </div>
 {% endif %}
