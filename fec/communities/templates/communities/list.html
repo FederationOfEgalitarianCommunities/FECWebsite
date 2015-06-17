@@ -43,10 +43,10 @@
     </div>
     {# Leave space at bottom of short columns #}
     {% if forloop.counter|divisibleby:2 %}
-      <div class='clearfix visible-sm'></div>
+      <div class='clearfix visible-sm-block visible-md-block'></div>
     {% endif %}
     {% if forloop.counter|divisibleby:3 %}
-      <div class='clearfix visible-lg'></div>
+      <div class='clearfix visible-lg-block'></div>
     {% endif %}
   {% endfor %}
 </div>
@@ -61,10 +61,10 @@
       </div>
       {# Leave space at bottom of short columns #}
       {% if forloop.counter|divisibleby:2 %}
-        <div class='clearfix visible-sm'></div>
+        <div class='clearfix visible-sm-block visible-md-block'></div>
       {% endif %}
       {% if forloop.counter|divisibleby:3 %}
-        <div class='clearfix visible-lg'></div>
+        <div class='clearfix visible-lg-block'></div>
       {% endif %}
     {% endfor %}
   </div>
