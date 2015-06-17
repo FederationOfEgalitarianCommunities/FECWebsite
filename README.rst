@@ -3,6 +3,10 @@ Federation of Egalitarian Communities Website
 
 This is the Mezzanine project that powers http://thefec.org.
 
+Open issues live at http://bugs.sleepanarchy.com/projects/fec/issues
+
+The project roadmap lives at http://bugs.sleepanarchy.com/projects/fec/roadmap
+
 .. image:: https://travis-ci.org/FederationOfEgalitarianCommunities/FECWebsite.svg?branch=develop
     :target: https://travis-ci.org/FederationOfEgalitarianCommunities/FECWebsite
     :alt: Test Status
