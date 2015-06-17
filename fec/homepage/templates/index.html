@@ -51,7 +51,7 @@
                     <a href="{{ news.get_absolute_url }}">{{ news.title }}</a>
                   </h5>
                   <small><em>{% trans "posted" %} {{ news.publish_date|timesince }} {% trans "ago" %}</em></small>
-                  <p>{{ news.description_from_content|striptags }}
+                  <p>{{ news.description_from_content|striptags|truncatewords:40 }}
 
                   <a href="{{ news.get_absolute_url }}" class="btn btn-text btn-xs">Read More</a>
                   </p>
