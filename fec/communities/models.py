@@ -223,6 +223,7 @@ class CommunityFeed(Orderable, object):
     """
     url = models.URLField(help_text='The Feed\'s URL.')
     community = models.ForeignKey(Community, related_name="feeds")
+    post_limit = models.PositiveSmallIntegerField(null=True, blank=True)
 
     class Meta(object):
         """Set the colloquial name to ``Feed``."""
@@ -246,4 +247,6 @@ class CommunityFeed(Orderable, object):
             published_datetime = datetime.fromtimestamp(mktime(
                 post['published_parsed']))
             post['published'] = published_datetime
+        if self.post_limit is not None:
+            return posts[:self.post_limit]
         return posts

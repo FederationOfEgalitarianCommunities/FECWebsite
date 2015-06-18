@@ -44,6 +44,14 @@ class CommunityFeedModelTests(TestCase):
         ]
         self.assertEqual([post.title for post in bps], post_titles)
 
+    def test_get_blog_posts_respects_post_limit(self):
+        """get_latest_blog_posts should limit the items to the post_limit."""
+        self.feed.post_limit = 1
+        self.feed.save()
+        bps = self.feed.get_blog_posts()
+        post_titles = ['RSS Resources']
+        self.assertSequenceEqual([post.title for post in bps], post_titles)
+
 
 class CommunityDetailViewTests(TestCase):
     """Test the DetailViews Associated with the Community Model."""
