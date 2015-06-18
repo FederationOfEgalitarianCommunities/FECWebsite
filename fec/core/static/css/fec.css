@@ -23,12 +23,12 @@ html, body {
 
 /* Bring the Header Closer to the Top of the Page */
 body {
-  padding-top: 10px;
+  padding-top: 5px;
 }
 
 /* Add Some Breathing Room to the Bottom of the Site Header */
 div#site-header {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 /* Remove the Top Spacing for the Tag Line */
@@ -51,13 +51,17 @@ div#site-header #site-title .h1 {
 
 /* Reduce the Spacing Around the Site Title on Extra-Small Screens */
 div#site-header .visible-xs .h1 {
-  margin-top: 10px;
+  margin-top: 5px;
   margin-bottom: 5px;
 }
 
-/* Reduce the Width of the Search Box */
+/* Reduce the Size & Spacing of the Search Box */
 form#site-search input {
   width: 175px;
+  padding: 4px 8px;
+  height: 30px;
+  font-size: 14px;
+  line-height: 1.2;
 }
 
 /* Move the Tagline Completely to the Right of the Header */
@@ -72,6 +76,9 @@ form#site-search div.form-group {
 }
 
 /* Reduce the spacing between the navigation & page header */
+#navigation {
+  margin-bottom: 10px;
+}
 div.container > h1 {
   margin-top: 0;
 }
@@ -107,6 +114,11 @@ footer .container {
 
 
 /* Home Page */
+
+/* Reduce the space above the Lead Text */
+h3#lead-text {
+  margin-top: 10px;
+}
 
 /* Center the Lead Text and the Headings */
 h3#lead-text, .homepage-heading {

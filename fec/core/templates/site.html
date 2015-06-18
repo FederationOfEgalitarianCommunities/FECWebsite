@@ -92,8 +92,8 @@ $(document).ready(function() {
       <form action="{% url "search" %}" class="pull-right"
             id="site-search" role="search">
         <div class="form-group">
-          <input placeholder="{% trans "Search" %}" type="text" name="q"
-                 value="{{ request.REQUEST.q }}" />
+          <input id='site-search' placeholder="{% trans "Search..." %}"
+                 type="text" name="q" value="{{ request.REQUEST.q }}" />
         </div>
       </form>
     </div>
