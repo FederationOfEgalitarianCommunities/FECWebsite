@@ -15,6 +15,22 @@ from mezzanine.utils.models import upload_to
 class Community(Displayable):
     """A model for FEC Communities.
 
+    .. attribute:: MEMBER
+
+        A constant representing an FEC Full Member Community.
+
+    .. attribute:: COMMUNITY_IN_DIALOG
+
+        A constant representing an FEC Full Community in Dialog.
+
+    .. attribute:: ALLY
+
+        A constant representing an Ally Community of the FEC.
+
+    .. attribute:: STATUS_CHOICES
+
+        The available choices for the ``membership_status`` field.
+
     .. attribute:: profile_image
 
         The main image to use for the Community.
@@ -43,10 +59,10 @@ class Community(Displayable):
 
         The number of children living in the Community.
 
-    .. attribute:: is_community_in_dialog
+    .. attribute:: membership_status
 
-        If the Community is a Community in Dialog or not. A Community in Dialog
-        is not a full member of the FEC yet.
+        The current FEC membership status of the Community. Can be Member,
+        Community in Dialog or Ally.
 
     .. attribute:: address
 
@@ -65,6 +81,15 @@ class Community(Displayable):
         The phone number of the Community.
 
     """
+    MEMBER = 'member'
+    COMMUNITY_IN_DIALOG = 'community-in-dialog'
+    ALLY = 'ally'
+    STATUS_CHOICES = (
+        (MEMBER, 'Full Member'),
+        (COMMUNITY_IN_DIALOG, 'Community in Dialog'),
+        (ALLY, 'Ally')
+    )
+
     profile_image = models.ImageField(
         blank=True, null=True,
         upload_to='communities/profile_images/',
@@ -97,10 +122,12 @@ class Community(Displayable):
         default=0,
         help_text='The number of children living in the Community.'
     )
-    is_community_in_dialog = models.BooleanField(
-        default=False,
-        help_text='Is the Community in a Community in Dialog?',
-        verbose_name='Community in Dialog'
+    membership_status = models.CharField(
+        choices=STATUS_CHOICES,
+        max_length=30,
+        default=COMMUNITY_IN_DIALOG,
+        verbose_name='FEC Membership Status',
+        help_text='The Community\'s current status with the FEC.'
     )
     date_joined = models.DateField(
         blank=True, null=True,
@@ -140,9 +167,11 @@ class Community(Displayable):
 
     def get_absolute_url(self):
         """Return the URL of the Community's Detail Page."""
-        if self.is_community_in_dialog:
+        if self.membership_status == Community.COMMUNITY_IN_DIALOG:
             return reverse('community_in_dialog_detail',
                            kwargs={'slug': self.slug})
+        elif self.membership_status == Community.ALLY:
+            return reverse('ally_community_detail', kwargs={'slug': self.slug})
         return reverse('community_detail', kwargs={'slug': self.slug})
 
     def get_latest_blog_posts(self):

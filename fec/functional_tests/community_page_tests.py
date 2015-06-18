@@ -21,7 +21,8 @@ class CommunityDetailPageTests(SeleniumTestCase):
             number_of_children=3, phone="(555)555-5555",
             website="http://hello.com",
             address="123 Easy St.\nSomewhere, AK 21030",
-            full_description="Hello, I am the full description"
+            full_description="Hello, I am the full description",
+            membership_status=Community.MEMBER,
         )
         self.darmok_gallery_image = CommunityImage.objects.create(
             community=self.darmok, file="Test")
@@ -143,11 +144,13 @@ class CommunityListPageTests(SeleniumTestCase):
             general_location="Rural Tenagra", number_of_adults=20,
             number_of_children=3,
             short_description="A dude from a Star Trek episode",
-            profile_image=create_test_image()
+            profile_image=create_test_image(),
+            membership_status=Community.MEMBER,
         )
-        self.jalad = Community.objects.create(title="Jalad")
+        self.jalad = Community.objects.create(
+            title="Jalad", membership_status=Community.MEMBER)
         self.community_in_dialog = Community.objects.create(
-            title="Tenagra", is_community_in_dialog=True)
+            title="Tenagra", membership_status=Community.COMMUNITY_IN_DIALOG)
         self.selenium.get(self.live_server_url + reverse('community_list'))
 
     def test_page_title_is_our_communities(self):

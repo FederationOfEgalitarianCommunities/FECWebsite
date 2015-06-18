@@ -1,6 +1,5 @@
 """This module contains views used to display Communities."""
-from django.core.urlresolvers import reverse
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, ListView
 
 from .models import Community
@@ -39,12 +38,10 @@ class AbstractCommunityDetail(PublishedCommunityMixin, DetailView):
 class CommunityDetail(AbstractCommunityDetail):
     """Shows the details of a published :class:`~.models.Community`."""
     def get(self, request, slug, *args, **kwargs):
-        """Redirect Communities in Dialog to the correct detail view.."""
-        is_in_dialog = Community.objects.filter(
-            slug=slug, is_community_in_dialog=True).exists()
-        if is_in_dialog:
-            return redirect(
-                reverse('community_in_dialog_detail', kwargs={'slug': slug}))
+        """Redirect non-Members to the correct detail view.."""
+        community = get_object_or_404(Community, slug=slug)
+        if community.membership_status != Community.MEMBER:
+            return redirect(community.get_absolute_url())
         return super(CommunityDetail, self).get(request, slug, *args, **kwargs)
 
 
@@ -52,17 +49,32 @@ class CommunityInDialogDetail(AbstractCommunityDetail):
     """Shows the details of a published ``Community in Dialog``.
 
     This is represented by the :class:`~.models.Community` model's
-    :attr:`~.models.Community.is_community_in_dialog` attribute.
+    :attr:`~.models.Community.membership_status` attribute.
 
     """
     def get(self, request, slug, *args, **kwargs):
-        """Redirect Communities in Dialog to the correct detail view.."""
-        is_not_in_dialog = Community.objects.filter(
-            slug=slug, is_community_in_dialog=False).exists()
-        if is_not_in_dialog:
-            return redirect(reverse('community_detail', kwargs={'slug': slug}))
-        return super(CommunityInDialogDetail, self).get(request, slug, *args,
-                                                        **kwargs)
+        """Redirect non-Communities-in-Dialog to the correct detail view.."""
+        community = get_object_or_404(Community, slug=slug)
+        if community.membership_status != Community.COMMUNITY_IN_DIALOG:
+            return redirect(community.get_absolute_url())
+        return super(CommunityInDialogDetail, self).get(
+            request, slug, *args, **kwargs)
+
+
+class AllyCommunityDetail(AbstractCommunityDetail):
+    """Shows the details of a published ``Ally Community``.
+
+    This is represented by the :class:`~.models.Community` model's
+    :attr:`~.models.Community.membership_status` attribute.
+
+    """
+    def get(self, request, slug, *args, **kwargs):
+        """Redirect non-Allies to the correct detail view."""
+        community = get_object_or_404(Community, slug=slug)
+        if community.membership_status != Community.ALLY:
+            return redirect(community.get_absolute_url())
+        return super(AllyCommunityDetail, self).get(
+            request, slug, *args, **kwargs)
 
 
 class CommunityList(PublishedCommunityMixin, ListView):
@@ -85,7 +97,9 @@ class CommunityList(PublishedCommunityMixin, ListView):
         """Modify the context to filter the Community lists."""
         context = super(CommunityList, self).get_context_data(**kwargs)
         context['community_list'] = Community.objects.filter(
-            is_community_in_dialog=False)
+            membership_status=Community.MEMBER)
         context['in_dialog_list'] = Community.objects.filter(
-            is_community_in_dialog=True)
+            membership_status=Community.COMMUNITY_IN_DIALOG)
+        context['ally_list'] = Community.objects.filter(
+            membership_status=Community.ALLY)
         return context

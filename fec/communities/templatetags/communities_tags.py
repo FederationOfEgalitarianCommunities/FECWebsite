@@ -94,13 +94,14 @@ def community_all_latest_blog_posts(limit=5):
 @register.assignment_tag
 def community_fec_members():
     """Return a list of all FEC member communities."""
-    return Community.objects.filter(is_community_in_dialog=False)
+    return Community.objects.filter(membership_status=Community.MEMBER)
 
 
 @register.assignment_tag
 def community_communities_in_dialog():
     """Return a list of all FEC Communities in dialog"""
-    return Community.objects.filter(is_community_in_dialog=True)
+    return Community.objects.filter(
+        membership_status=Community.COMMUNITY_IN_DIALOG)
 
 
 @register.assignment_tag

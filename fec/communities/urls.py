@@ -1,7 +1,8 @@
 """This module controls the URL routing for the ``communities`` package."""
 from django.conf.urls import patterns, url
 
-from .views import (CommunityList, CommunityDetail, CommunityInDialogDetail)
+from .views import (CommunityList, CommunityDetail, CommunityInDialogDetail,
+                    AllyCommunityDetail)
 
 
 urlpatterns = patterns(
@@ -14,4 +15,7 @@ urlpatterns = patterns(
     url(r'^in-dialog/(?P<slug>[-_\w]+)/$',
         CommunityInDialogDetail.as_view(),
         name='community_in_dialog_detail'),
+    url(r'^ally/(?P<slug>[-_\w]+)/$',
+        AllyCommunityDetail.as_view(),
+        name='ally_community_detail'),
 )

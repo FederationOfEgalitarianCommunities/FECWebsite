@@ -70,6 +70,24 @@
   </div>
 {% endif %}
 
+{% if ally_list %}
+  <h2 id="ally-communities">Ally Communities</h2>
+  <div class="gallery row">
+    {% for community in ally_list %}
+      <div class="col-sm-6 col-lg-4">
+        {% community_info_thumbnail_block community %}
+      </div>
+      {# Leave space at bottom of short columns #}
+      {% if forloop.counter|divisibleby:2 %}
+        <div class='clearfix visible-sm-block visible-md-block'></div>
+      {% endif %}
+      {% if forloop.counter|divisibleby:3 %}
+        <div class='clearfix visible-lg-block'></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+
 {% endblock %}
 
 

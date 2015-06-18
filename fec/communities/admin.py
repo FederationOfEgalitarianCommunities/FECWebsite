@@ -36,9 +36,9 @@ class CommunityAdmin(DisplayableAdmin):
 
     """
     inlines = (CommunityFeedInline, CommunityImageInline)
-    list_display = ('title', 'is_community_in_dialog', 'general_location',
+    list_display = ('title', 'membership_status', 'general_location',
                     get_community_email, 'status', 'admin_link')
-    list_filter = ('is_community_in_dialog', 'status', 'keywords__keyword')
+    list_filter = ('membership_status', 'status', 'keywords__keyword')
     search_fields = ['title', 'general_location', 'year_founded', 'address']
     fieldsets = (
         (None, {
@@ -46,7 +46,7 @@ class CommunityAdmin(DisplayableAdmin):
                        ("short_description", "full_description"),
                        ("general_location", "year_founded"),
                        ("number_of_adults", "number_of_children"),
-                       ("is_community_in_dialog", "date_joined")],
+                       ("membership_status", "date_joined")],
         }),
         ("Contact", {
             "fields": ["address", "website", "email", "phone"],

@@ -133,7 +133,8 @@ class DocumentDetailPageTests(SeleniumTestCase):
         self.parent = DocumentCategory.objects.create(title="Enterprise")
         self.category = DocumentCategory.objects.create(
             title="Tenagra", parent=self.parent)
-        self.community = Community.objects.create(title="Picard")
+        self.community = Community.objects.create(
+            title="Picard", membership_status=Community.MEMBER)
         self.document = Document.objects.create(
             title="Darmok & Jalad", category=self.category,
             community=self.community, contents="Treaty of Algeron, 2311.")

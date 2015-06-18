@@ -29,7 +29,8 @@ class CommunityFeedModelTests(TestCase):
     """Test the CommunityFeed Model Methods."""
     def setUp(self):
         """Create a Community and RSS Feed."""
-        self.community = Community.objects.create(title="Dreamland")
+        self.community = Community.objects.create(
+            membership_status=Community.MEMBER, title="Dreamland")
         self.feed = CommunityFeed.objects.create(
             community=self.community,
             url="http://www.feedforall.com/sample-feed.xml")
@@ -57,48 +58,73 @@ class CommunityDetailViewTests(TestCase):
     """Test the DetailViews Associated with the Community Model."""
     def setUp(self):
         """Create a Community to view."""
-        self.community = Community.objects.create(title="Dreamland")
+        self.community = Community.objects.create(
+            membership_status=Community.MEMBER, title="Dreamland")
         self.community_in_dialog = Community.objects.create(
-            title="Dreamland 2", is_community_in_dialog=True)
+            title="Dreamland 2",
+            membership_status=Community.COMMUNITY_IN_DIALOG)
+        self.ally = Community.objects.create(
+            title="Dreamland 3", membership_status=Community.ALLY)
 
-    def test_community_detail_redirects_communities_in_dialog(self):
+    def test_community_detail_redirects_others(self):
         """
-        The CommunityDetail view should redirect to the
-        CommunityInDialogDetail view if the community is actually a community
-        in dialog.
+        The CommunityDetail view should redirect to the proper view if the
+        community is not a member of the FEC.
         """
         response = self.client.get(
             reverse('community_detail',
                     kwargs={'slug': self.community_in_dialog.slug}))
+        self.assertRedirects(response,
+                             self.community_in_dialog.get_absolute_url())
 
-        cid_link = reverse('community_in_dialog_detail',
-                           kwargs={'slug': self.community_in_dialog.slug})
+        response = self.client.get(
+            reverse('community_detail', kwargs={'slug': self.ally.slug}))
+        self.assertRedirects(response, self.ally.get_absolute_url())
 
-        self.assertRedirects(response, cid_link)
-
-    def test_community_in_dialog_detail_redirects_communities(self):
+    def test_community_in_dialog_detail_redirects_others(self):
         """
-        The CommunityInDialogDetail view should redirect to the CommunityDetail
-        view if the community is not a community in dialog.
+        The CommunityInDialogDetail view should redirect to the proper view if
+        the community is not a community in dialog.
         """
         response = self.client.get(
             reverse('community_in_dialog_detail',
                     kwargs={'slug': self.community.slug}))
+        self.assertRedirects(response, self.community.get_absolute_url())
 
-        community_link = reverse('community_detail',
-                                 kwargs={'slug': self.community.slug})
+        response = self.client.get(
+            reverse('community_in_dialog_detail',
+                    kwargs={'slug': self.ally.slug}))
+        self.assertRedirects(response, self.ally.get_absolute_url())
 
-        self.assertRedirects(response, community_link)
+    def test_ally_detail_redirects_others(self):
+        """
+        The AllyCommunityDetail view should redirect to the proper view if the
+        community is not an ally community..
+        """
+        response = self.client.get(
+            reverse('ally_community_detail',
+                    kwargs={'slug': self.community.slug}))
+        self.assertRedirects(response, self.community.get_absolute_url())
+
+        response = self.client.get(
+            reverse('ally_community_detail',
+                    kwargs={'slug': self.community_in_dialog.slug}))
+        self.assertRedirects(
+            response, self.community_in_dialog.get_absolute_url())
 
 
 class CommunityListViewTests(TestCase):
     """Test the ListViews Associated with the Community Model."""
     def setUp(self):
         """Create some Communities and a Community in Dialog."""
-        self.darmok = Community.objects.create(title="Darmok")
-        self.jalad = Community.objects.create(title="Jalad")
+        self.darmok = Community.objects.create(
+            membership_status=Community.MEMBER, title="Darmok")
+        self.jalad = Community.objects.create(
+            membership_status=Community.MEMBER, title="Jalad")
         self.community_in_dialog = Community.objects.create(
-            title="Tenagra", is_community_in_dialog=True)
+            title="Tenagra", membership_status=Community.COMMUNITY_IN_DIALOG)
+        self.ally_community = Community.objects.create(
+            title="On the Ocean", membership_status=Community.ALLY)
 
     def test_community_list_passes_correct_context(self):
         """The CommunityList view should pass the correct context."""
@@ -107,3 +133,5 @@ class CommunityListViewTests(TestCase):
                                  response.context['community_list'])
         self.assertSequenceEqual([self.community_in_dialog],
                                  response.context['in_dialog_list'])
+        self.assertSequenceEqual([self.ally_community],
+                                 response.context['ally_list'])
