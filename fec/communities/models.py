@@ -220,6 +220,10 @@ class CommunityFeed(Orderable, object):
 
         The :class:`Community` the feed belongs to.
 
+    .. attribute:: post_limit
+
+        The maximum number of posts to display.
+
     """
     url = models.URLField(help_text='The Feed\'s URL.')
     community = models.ForeignKey(Community, related_name="feeds")
