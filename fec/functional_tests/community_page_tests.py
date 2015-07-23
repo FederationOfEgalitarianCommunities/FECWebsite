@@ -2,6 +2,7 @@
 import time
 
 from django.core.urlresolvers import reverse
+from mezzanine.blog.models import BlogPost
 from mezzanine.core.templatetags.mezzanine_tags import thumbnail
 
 from core.utils import SeleniumTestCase, create_test_image
@@ -115,18 +116,31 @@ class CommunityDetailPageTests(SeleniumTestCase):
                          self.live_server_url + '/static/media/' +
                          gallery_image_url)
 
-    def test_page_contains_blog_posts(self):
-        """The community's blog posts should appear on the page."""
+    def test_page_contains_feed_posts(self):
+        """The community feed's posts should appear on the page."""
         blog_posts = self.selenium.find_elements_by_css_selector(
             ".community-blog-posts .community-blog-post")
         self.assertNotEqual(blog_posts, [])
 
-    def test_page_contains_latest_blog_post(self):
-        """The community's latest blog post should appear first."""
+    def test_page_contains_latest_feed_post(self):
+        """The community feed's latest post should appear first."""
         blog_posts = self.selenium.find_elements_by_css_selector(
             ".community-blog-posts .community-blog-post")
         self.assertIn("FeedScout enables you to view RSS/ATOM/RDF feeds from",
                       blog_posts[0].text)
+
+    def test_page_contains_blog_posts(self):
+        """BlogPosts under the Community's blog_category should be shown."""
+        self.create_admin_and_login()
+        self.selenium.get(self.live_server_url +
+                          self.darmok.get_absolute_url())
+        post = BlogPost.objects.create(
+            user_id=1, title='The Holy Hand Grenade', content='Has Holes')
+        post.categories.add(self.darmok.blog_category)
+        self.selenium.refresh()
+
+        self.assertIn('The Holy Hand Grenade',
+                      self.selenium.find_element_by_tag_name('html').text)
 
     def test_page_contains_documents(self):
         """The community's documents should appear in a table."""

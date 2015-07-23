@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.encoding import force_text
 import feedparser
+from mezzanine.blog.models import BlogCategory
 from mezzanine.core.models import Displayable, Orderable
 from mezzanine.core.fields import RichTextField, FileField
 from mezzanine.utils.models import upload_to
@@ -79,6 +80,11 @@ class Community(Displayable):
     .. attribute:: phone
 
         The phone number of the Community.
+
+    .. attribute:: blog_category
+
+        The :class:`mezzanine.blog.models.BlogCategory` containing the
+        Community's posts.
 
     """
     MEMBER = 'member'
@@ -155,6 +161,10 @@ class Community(Displayable):
         verbose_name='Phone Number',
         max_length=20
     )
+    blog_category = models.ForeignKey(
+        BlogCategory,
+        blank=True,
+    )
 
     class Meta(object):
         """Set the model's options, like the plural name and ordering."""
@@ -173,6 +183,15 @@ class Community(Displayable):
         elif self.membership_status == Community.ALLY:
             return reverse('ally_community_detail', kwargs={'slug': self.slug})
         return reverse('community_detail', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        """Create the :attr:`blog_category` or update it's name."""
+        if not self.id:
+            self.blog_category = BlogCategory.objects.create(title=self.title)
+        else:
+            self.blog_category.title = self.title
+            self.blog_category.save()
+        super(Community, self).save(*args, **kwargs)
 
     def get_latest_blog_posts(self):
         """Return a list of the Community's latest ``blog posts``.

@@ -1,6 +1,7 @@
 """This module contains unit tests for the ``communities`` package."""
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from mezzanine.blog.models import BlogCategory
 
 from .models import Community, CommunityFeed
 
@@ -9,10 +10,31 @@ class CommunityModelTests(TestCase):
     """Test the Community Model Methods."""
     def setUp(self):
         """Create a Community and RSS Feed."""
-        self.community = Community.objects.create(title="Dreamland")
+        self.community = Community.objects.create(
+            membership_status=Community.MEMBER, title="Dreamland")
         CommunityFeed.objects.create(
             community=self.community,
             url="http://www.feedforall.com/sample-feed.xml")
+
+    def test_create_category_when_created(self):
+        """
+        Creating a Community should create a BlogCategory of the same name.
+        """
+        community = Community(title='Transfers on over')
+        self.assertFalse(hasattr(community, 'blog_category'))
+        community.save()
+        self.assertTrue(hasattr(community, 'blog_category'))
+        self.assertEqual('Transfers on over', community.blog_category.title)
+
+    def test_name_changes_blog_category_name(self):
+        """
+        Changing a Community's name should change the name of it's
+        BlogCategory.
+        """
+        self.assertEqual(self.community.blog_category.title, 'Dreamland')
+        self.community.title = 'I like shorts'
+        self.community.save()
+        self.assertEqual(self.community.blog_category.title, 'I like shorts')
 
     def test_get_latest_blog_posts_returns_latest_posts(self):
         """get_latest_blog_posts should return the 5 latest posts."""
@@ -23,6 +45,13 @@ class CommunityModelTests(TestCase):
             'RSS Resources',
         ]
         self.assertSequenceEqual([post.title for post in bps], post_titles)
+
+    def test_category_not_deleted_with_community(self):
+        """The BlogCategory should remain if the Community is deleted."""
+        self.community.delete()
+        self.assertEqual(Community.objects.count(), 0)
+        self.assertEqual(BlogCategory.objects.count(), 1)
+        self.assertEqual(BlogCategory.objects.get().title, 'Dreamland')
 
 
 class CommunityFeedModelTests(TestCase):
