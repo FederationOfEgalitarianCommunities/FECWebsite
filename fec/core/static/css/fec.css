@@ -157,7 +157,7 @@ div#latest-news h5 {
 
 /* Community Listings Customizations */
 /* Remove Top Margins for Alignment w/ Top of Sidebar */
-h2#member-communities, h3#all-latest-blog-posts-sidebar {
+h2#member-communities, h3#all-latest-posts-sidebar {
   margin-top: 0;
 }
 /* Remove Top Margin to Reduce Space Between Image Thumbnail and Header */
@@ -185,8 +185,12 @@ dd.address address, dd.address address p {
 }
 /* Reduce Margins to Reduce Space Around the Latest Updates Header */
 h2.community-latest-updates {
-  margin-top: 10px;
+  margin-top: 10px;*/
   margin-bottom: -10px;
+}
+/* Add space between the Latest Updates & Page Footer */
+div.community-posts {
+  margin-bottom: 20px;
 }
 /* Reduce Bottom Margin to Reduce the Space Above the Latest Updates Header */
 div.community-description-list dl {

@@ -119,13 +119,13 @@ class CommunityDetailPageTests(SeleniumTestCase):
     def test_page_contains_feed_posts(self):
         """The community feed's posts should appear on the page."""
         blog_posts = self.selenium.find_elements_by_css_selector(
-            ".community-blog-posts .community-blog-post")
+            ".community-posts .community-post")
         self.assertNotEqual(blog_posts, [])
 
     def test_page_contains_latest_feed_post(self):
         """The community feed's latest post should appear first."""
         blog_posts = self.selenium.find_elements_by_css_selector(
-            ".community-blog-posts .community-blog-post")
+            ".community-posts .community-post")
         self.assertIn("FeedScout enables you to view RSS/ATOM/RDF feeds from",
                       blog_posts[0].text)
 

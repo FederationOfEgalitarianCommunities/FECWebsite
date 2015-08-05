@@ -36,9 +36,9 @@ class CommunityModelTests(TestCase):
         self.community.save()
         self.assertEqual(self.community.blog_category.title, 'I like shorts')
 
-    def test_get_latest_blog_posts_returns_latest_posts(self):
-        """get_latest_blog_posts should return the 5 latest posts."""
-        bps = self.community.get_latest_blog_posts()
+    def test_get_latest_feed_posts_returns_latest_posts(self):
+        """get_latest_feed_posts should return the 5 latest posts."""
+        bps = self.community.get_latest_feed_posts()
         post_titles = [
             'Recommended Web Based Feed Reader Software',
             'Recommended Desktop Feed Reader Software',
@@ -64,9 +64,9 @@ class CommunityFeedModelTests(TestCase):
             community=self.community,
             url="http://www.feedforall.com/sample-feed.xml")
 
-    def test_get_blog_posts_returns_feeds_posts(self):
-        """get_blog_posts should return all posts from the CommunityFeed."""
-        bps = self.feed.get_blog_posts()
+    def test_get_feed_posts_returns_feeds_posts(self):
+        """get_feed_posts should return all posts from the CommunityFeed."""
+        bps = self.feed.get_feed_posts()
         post_titles = [
             'RSS Resources',
             'Recommended Desktop Feed Reader Software',
@@ -74,11 +74,11 @@ class CommunityFeedModelTests(TestCase):
         ]
         self.assertEqual([post.title for post in bps], post_titles)
 
-    def test_get_blog_posts_respects_post_limit(self):
-        """get_latest_blog_posts should limit the items to the post_limit."""
+    def test_get_feed_posts_respects_post_limit(self):
+        """get_latest_feed_posts should limit the items to the post_limit."""
         self.feed.post_limit = 1
         self.feed.save()
-        bps = self.feed.get_blog_posts()
+        bps = self.feed.get_feed_posts()
         post_titles = ['RSS Resources']
         self.assertSequenceEqual([post.title for post in bps], post_titles)
 

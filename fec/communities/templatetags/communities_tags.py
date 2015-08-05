@@ -81,14 +81,14 @@ def community_random():
 
 
 @register.assignment_tag
-def community_all_latest_blog_posts(limit=5):
-    """Return the latest Blog Posts of all the Communities."""
+def community_all_latest_posts(limit=10):
+    """Return the latest RSS Feed & Blog Posts of all the Communities."""
     communities = Community.objects.all()
     posts = []
-    _ = [posts.extend(community.get_latest_blog_posts()) for community in
+    _ = [posts.extend(community.get_latest_posts()) for community in
          communities]
-    posts.sort(key=lambda post: post.published, reverse=True)
-    return posts
+    posts.sort(key=lambda post: post['published'], reverse=True)
+    return posts[:limit]
 
 
 @register.assignment_tag

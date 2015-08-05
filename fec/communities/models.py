@@ -1,5 +1,6 @@
 """This module contains data models related to Communities."""
 from datetime import datetime
+import re
 from string import punctuation
 from time import mktime
 
@@ -8,7 +9,8 @@ from django.db import models
 from django.utils.encoding import force_text
 import feedparser
 from mezzanine.blog.models import BlogCategory
-from mezzanine.core.models import Displayable, Orderable
+from mezzanine.core.models import (Displayable, Orderable,
+                                   CONTENT_STATUS_PUBLISHED)
 from mezzanine.core.fields import RichTextField, FileField
 from mezzanine.utils.models import upload_to
 
@@ -172,7 +174,7 @@ class Community(Displayable):
         ordering = ['title']
 
     def __unicode__(self):
-        """Use the Community :attr:`Community.title <name>` to represent it."""
+        """Use the :attr:`Community.title <name>` to represent it."""
         return u'{}'.format(self.title)
 
     def get_absolute_url(self):
@@ -193,25 +195,42 @@ class Community(Displayable):
             self.blog_category.save()
         super(Community, self).save(*args, **kwargs)
 
-    def get_latest_blog_posts(self):
-        """Return a list of the Community's latest ``blog posts``.
+    def get_latest_posts(self, limit=5):
+        """
+        Return a list of latest BlogPosts in Community's BlogCategory and Posts
+        from it's CommunityFeed.
 
-        What exactly consitutes a ``blog_post`` is defined by the
-        :func:`CommunityFeed.get_blog_posts` function.
+        """
+        blog_and_feed_posts = (
+            [convert_to_feed_post(blog_post, self) for blog_post in
+             self.blog_category.blogposts.filter(
+                 status=CONTENT_STATUS_PUBLISHED)]
+            + self.get_latest_feed_posts()
+        )
+        blog_and_feed_posts.sort(
+            key=lambda post: post['published'], reverse=True)
+
+        return blog_and_feed_posts[:limit]
+
+    def get_latest_feed_posts(self):
+        """Return a list of the Community's latest ``feed posts``.
+
+        What exactly consitutes a ``feed_post`` is defined by the
+        :func:`CommunityFeed.get_feed_posts` function.
 
         A `community` attribute is added to each post containing the parent
         :class:`Community`.
 
-        :returns: A list of ``blog post`` dictionaries.
+        :returns: A list of ``feed post`` dictionaries.
 
         """
         feeds = self.feeds.all()
-        blog_posts = []
-        _ = [blog_posts.append(post) for feed in feeds
-             for post in feed.get_blog_posts()]
-        _ = [setattr(post, "community", self) for post in blog_posts]
-        blog_posts.sort(key=lambda x: x.published, reverse=True)
-        return blog_posts[:5]
+        feed_posts = []
+        _ = [feed_posts.append(post) for feed in feeds
+             for post in feed.get_feed_posts()]
+        _ = [setattr(post, "community", self) for post in feed_posts]
+        feed_posts.sort(key=lambda x: x.published, reverse=True)
+        return feed_posts[:5]
 
 
 class CommunityImage(Orderable, object):
@@ -285,13 +304,13 @@ class CommunityFeed(Orderable, object):
     def __unicode__(self):
         return self.url
 
-    def get_blog_posts(self):
-        """Return all blog posts from the :attr:`url`.
+    def get_feed_posts(self):
+        """Return all feed posts from the :attr:`url`.
 
         This modifies the ``published`` attribute to be a datetime instead of
         the Feed's date string.
 
-        :returns: A list of ``blog posts``.
+        :returns: A list of ``feed posts``.
         """
         parsed_feed = feedparser.parse(self.url)
         posts = parsed_feed.entries
@@ -299,6 +318,22 @@ class CommunityFeed(Orderable, object):
             published_datetime = datetime.fromtimestamp(mktime(
                 post['published_parsed']))
             post['published'] = published_datetime
+            post['via'] = re.sub(r'^(http(s)?://)?(www.)?(.*)$', r'\4',
+                                 parsed_feed.feed.link)
         if self.post_limit is not None:
             return posts[:self.post_limit]
         return posts
+
+
+def convert_to_feed_post(blog_post, community):
+    '''Turn a BlogPost into a feedparser entry.'''
+    return {
+        'title': blog_post.title,
+        'published': blog_post.publish_date.replace(tzinfo=None),
+        'author': blog_post.user.get_full_name(),
+        'description': blog_post.description,
+        'link': blog_post.get_absolute_url(),
+        'comments': '{}#comments'.format(blog_post.get_absolute_url()),
+        'slash_comments': '{}'.format(blog_post.comments_count),
+        'community': community,
+    }

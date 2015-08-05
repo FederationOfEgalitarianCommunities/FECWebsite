@@ -121,38 +121,44 @@
 {% endwith %}
 
 
-<!-- Blog Posts -->
-{# Each blog post should be an ``entry`` returned by ``feedparser``. #}
+<!-- Feed Posts -->
+{# Each feed post should be an ``entry`` returned by ``feedparser``. #}
 {% nevercache %}
-{% cache 86400 blog_posts community.slug %}
-{% with community.get_latest_blog_posts as blog_posts %}
-{% if blog_posts %}
+{% cache 86400 feed_posts community.slug %}
+{% with community.get_latest_posts as feed_posts %}
+{% if feed_posts %}
   <a id="latest-updates"></a>
-  <h2 class="community-latest-updates">Latest Updates</h2>
-  <div class="row community-blog-posts">
-    {% for blog_post in blog_posts %}
-      {% if blog_post.description|richtext_filters %}
-      <div class="community-blog-post col-xs-12">
-        <h3>{{ blog_post.title }}
-          {% if blog_post.author %}
-            <small>by {{ blog_post.author }}{% if blog_post.published%},
-              {{ blog_post.published|timesince|get_first_by:"," }} ago{% endif %}
+  <h2 class="community-latest-updates">Latest Feed Updates</h2>
+  <div class="row community-posts">
+    {% for feed_post in feed_posts %}
+      {% if feed_post.description|richtext_filters %}
+      <div class="community-post col-xs-12">
+        <h3>{{ feed_post.title }}
+          {% if feed_post.author %}
+            <small>by {{ feed_post.author }}{% if feed_post.published%},
+              {{ feed_post.published|timesince|get_first_by:"," }} ago{% endif %}
             </small>
           {% endif %}
         </h3>
-        <p>{{ blog_post.description|richtext_filters|safe }}</p>
+        <p>{{ feed_post.description|richtext_filters|safe }}</p>
         <div class="pull-left">
-          <a href="{{ blog_post.comments }}" target="_blank"><button class="btn btn-link btn-xs">
-            {% if blog_post.slash_comments %}
-              {{ blog_post.slash_comments }} Comment{{ blog_post.slash_comments|pluralize }}
+          <a href="{{ feed_post.comments }}" target="_blank"><button class="btn btn-link btn-xs">
+            {% if feed_post.slash_comments %}
+              {{ feed_post.slash_comments }} Comment{{ feed_post.slash_comments|pluralize }}
             {% else %}
               Comments
             {% endif %}
             <small><span class="glyphicon glyphicon-comment"></span></small>
           </button></a>
-          <a href="{{ blog_post.link }}" target="_blank"><button class="btn btn-link btn-xs">
+          <a href="{{ feed_post.link }}" target="_blank"><button class="btn btn-link btn-xs">
             Read More <small><span class="glyphicon glyphicon-new-window"></span></small>
           </button></a>
+          {% if feed_post.via %}
+            <a href="http://{{ feed_post.via }}" target='_blank'><button class='btn btn-link btn-xs'>
+              Via {{ feed_post.via }}
+              <small><span class="glyphicon glyphicon-new-window"></span></small>
+            </button></a>
+          {% endif %}
         </div>
       </div>
       {% endif %}
