@@ -215,7 +215,7 @@ div.community-description-list dl {
 }
 .header-fixed > tbody {
   overflow-y: auto;
-  height: 150px;
+  max-height: 150px;
 }
 .header-fixed > tbody > tr > td,
 .header-fixed > thead > tr > th {
