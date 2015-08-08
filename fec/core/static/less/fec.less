@@ -2,14 +2,54 @@
 @import "bootstrap/bootstrap.less";
 @import "bootstrap/theme.less";
 
-
 /* Variables */
-@navbar-height:         38px;
+
+/* Colors */
+// From FEC Logo
+@red:     #d2232a;
+@green:   #00813d;
+@purple:  #553289;
+@orange:  #f49a2e;
+@yellow:  #ebc900;
+
+@light-red:   lighten(@red, 47.5%);
+@lighter-red: lighten(@red, 50%);
+
+@brand-primary: @red;
+
 /* Set Correct Font Path */
 @icon-font-path:        "/static/fonts/";
 
 /* Set Small Screen Width to Correct Size for Navbar Breaking */
 @screen-sm:             793px;
+
+@component-active-color:    white;
+@component-active-bg:       @red;
+
+/* Navbar */
+@navbar-height:                     38px;
+@navbar-default-bg:                 @red;
+@navbar-default-color:              white;
+@navbar-default-link-color:         @navbar-default-color;
+@navbar-default-link-hover-color:   white;
+@navbar-default-link-hover-bg:      darken(@navbar-default-bg, 1%);
+@navbar-default-link-active-color:  @navbar-default-color;
+@navbar-default-toggle-icon-bar-bg: @navbar-default-link-color;
+@navbar-default-toggle-hover-bg:    @navbar-default-link-hover-bg;
+
+/* Generic Navs */
+@nav-link-hover-bg:                 @lighter-red;
+
+/* Panels */
+@panel-heading-padding:             7.5px 15px;
+@panel-default-heading-bg:          lighten(@yellow, 20%);
+
+/* Dropdowns */
+@dropdown-link-hover-color:         white;
+@dropdown-link-hover-bg:            darken(@navbar-default-bg, 1%);
+
+/* Breadcrumbs */
+@breadcrumb-bg:                     @light-red;
 
 
 /* General Customizations */
@@ -29,6 +69,23 @@
       table-layout: fixed;
       float:none;
   }
+}
+
+/* Fix Color of Dropdown Nav Menus */
+ul.nav.navbar-nav > li.dropdown > a.dropdown-toggle:hover {
+  background-color: @dropdown-link-hover-bg;
+  color: @dropdown-link-hover-color;
+}
+div.navbar-header button.navbar-toggle:hover,
+div.navbar-header button.navbar-toggle:focus {
+  background-color: @navbar-default-link-hover-bg;
+  color: @navbar-default-link-hover-color;
+}
+
+
+/* Make Footer Light Red */
+footer {
+  background-color: lighten(@red, 49.5%) !important;
 }
 
 
