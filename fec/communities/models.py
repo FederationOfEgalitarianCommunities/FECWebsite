@@ -204,8 +204,8 @@ class Community(Displayable):
         blog_and_feed_posts = (
             [convert_to_feed_post(blog_post, self) for blog_post in
              self.blog_category.blogposts.filter(
-                 status=CONTENT_STATUS_PUBLISHED)]
-            + self.get_latest_feed_posts()
+                 status=CONTENT_STATUS_PUBLISHED)] +
+            self.get_latest_feed_posts()
         )
         blog_and_feed_posts.sort(
             key=lambda post: post['published'], reverse=True)
