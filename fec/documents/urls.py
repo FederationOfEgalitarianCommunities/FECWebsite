@@ -20,7 +20,7 @@ urlpatterns = patterns(
         DocumentCategoryDetail.as_view(),
         name="document_category_detail"),
 
-    url(r'^tag/(?P<tag>[-_\w\s]+)/$',
+    url(r'^tag/(?P<tag>.*)/$',
         DocumentTagList.as_view(),
         name="document_tag_list"),
 

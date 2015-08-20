@@ -1,5 +1,8 @@
 """This module contains views to display Documents and their Categories."""
 from django.views.generic import DetailView, ListView
+from django.shortcuts import get_object_or_404
+
+from mezzanine.generic.models import Keyword
 
 from .models import Document, DocumentCategory
 
@@ -79,11 +82,11 @@ class DocumentTagList(ListView):
 
     def get_queryset(self):
         """Return only Documents with the specified ``tag``."""
-        tag = self.kwargs['tag']
-        return Document.objects.filter(keywords__keyword__title__iexact=tag)
+        tag = get_object_or_404(Keyword, slug=self.kwargs['tag'])
+        return Document.objects.filter(keywords__keyword=tag)
 
     def get_context_data(self, **kwargs):
         """Add the tag name to the context."""
         context = super(DocumentTagList, self).get_context_data(**kwargs)
-        context['tag'] = self.kwargs['tag']
+        context['tag'] = get_object_or_404(Keyword, slug=self.kwargs['tag'])
         return context

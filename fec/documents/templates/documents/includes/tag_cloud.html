@@ -10,7 +10,7 @@
   <h3 class="text-center">Tags</h3>
   <ul class="list-inline tag-cloud">
     {% for tag in tags %}
-    <li><a href="{% url "document_tag_list" tag=tag %}" class="tag-weight-{{ tag.weight }}">{{ tag }}</a></li>
+    <li><a href="{% url "document_tag_list" tag=tag.slug %}" class="tag-weight-{{ tag.weight }}">{{ tag }}</a></li>
     {% endfor %}
   </ul>
 {% endif %}
