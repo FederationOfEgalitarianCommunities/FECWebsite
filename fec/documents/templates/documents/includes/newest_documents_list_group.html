@@ -6,8 +6,10 @@
     <li class="list-group-item">
       <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
       <small>
-        by
-        <a href="{{ document.community.get_absolute_url }}">{{ document.community }}</a>
+        {% if document.community %}
+          by
+          <a href="{{ document.community.get_absolute_url }}">{{ document.community }}</a>
+        {% endif %}
         in
         <a href="{{ document.category.get_absolute_url }}">{{ document.category.title }}</a>
       </small>
