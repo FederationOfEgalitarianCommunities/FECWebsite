@@ -67,6 +67,11 @@ class Community(Displayable):
         The current FEC membership status of the Community. Can be Member,
         Community in Dialog or Ally.
 
+    .. attribute:: date_joined
+
+        The day the Community became a Full Member of the FEC. Blank for
+        non-members.
+
     .. attribute:: address
 
         The Community's full address.
