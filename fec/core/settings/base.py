@@ -15,6 +15,9 @@ SITE_TAGLINE = "A new way of living is possible."
 # Remove the Model-dropdown for the search
 SEARCH_MODEL_CHOICES = ()
 
+# Bump up Posts per Page
+BLOG_POST_PER_PAGE = 10
+
 # Remove Ratings from Comments
 COMMENTS_USE_RATINGS = False
 
