@@ -129,12 +129,12 @@ out.
 Testing
 --------
 
-After making changes, run the test suite with ``manage.py``:
+After making changes, run the test suite with ``py.test``:
 
 .. code-block:: bash
 
-    $ export DJANGO_SETTINGS_MODULE=core.settings.test
-    $ ./manage.py test
+    $ cd fec
+    $ py.test
 
 Every test should pass before you commit your changes.
 

@@ -106,20 +106,20 @@ Install the test dependencies::
 Then you can start the test runner::
 
     cd fec
-    ./manage.py test --settings=core.settings.test
+    py.test
 
 Once completed, the test runner will monitor for file changes & re-run the test
 suite.
 
 You can also run a subset of the tests::
 
-    ./manage.py test communities.tests --settings=core.settings.test
+    py.test communities/tests.py -k CommunityDetail
 
 
 Contribute
 -----------
 
-Template overrides and sitewide items go in ``core``.
+Template overrides and sitewide items go in ``fec``.
 
 Write tests, maintain 100% test coverage. Update docs when necessary.
 
