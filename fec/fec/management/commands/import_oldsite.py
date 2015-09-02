@@ -11,8 +11,9 @@ imported.
 """
 import datetime
 from getpass import getpass
-import re
 import pytz
+import re
+import sys
 
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
@@ -20,7 +21,11 @@ from django.utils.html import linebreaks
 from mezzanine.blog.models import BlogPost
 from mezzanine.generic.models import Keyword, AssignedKeyword
 from mezzanine.pages.models import RichTextPage
-import MySQLdb
+try:
+    import MySQLdb
+except ImportError:
+    sys.exit('You must have MySQL-python installed.')
+
 
 from communities.models import Community
 from documents.models import Document, DocumentCategory

@@ -20,17 +20,17 @@ class Pep8Tests(TestCase):
         self.assertEqual(result.total_errors, 0,
                          "PEP8 issues were found in the functional tests.")
 
-    def test_core_pep8(self):
-        """The core package should be PEP8 compliant."""
+    def test_fec_pep8(self):
+        """The fec package should be PEP8 compliant."""
         result = check_pep8([
-            'core/urls.py',
-            'core/utils.py',
-            'core/templatetags/core_filters.py',
-            'core/tests.py',
+            'fec/urls.py',
+            'fec/utils.py',
+            'fec/templatetags/core_filters.py',
+            'fec/tests.py',
         ])
 
         self.assertEqual(result.total_errors, 0,
-                         "PEP8 issues were found in the core package.")
+                         "PEP8 issues were found in the fec package.")
 
     def test_homepage_pep8(self):
         """The homepage package should be PEP8 compliant."""

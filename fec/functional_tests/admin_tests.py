@@ -1,5 +1,5 @@
 """This module contains functional tests applicable to the Admin Backend."""
-from core.utils import SeleniumTestCase
+from fec.utils import SeleniumTestCase
 
 
 class GeneralAdminPageTests(SeleniumTestCase):
@@ -35,7 +35,7 @@ class CommunityAdminPageTests(SeleniumTestCase):
         self.selenium.find_element_by_link_text("Communities").click()
         self.selenium.find_element_by_link_text("Add community").click()
         fieldset_headers = self.selenium.find_elements_by_css_selector(
-            "fieldset.collapse-closed h2.collapse-toggle")
+            "fieldset.collapse-closed h2")
         self.assertIn("Publishing", [fh.text for fh in fieldset_headers])
 
     def test_contact_fieldset_is_hidden_by_default(self):
@@ -43,7 +43,7 @@ class CommunityAdminPageTests(SeleniumTestCase):
         self.selenium.find_element_by_link_text("Communities").click()
         self.selenium.find_element_by_link_text("Add community").click()
         fieldset_headers = self.selenium.find_elements_by_css_selector(
-            "fieldset.collapse-closed h2.collapse-toggle")
+            "fieldset.collapse-closed h2")
         self.assertIn("Contact", [fh.text for fh in fieldset_headers])
 
 

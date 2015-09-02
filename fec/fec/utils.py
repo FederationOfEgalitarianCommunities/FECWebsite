@@ -3,9 +3,9 @@ from StringIO import StringIO
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.files.base import ContentFile
 from django.db import transaction
-from django.test import LiveServerTestCase
 from PIL import Image
 import pep8
 from selenium import webdriver
@@ -13,7 +13,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 
 
-class SeleniumTestCase(LiveServerTestCase):
+class SeleniumTestCase(StaticLiveServerTestCase):
     """A test case with a Selenium WebDriver and extra helper functions."""
     @classmethod
     def setUpClass(cls):
@@ -47,7 +47,8 @@ class SeleniumTestCase(LiveServerTestCase):
         :returns: :obj:`None`
 
         """
-        User.objects.create_superuser('admin', 'admin@test.test', 'admin')
+        self.admin_user = User.objects.create_superuser(
+            'admin', 'admin@test.test', 'admin')
         transaction.commit()
         self.selenium.get(self.live_server_url + '/admin/')
         username_field = self.selenium.find_element_by_name('username')
@@ -111,7 +112,6 @@ class SeleniumTestCase(LiveServerTestCase):
         """
         sub_menu_link = self.selenium.find_element_by_link_text(sub_menu)
         sub_menu_items = sub_menu_link.find_elements_by_xpath("../ul/li")
-        print sub_menu_items
         self.assertTrue(any(item.text == item_name for item in sub_menu_items),
                         'Could not find the Menu Item "{0}" in the "{1}" Menu'.
                         format(item_name, sub_menu))

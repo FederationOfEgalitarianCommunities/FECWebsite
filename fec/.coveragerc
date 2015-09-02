@@ -1,0 +1,17 @@
+[run]
+branch = True
+
+omit =
+    */migrations/*
+    **/__init__.py
+    */tests.py
+    accounting/*
+    fec/management/*
+    fec/settings/*
+    manage.py
+    fec/wsgi.py
+source =
+    fec
+    communities
+    documents
+    homepage

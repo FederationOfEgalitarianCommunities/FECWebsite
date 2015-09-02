@@ -2,7 +2,7 @@
 from django.core.urlresolvers import reverse
 
 from communities.models import Community
-from core.utils import SeleniumTestCase
+from fec.utils import SeleniumTestCase
 from documents.models import Document, DocumentCategory
 
 

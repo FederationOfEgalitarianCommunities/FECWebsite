@@ -2,10 +2,11 @@
 import time
 
 from django.core.urlresolvers import reverse
+from django.utils.timezone import now
 from mezzanine.blog.models import BlogPost
 from mezzanine.core.templatetags.mezzanine_tags import thumbnail
 
-from core.utils import SeleniumTestCase, create_test_image
+from fec.utils import SeleniumTestCase, create_test_image
 from communities.models import Community, CommunityImage, CommunityFeed
 from documents.models import Document, DocumentCategory
 
@@ -13,7 +14,7 @@ from documents.models import Document, DocumentCategory
 class CommunityDetailPageTests(SeleniumTestCase):
     """Test Expectations for the Community Details Page."""
     def setUp(self):
-        """Create a Community to test with and visit it's detail's page."""
+        """Create a Community to test with & visit it's detail page."""
         self.darmok = Community.objects.create(
             title="Darmok", year_founded=2014,
             general_location="Rural Tenagra", number_of_adults=20,
@@ -123,7 +124,7 @@ class CommunityDetailPageTests(SeleniumTestCase):
         self.assertNotEqual(blog_posts, [])
 
     def test_page_contains_latest_feed_post(self):
-        """The community feed's latest post should appear first."""
+        """The CommunityFeed's latest post should appear first."""
         blog_posts = self.selenium.find_elements_by_css_selector(
             ".community-posts .community-post")
         self.assertIn("FeedScout enables you to view RSS/ATOM/RDF feeds from",
@@ -135,7 +136,8 @@ class CommunityDetailPageTests(SeleniumTestCase):
         self.selenium.get(self.live_server_url +
                           self.darmok.get_absolute_url())
         post = BlogPost.objects.create(
-            user_id=1, title='The Holy Hand Grenade', content='Has Holes')
+            user_id=self.admin_user.id, title='The Holy Hand Grenade',
+            content='Has Holes', publish_date=now())
         post.categories.add(self.darmok.blog_category)
         self.selenium.refresh()
 

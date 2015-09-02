@@ -124,7 +124,7 @@
 <!-- Feed Posts -->
 {# Each feed post should be an ``entry`` returned by ``feedparser``. #}
 {% nevercache %}
-{% cache 86400 feed_posts community.slug %}
+{% cache 86400 "feed_posts" community.slug %}
 {% with community.get_latest_posts as feed_posts %}
 {% if feed_posts %}
   <a id="latest-updates"></a>

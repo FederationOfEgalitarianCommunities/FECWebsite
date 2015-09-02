@@ -12,6 +12,6 @@ install:
     - pip install coveralls
     - pip install Sphinx sphinx_rtd_theme
 script:
-    - cd fec && python manage.py test && cd ../docs && make html && cd ..
+    - cd fec && py.test && cd ../docs && make html && cd ..
 after_success:
     - mv -f fec/.coverage . && coveralls

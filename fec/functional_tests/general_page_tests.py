@@ -1,10 +1,10 @@
 """This module contains functional tests applicable for every Page."""
 from mezzanine.core.templatetags.mezzanine_tags import thumbnail
-from mezzanine.pages.models import Link, Page, RichTextPage
+from mezzanine.pages.models import Link, RichTextPage
 from selenium.webdriver.common.keys import Keys
 
 from communities.models import Community, CommunityImage
-from core.utils import SeleniumTestCase
+from fec.utils import SeleniumTestCase
 from homepage.models import HomepageContent
 
 
@@ -34,6 +34,7 @@ class GeneralPageTests(SeleniumTestCase):
     def test_mobile_title_links_to_homepage(self):
         """The title on a mobile screen should be a link to the Home Page."""
         self.selenium.set_window_size(320, 568)
+        self.selenium.set_window_position(0, 0)
         title_link = self.selenium.find_element_by_css_selector(
             '#site-logo-title-xs a')
         self.assertTrue(title_link.is_displayed(),
@@ -45,6 +46,7 @@ class GeneralPageTests(SeleniumTestCase):
     def test_tagline_is_visible_and_correct_on_large_screens(self):
         """The tagline should be the FEC's slogan."""
         self.selenium.set_window_size(1680, 1050)
+        self.selenium.set_window_position(0, 0)
         tagline = self.selenium.find_element_by_css_selector(
             "#site-tagline")
         self.assertTrue(tagline.is_displayed(),

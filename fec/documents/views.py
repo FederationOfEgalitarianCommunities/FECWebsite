@@ -65,8 +65,8 @@ class RootDocumentCategoryList(ListView):
 
     def get_queryset(self):
         """Return only Categories with no parent."""
-        return DocumentCategory.objects.filter(parent=None).select_related(
-            'children', 'documents', 'child__documents')
+        return DocumentCategory.objects.filter(parent=None).prefetch_related(
+            'children', 'documents', 'children__documents')
 
 
 class DocumentTagList(ListView):

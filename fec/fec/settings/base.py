@@ -1,48 +1,13 @@
 from __future__ import absolute_import, unicode_literals
-from django.core.exceptions import ImproperlyConfigured
-
 import os
+
+from django.core.exceptions import ImproperlyConfigured
+from django.utils.translation import ugettext_lazy as _
 
 
 ######################
 # FEC Customizations #
 ######################
-
-# Title & Tagline
-SITE_TITLE = "Federation of Egalitarian Communities"
-SITE_TAGLINE = "A new way of living is possible."
-
-# Remove the Model-dropdown for the search
-SEARCH_MODEL_CHOICES = ()
-
-# Bump up Posts per Page
-BLOG_POST_PER_PAGE = 10
-
-# Remove Ratings from Comments
-COMMENTS_USE_RATINGS = False
-
-# Specify Settings Available in Templates
-TEMPLATE_ACCESSIBLE_SETTINGS = (
-    'MEDIA_URL',
-    # Defaults
-    'ACCOUNTS_APPROVAL_REQUIRED', 'ACCOUNTS_VERIFICATION_REQUIRED',
-    'ADMIN_MENU_COLLAPSED', 'BITLY_ACCESS_TOKEN', 'BLOG_USE_FEATURED_IMAGE',
-    'COMMENTS_DISQUS_SHORTNAME', 'COMMENTS_NUM_LATEST',
-    'COMMENTS_DISQUS_API_PUBLIC_KEY', 'COMMENTS_DISQUS_API_SECRET_KEY',
-    'COMMENTS_USE_RATINGS', 'DEV_SERVER', 'FORMS_USE_HTML5',
-    'GRAPPELLI_INSTALLED', 'GOOGLE_ANALYTICS_ID', 'JQUERY_FILENAME',
-    'JQUERY_UI_FILENAME', 'LOGIN_URL', 'LOGOUT_URL', 'SITE_TITLE',
-    'SITE_TAGLINE', 'USE_L10N'
-)
-
-# Compile LESS Files using lessc
-COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc {infile} {outfile}'),
-)
-
-# Always compile static files
-COMPRESS_ENABLED = True
-
 
 # Utility Functions
 def get_env_variable(var_name):
@@ -54,19 +19,52 @@ def get_env_variable(var_name):
         raise ImproperlyConfigured(error_msg)
 
 
-######################
-# MEZZANINE SETTINGS #
-######################
+# Title & Tagline
+SITE_TITLE = "Federation of Egalitarian Communities"
+SITE_TAGLINE = "A new way of living is possible."
 
-# The following settings are already defined with default values in
-# the ``defaults.py`` module within each of Mezzanine's apps, but are
-# common enough to be put here, commented out, for convenient
-# overriding. Please consult the settings documentation for a full list
-# of settings Mezzanine implements:
-# http://mezzanine.jupo.org/docs/configuration.html#default-settings
+# Base in Eastern Time
+TIME_ZONE = 'America/New_York'
 
-# Controls the ordering and grouping of the admin menu.
-#
+# Remove the Model-dropdown for the search
+SEARCH_MODEL_CHOICES = ()
+
+# Bump up Posts per Page
+BLOG_POST_PER_PAGE = 10
+# Turn on featured images for blog posts.
+BLOG_USE_FEATURED_IMAGE = True
+
+# Remove Ratings from Comments
+COMMENTS_USE_RATINGS = False
+
+# Add custom apps
+INSTALLED_APPS = (
+    "fec",
+    "communities",
+    "documents",
+    "homepage",
+
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.redirects",
+    "django.contrib.sessions",
+    "django.contrib.sites",
+    "django.contrib.sitemaps",
+    "django.contrib.staticfiles",
+    "mezzanine.boot",
+    "mezzanine.conf",
+    "mezzanine.core",
+    "mezzanine.generic",
+    "mezzanine.pages",
+    "mezzanine.blog",
+    "mezzanine.forms",
+    "mezzanine.galleries",
+    # "mezzanine.accounts",
+    # "mezzanine.mobile",
+)
+
+# Add Custom Apps to Admin Menu
 ADMIN_MENU_ORDER = (
     ("Content",
         ("communities.Community",
@@ -95,6 +93,74 @@ ADMIN_MENU_ORDER = (
      ),
 )
 
+# Specify Settings Available in Templates
+TEMPLATE_ACCESSIBLE_SETTINGS = (
+    'MEDIA_URL',
+    # Defaults
+    'ACCOUNTS_APPROVAL_REQUIRED', 'ACCOUNTS_VERIFICATION_REQUIRED',
+    'ADMIN_MENU_COLLAPSED', 'BITLY_ACCESS_TOKEN', 'BLOG_USE_FEATURED_IMAGE',
+    'COMMENTS_DISQUS_SHORTNAME', 'COMMENTS_NUM_LATEST',
+    'COMMENTS_DISQUS_API_PUBLIC_KEY', 'COMMENTS_DISQUS_API_SECRET_KEY',
+    'COMMENTS_USE_RATINGS', 'DEV_SERVER', 'FORMS_USE_HTML5',
+    'GRAPPELLI_INSTALLED', 'GOOGLE_ANALYTICS_ID', 'JQUERY_FILENAME',
+    'JQUERY_UI_FILENAME', 'LOGIN_URL', 'LOGOUT_URL', 'SITE_TITLE',
+    'SITE_TAGLINE', 'USE_L10N', 'USE_MODELTRANSLATION'
+)
+
+# Compile LESS Files using lessc
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+
+# Always compile static files
+COMPRESS_ENABLED = True
+
+# Only use the Top Nav menu
+PAGE_MENU_TEMPLATES = (
+    (1, "Top navigation bar", "pages/menus/dropdown.html"),
+)
+
+# Set Secret Key via EnvVar
+SECRET_KEY = get_env_variable("DJANGO_SECRET_KEY")
+
+# Allow all hosts; overridden in prod settings
+ALLOWED_HOSTS = ['*']
+
+
+######################
+# MEZZANINE SETTINGS #
+######################
+
+# The following settings are already defined with default values in
+# the ``defaults.py`` module within each of Mezzanine's apps, but are
+# common enough to be put here, commented out, for conveniently
+# overriding. Please consult the settings documentation for a full list
+# of settings Mezzanine implements:
+# http://mezzanine.jupo.org/docs/configuration.html#default-settings
+
+# Controls the ordering and grouping of the admin menu.
+#
+# ADMIN_MENU_ORDER = (
+#     ("Content",
+#          "pages.Page",
+#          "blog.BlogPost",
+#          "generic.ThreadedComment",
+#          ("Media Library", "fb_browse"),
+#          )
+#      ),
+#     ("Site",
+#         ("sites.Site",
+#          "redirects.Redirect",
+#          "conf.Setting",
+#          )
+#      ),
+#     ("Users",
+#         ("auth.User",
+#          "auth.Group",
+#          )
+#      ),
+# )
+
 # A three item sequence, each containing a sequence of template tags
 # used to render the admin dashboard.
 #
@@ -111,9 +177,9 @@ ADMIN_MENU_ORDER = (
 # menus a page should appear in. Note that if a menu template is used
 # that doesn't appear in this setting, all pages will appear in it.
 
-PAGE_MENU_TEMPLATES = (
-    (1, "Top navigation bar", "pages/menus/dropdown.html"),
-)
+# PAGE_MENU_TEMPLATES = (
+#     (1, _("Top navigation bar"), "pages/menus/dropdown.html"),
+# )
 
 # A sequence of fields that will be injected into Mezzanine's (or any
 # library's) models. Each item in the sequence is a four item sequence.
@@ -131,7 +197,7 @@ PAGE_MENU_TEMPLATES = (
 #         # Dotted path to field class.
 #         "somelib.fields.ImageField",
 #         # Positional args for field class.
-#         ("Image",),
+#         (_("Image"),),
 #         # Keyword args for field class.
 #         {"blank": True, "upload_to": "blog"},
 #     ),
@@ -139,7 +205,7 @@ PAGE_MENU_TEMPLATES = (
 #     (
 #         "mezzanine.pages.models.Page.another_field",
 #         "IntegerField", # 'django.db.models.' is implied if path is omitted.
-#         ("Another name",),
+#         (_("Another name"),),
 #         {"blank": True, "default": 1},
 #     ),
 # )
@@ -148,28 +214,18 @@ PAGE_MENU_TEMPLATES = (
 #
 # BLOG_USE_FEATURED_IMAGE = True
 
-# If True, the south application will be automatically added to the
+# If True, the django-modeltranslation will be added to the
 # INSTALLED_APPS setting.
-USE_SOUTH = True
+USE_MODELTRANSLATION = False
 
 
 ########################
 # MAIN DJANGO SETTINGS #
 ########################
 
-SECRET_KEY = get_env_variable("DJANGO_SECRET_KEY")
-
-# People who get code error notifications.
-# In the format (('Full Name', 'email@example.com'),
-#                ('Full Name', 'anotheremail@example.com'))
-ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
-)
-MANAGERS = ADMINS
-
 # Hosts/domain names that are valid for this site; required if DEBUG is False
-# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['*']
+# See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
+# ALLOWED_HOSTS = []
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -178,7 +234,7 @@ ALLOWED_HOSTS = ['*']
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/New_York'
+# TIME_ZONE = 'UTC'
 
 # If you set this to True, Django will use timezone-aware datetimes.
 USE_TZ = True
@@ -188,7 +244,6 @@ USE_TZ = True
 LANGUAGE_CODE = "en"
 
 # Supported languages
-_ = lambda s: s
 LANGUAGES = (
     ('en', _('English')),
 )
@@ -207,26 +262,7 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = False
 
-# Tuple of IP addresses, as strings, that:
-#   * See debug comments, when DEBUG is true
-#   * Receive x-headers
-INTERNAL_IPS = ("127.0.0.1",)
-
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    "django.template.loaders.filesystem.Loader",
-    "django.template.loaders.app_directories.Loader",
-)
-
 AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
-
-# List of finder classes that know how to find static files in
-# various locations.
-STATICFILES_FINDERS = (
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
 
 # The numeric mode to set newly-uploaded files to. The value should be
 # a mode you'd pass directly to os.chmod.
@@ -259,18 +295,15 @@ DATABASES = {
 # PATHS #
 #########
 
-import os
-
 # Full filesystem path to the project.
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-# Name of the directory for the project.
-PROJECT_DIRNAME = PROJECT_ROOT.split(os.sep)[-1]
+PROJECT_APP_PATH = os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + '/../')
+PROJECT_APP = os.path.basename(PROJECT_APP_PATH)
+PROJECT_ROOT = BASE_DIR = os.path.dirname(PROJECT_APP_PATH)
 
 # Every cache key will get prefixed with this value - here we set it to
 # the name of the directory the project is in to try and use something
 # project specific.
-CACHE_MIDDLEWARE_KEY_PREFIX = PROJECT_DIRNAME
+CACHE_MIDDLEWARE_KEY_PREFIX = PROJECT_APP
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -292,7 +325,7 @@ MEDIA_URL = STATIC_URL + "media/"
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, *MEDIA_URL.strip("/").split("/"))
 
 # Package/module name to import the root urlpatterns from for the project.
-ROOT_URLCONF = "core.urls"
+ROOT_URLCONF = "%s.urls" % PROJECT_APP
 
 # Put strings here, like "/home/html/django_templates"
 # or "C:/www/django/templates".
@@ -305,32 +338,32 @@ TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"),)
 # APPLICATIONS #
 ################
 
-INSTALLED_APPS = (
-
-    "core",
-    "communities",
-    "documents",
-    "homepage",
-
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.redirects",
-    "django.contrib.sessions",
-    "django.contrib.sites",
-    "django.contrib.sitemaps",
-    "django.contrib.staticfiles",
-    "mezzanine.boot",
-    "mezzanine.conf",
-    "mezzanine.core",
-    "mezzanine.generic",
-    "mezzanine.blog",
-    "mezzanine.forms",
-    "mezzanine.pages",
-    "mezzanine.galleries",
-    # "mezzanine.accounts",
-    # "mezzanine.mobile",
-)
+# INSTALLED_APPS = (
+#     "core",
+#     "communities",
+#     "documents",
+#     "homepage",
+#
+#     "django.contrib.admin",
+#     "django.contrib.auth",
+#     "django.contrib.contenttypes",
+#     "django.contrib.redirects",
+#     "django.contrib.sessions",
+#     "django.contrib.sites",
+#     "django.contrib.sitemaps",
+#     "django.contrib.staticfiles",
+#     "mezzanine.boot",
+#     "mezzanine.conf",
+#     "mezzanine.core",
+#     "mezzanine.generic",
+#     "mezzanine.pages",
+#     "mezzanine.blog",
+#     "mezzanine.forms",
+#     "mezzanine.galleries",
+#     "mezzanine.twitter",
+#     # "mezzanine.accounts",
+#     # "mezzanine.mobile",
+# )
 
 # List of processors used by RequestContext to populate the context.
 # Each one should be a callable that takes the request object as its
@@ -353,12 +386,17 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 # response phase the middleware will be applied in reverse order.
 MIDDLEWARE_CLASSES = (
     "mezzanine.core.middleware.UpdateCacheMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
+
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    # Uncomment if using internationalisation or localisation
+    # 'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
     "mezzanine.core.request.CurrentRequestMiddleware",
     "mezzanine.core.middleware.RedirectFallbackMiddleware",
     "mezzanine.core.middleware.TemplateForDeviceMiddleware",
@@ -389,30 +427,6 @@ OPTIONAL_APPS = (
     PACKAGE_NAME_GRAPPELLI,
 )
 
-###################
-# DEPLOY SETTINGS #
-###################
-
-# These settings are used by the default fabfile.py provided.
-# Check fabfile.py for defaults.
-
-# FABRIC = {
-#     "SSH_USER": "", # SSH username for host deploying to
-#     "HOSTS": ALLOWED_HOSTS[:1], # List of hosts to deploy to (eg, first host)
-#     "DOMAINS": ALLOWED_HOSTS, # Domains for public site
-#     "REPO_URL": "ssh://hg@bitbucket.org/user/project", # Project's repo URL
-#     "VIRTUALENV_HOME":  "", # Absolute remote path for virtualenvs
-#     "PROJECT_NAME": "", # Unique identifier for project
-#     "REQUIREMENTS_PATH": "requirements.txt", # Project's pip requirements
-#     "GUNICORN_PORT": 8000, # Port gunicorn will listen on
-#     "LOCALE": "en_US.UTF-8", # Should end with ".UTF-8"
-#     "DB_PASS": "", # Live database password
-#     "ADMIN_PASS": "", # Live admin user password
-#     "SECRET_KEY": SECRET_KEY,
-#     "NEVERCACHE_KEY": NEVERCACHE_KEY,
-# }
-
-
 ##################
 # LOCAL SETTINGS #
 ##################
@@ -420,11 +434,13 @@ OPTIONAL_APPS = (
 # Allow any settings to be defined in local_settings.py which should be
 # ignored in your version control system allowing for settings to be
 # defined per machine.
-try:
-    from local_settings import *
-except ImportError as e:
-    if "local_settings" not in str(e):
-        raise e
+
+# Instead of doing "from .local_settings import *", we use exec so that
+# local_settings has full access to everything defined in this module.
+
+f = os.path.join(PROJECT_APP_PATH, "local_settings.py")
+if os.path.exists(f):
+    exec(open(f, "rb").read())
 
 
 ####################

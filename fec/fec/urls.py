@@ -1,11 +1,12 @@
+'''This module determines the overall URL structure of the site.'''
 from __future__ import unicode_literals
 
 from django.conf.urls import patterns, include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 
+from mezzanine.conf import settings
 
-admin.autodiscover()
 
 # Add the urlpatterns for any custom Django applications here.
 # You can also change the ``home`` view to add your own functionality
@@ -18,9 +19,14 @@ urlpatterns = i18n_patterns(
     ("^admin/", include(admin.site.urls)),
 )
 
+if settings.USE_MODELTRANSLATION:
+    urlpatterns += patterns(
+        '',
+        url('^i18n/$', 'django.views.i18n.set_language', name='set_language'),
+    )
+
 urlpatterns += patterns(
     '',
-
     url("^$", "homepage.views.index", name="home"),
 
     ("^communities/", include("communities.urls")),

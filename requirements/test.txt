@@ -1,8 +1,10 @@
 -r base.txt
 
-django-nose>=1.2
-nose-progressive>= 1.5
-nose-watcher>=0.1
+pytest>=2.7.2
+pytest-cov>=2.0
+pytest-django>=2.8
+pytest-watch>=3.2
+pytest-xdist>=1.13.1
 
 coverage>=3.7
 pep8>=1.5

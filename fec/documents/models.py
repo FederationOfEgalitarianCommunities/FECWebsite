@@ -61,7 +61,8 @@ class Document(Displayable):
 
     def related_documents(self):
         """Return 5 random Documents with the same category or tag."""
-        keywords = self.keywords.all()
+        assigned_keywords = self.keywords.all()
+        keywords = [assigned.keyword for assigned in assigned_keywords]
         documents = set(
             Document.objects.filter((Q(keywords__keyword__in=keywords) |
                                      Q(category=self.category)) &

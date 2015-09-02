@@ -5,7 +5,7 @@ from mezzanine.core.models import CONTENT_STATUS_PUBLISHED
 from mezzanine.blog.models import BlogPost
 
 from communities.models import Community
-from core.utils import SeleniumTestCase
+from fec.utils import SeleniumTestCase
 from homepage.models import HomepageContent
 
 
