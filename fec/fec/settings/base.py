@@ -44,6 +44,8 @@ INSTALLED_APPS = (
     "documents",
     "homepage",
 
+    "axes",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -131,6 +133,12 @@ SECRET_KEY = get_env_variable("DJANGO_SECRET_KEY")
 
 # Allow all hosts; overridden in prod settings
 ALLOWED_HOSTS = ['*']
+
+# Lock out IPs after 10 failed login attempts
+AXES_LOGIN_FAILURE_LIMIT = 10
+
+# Lock out IPs for 24 hours
+AXES_COOLOFF_TIME = 24
 
 
 ######################
@@ -399,6 +407,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'axes.middleware.FailedLoginMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
