@@ -5,12 +5,6 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 
-from mezzanine.conf import settings
-
-
-# Add the urlpatterns for any custom Django applications here.
-# You can also change the ``home`` view to add your own functionality
-# to the project's homepage.
 
 urlpatterns = i18n_patterns(
     "",
@@ -18,12 +12,6 @@ urlpatterns = i18n_patterns(
     # admin interface, which would be marginally more secure.
     ("^admin/", include(admin.site.urls)),
 )
-
-if settings.USE_MODELTRANSLATION:
-    urlpatterns += patterns(
-        '',
-        url('^i18n/$', 'django.views.i18n.set_language', name='set_language'),
-    )
 
 urlpatterns += patterns(
     '',

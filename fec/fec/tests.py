@@ -3,6 +3,7 @@
 from unittest.case import TestCase
 
 from .utils import check_pep8
+from .templatetags.core_filters import get_first_by
 
 
 class Pep8Tests(TestCase):
@@ -71,3 +72,17 @@ class Pep8Tests(TestCase):
 
         self.assertEqual(result.total_errors, 0,
                          "PEP8 issues were found in the documents package.")
+
+
+class CoreFiltersTests(TestCase):
+    '''Test the core_filters templatetags.'''
+    def test_get_first_by_splits_correctly(self):
+        '''The function should split the string using the stop_char.'''
+        self.assertEqual(get_first_by('1,2,3,4', ','), '1')
+        self.assertEqual(get_first_by('1;2;3;4', ';'), '1')
+        self.assertEqual(get_first_by('1,2;3;4', ';'), '1,2')
+
+    def test_get_first_by_empty_string(self):
+        '''The function should be able to handle empty strings.'''
+        self.assertEqual(get_first_by('', ','), '')
+        self.assertEqual(get_first_by('', ';'), '')
