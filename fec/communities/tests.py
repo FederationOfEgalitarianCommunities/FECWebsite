@@ -2,6 +2,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from mezzanine.blog.models import BlogCategory
+from mezzanine.core.models import CONTENT_STATUS_DRAFT
 
 from .models import Community, CommunityFeed
 
@@ -164,3 +165,18 @@ class CommunityListViewTests(TestCase):
                                  response.context['in_dialog_list'])
         self.assertSequenceEqual([self.ally_community],
                                  response.context['ally_list'])
+
+    def test_unpublished_communities_not_listed(self):
+        '''The CommunityList view should not show unpublished communities.'''
+        self.darmok.status = CONTENT_STATUS_DRAFT
+        self.darmok.save()
+        self.community_in_dialog.status = CONTENT_STATUS_DRAFT
+        self.community_in_dialog.save()
+        self.ally_community.status = CONTENT_STATUS_DRAFT
+        self.ally_community.save()
+
+        response = self.client.get(reverse('community_list'))
+        self.assertSequenceEqual(
+            [self.jalad], response.context['community_list'])
+        self.assertSequenceEqual([], response.context['in_dialog_list'])
+        self.assertSequenceEqual([], response.context['ally_list'])

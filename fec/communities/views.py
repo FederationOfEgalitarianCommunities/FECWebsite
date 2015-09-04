@@ -96,10 +96,13 @@ class CommunityList(PublishedCommunityMixin, ListView):
     def get_context_data(self, **kwargs):
         """Modify the context to filter the Community lists."""
         context = super(CommunityList, self).get_context_data(**kwargs)
-        context['community_list'] = Community.objects.filter(
-            membership_status=Community.MEMBER)
-        context['in_dialog_list'] = Community.objects.filter(
-            membership_status=Community.COMMUNITY_IN_DIALOG)
-        context['ally_list'] = Community.objects.filter(
-            membership_status=Community.ALLY)
+        context['community_list'] = Community.objects.published(
+            for_user=self.request.user).filter(
+                membership_status=Community.MEMBER)
+        context['in_dialog_list'] = Community.objects.published(
+            for_user=self.request.user).filter(
+                membership_status=Community.COMMUNITY_IN_DIALOG)
+        context['ally_list'] = Community.objects.published(
+            for_user=self.request.user).filter(
+                membership_status=Community.ALLY)
         return context
