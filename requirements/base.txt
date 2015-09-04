@@ -1,6 +1,8 @@
 Mezzanine>=4.0.1,<5.0
 Pillow>=2
 psycopg2>=2.5
+python-memcached>=1.53
+
 
 django_compressor>=1.4
 django-axes>=1.4
