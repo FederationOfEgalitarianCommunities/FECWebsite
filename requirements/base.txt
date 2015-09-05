@@ -6,6 +6,5 @@ python-memcached>=1.53
 
 django_compressor>=1.4
 django-axes>=1.4
-django-webmaster-verification>=0.2.4
 
 feedparser>=5.1
