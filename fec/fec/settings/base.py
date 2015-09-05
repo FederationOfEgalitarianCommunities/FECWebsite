@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     "homepage",
 
     "axes",
+    "webmaster_verification",
 
     "django.contrib.admin",
     "django.contrib.auth",
@@ -140,6 +141,10 @@ AXES_LOGIN_FAILURE_LIMIT = 10
 # Lock out IPs for 24 hours
 AXES_COOLOFF_TIME = 24
 
+# Webmaster Tools
+WEBMASTER_VERIFICATION = {
+    'google': '69349aaafd5ecb28',
+}
 
 ######################
 # MEZZANINE SETTINGS #

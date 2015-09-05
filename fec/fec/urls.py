@@ -21,6 +21,7 @@ urlpatterns += patterns(
     ("^systems-and-structures/", include("documents.urls")),
 
 
+    url(r'', include('webmaster_verification.urls')),
     ("^", include("mezzanine.urls")),
 )
 
