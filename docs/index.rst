@@ -7,6 +7,7 @@ FEC Website Documentation
     intro
     get_started
     guidelines
+    Appendix: Debian 7 (Wheezy) Deployment <appendix_debian>
     api/index
 
 

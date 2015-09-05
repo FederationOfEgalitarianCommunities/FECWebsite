@@ -29,6 +29,8 @@ sys.path.append(os.path.abspath('../fec/'))
 
 # Setup Django settings/environment
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "fec.settings.local")
+import django
+django.setup()
 
 # Is this being built by readthedocs.org?
 on_rtd = os.environ.get('READTHEDOCS', None) == True
