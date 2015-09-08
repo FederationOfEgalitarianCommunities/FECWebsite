@@ -46,7 +46,7 @@ Install python dependencies w/ ``pip``::
 Set environmental variables to match your configuration::
 
     export DJANGO_SECRET_KEY=fourtytwo
-    export DJANGO_SETTINGS_MODULE=core.settings.local
+    export DJANGO_SETTINGS_MODULE=fec.settings.local
     export DB_NAME=FEC
     export DB_USER=myuser
 
@@ -55,7 +55,7 @@ Create the database and optionally preload some initial data::
     cd fec
     ./manage.py createdb --noinput
     ./manage.py loaddata homepage/fixtures/homepage_original.json
-    ./manage.py loaddata core/fixtures/nav_pages_original.json
+    ./manage.py loaddata fec/fixtures/nav_pages_original.json
 
 Finally you can start the dev server::
 
