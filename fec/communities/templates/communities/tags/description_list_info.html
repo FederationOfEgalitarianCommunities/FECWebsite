@@ -4,14 +4,14 @@
 
   The `community` context variable is expected to be passed.
 {% endcomment %}
-{% load mezzanine_tags %}
+{% load mezzanine_tags email_obfuscator %}
 
 <dl class="dl-horizontal">
   <!-- Email -->
   {% if community.email %}
     <dt>Email</dt>
-    <dd class="email"><a href="mailto:{{ community.email }}">
-        {{ community.email }}
+    <dd class="email"><a href="mailto:{{ community.email|obfuscate }}">
+        {{ community.email|obfuscate }}
     </a></dd>
   {% endif %}
   <!-- Website -->

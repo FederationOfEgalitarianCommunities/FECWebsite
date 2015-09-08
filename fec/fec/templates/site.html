@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
-{% load communities_tags pages_tags mezzanine_tags i18n future staticfiles cache %}
+{% load communities_tags pages_tags mezzanine_tags i18n future staticfiles cache email_obfuscator %}
 
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -200,14 +200,16 @@ $(document).ready(function() {
       </div>
       <div>
         <!-- Contact & Report a Bug Links -->
-        <a href="mailto:secretary@thefec.org?subject=FEC%20Website%20Contact">
+        {% with "?subject=FEC%20Website%20Contact" as email_subject %}
+        <a href="mailto:{{ "secretary@thefec.org"|obfuscate }}{{ email_subject }}">
           Secretary</a>
         |
-        <a href="mailto:peachadmin@thefec.org?subject=FEC%20Website%20Contact">
+        <a href="mailto:{{ "peachadmin@thefec.org"|obfuscate }}{{ email_subject }}">
           PEACH</a>
         |
-        <a href="mailto:webmaster@thefec.org?subject=FEC%20Website%20Contact">
+        <a href="mailto:{{ "webmaster@thefec.org"|obfuscate }}{{ email_subject }}">
           Webmaster</a>
+        {% endwith %}
       </div>
       <div>
         <!-- Copyleft Year -->

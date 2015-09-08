@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     "homepage",
 
     "axes",
+    "email_obfuscator",
 
     "django.contrib.admin",
     "django.contrib.auth",
