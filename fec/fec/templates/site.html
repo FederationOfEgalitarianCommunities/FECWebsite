@@ -67,7 +67,8 @@ $(document).ready(function() {
     <!-- Horizontal Logo + Title -->
     <div class="hidden-xs media" id="site-logo-title">
       <a href="/" class="pull-left">
-        <img class="" alt="FEC Logo" src="{% static "img/fec_logo.png" %}"  style="height:120px;"/>
+        <img alt="The FEC's Logo" title="The Federation of Egalitarian Communitie"
+             src="{% static "img/fec_logo.png" %}"  style="height:120px;"/>
       </a>
       <a href='/'>
         <div class="media-body" id="site-title">
@@ -81,7 +82,8 @@ $(document).ready(function() {
     <!-- Stacked Logo + Title -->
     <div class="visible-xs" id="site-logo-title-xs">
       <a href="/">
-        <img class="image-center img-responsive" alt="FEC Logo"
+        <img class="image-center img-responsive" alt="The FEC's Logo"
+             title="The Federation of Egalitarian Communities"
              src="{% static "img/fec_logo.png" %}"  style="height:75px;" />
         <div class="h1 text-center">Federation of Egalitarian Communities</div>
       </a>
@@ -92,11 +94,11 @@ $(document).ready(function() {
        id="site-tagline-search">
     <!-- Search Form -->
     <div class="pull-right">
-      <form action="{% url "search" %}" class="pull-right"
-            id="site-search" role="search">
+      <form action="{% url "search" %}" class="pull-right" role="search">
         <div class="form-group">
-          <input id='site-search' placeholder="{% trans "Search..." %}"
-                 type="text" name="q" value="{{ request.REQUEST.q }}" />
+          <input id="site-search" placeholder="{% trans "Search..." %}"
+                 title="Site Search" type="text" name="q"
+                 value="{{ request.REQUEST.q }}" />
         </div>
       </form>
     </div>
@@ -160,6 +162,8 @@ $(document).ready(function() {
       <a rel="#image-{{ random_image.id }}" title="{{ random_image.description }}"
          href="{{ random_image.file.url }}" id="footer-random-photo">
         <img class="img-responsive image-center" id="#image-{{ random_image.id}}"
+             alt="A random picture from {{ random_image.community.title }}"
+             title="{{ random_image.description }}" width="360" height="215"
              src="{{ MEDIA_URL }}{% thumbnail random_image.file 360 215 %}" />
       </a>
       <div>
@@ -181,7 +185,8 @@ $(document).ready(function() {
     <p>Please visit our sister organization, the Fellowship for Intentional Community
       <a href="http://www.ic.org/" target="_blank" id="fic-link">
         <img class="image-center" src="{% static "img/fic_logo.png" %}"
-             alt="The Fellowship for Intentional Community Website" />
+             alt="The Fellowship for Intentional Community's Logo"
+             title="The Fellowship for Intentional Community" />
       </a>
     </p>
     <div>
@@ -219,7 +224,7 @@ $(document).ready(function() {
         <!-- Blog RSS Feed -->
         <a href="{% url "blog_post_feed" format="rss" %}">
           <img class="image-center" src="{% static "img/rss_icon.png" %}"
-              alt="The FEC RSS Feed" />
+              alt="The FEC RSS Feed" title="RSS Feed" />
         </a>
       </div>
     </div>

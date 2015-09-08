@@ -8,8 +8,12 @@
 {% load documents_tags mezzanine_tags keyword_tags %}
 
 
-<!-- Title -->
+<!-- Meta -->
 {% block meta_title %}{{ document.title }}{% endblock %}
+{% block meta_keywords %}{{ block.super }}, {{ document.community }}, {{ document.category.title }}{% endblock %}
+
+
+<!-- Title -->
 {% block title %}
   {% editable document.title %}{% endeditable %}
 {% endblock %}

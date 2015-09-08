@@ -6,6 +6,10 @@
 {% load mezzanine_tags %}
 
 
-<a class="profile-image" rel="#image-{{ community.profile_image.id }}" title="{{ community.profile_image.description }}" href="{{ community.profile_image.url }}">
-  <img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail community.profile_image width height %}" />
+<a class="profile-image" rel="#image-{{ community.profile_image.id }}"
+   alt="Profile Picture for {{ community.title }}" title="{{ community.title }}"
+   href="{{ community.profile_image.url }}">
+  <img class="img-responsive" alt="Profile Picture for {{ community.title }}"
+       title="{{ community.title }}" width="{{ width }}" height="{{ height }}"
+       src="{{ MEDIA_URL }}{% thumbnail community.profile_image width height %}" />
 </a>

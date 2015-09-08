@@ -8,6 +8,9 @@
 
 
 {% block meta_title %}{{ community.title }}{% endblock %}
+{% block meta_description %}{{ community.short_description }}{% endblock %}
+{% block meta_keywords %}{{ block.super }}, {{ community.title }}{% endblock %}
+
 {% block title %}
   {% editable community.title %}{% endeditable %}
 {% endblock %}
@@ -112,7 +115,8 @@
     <div class="col-xs-4 col-sm-3">
     <a class="thumbnail" rel="#image-{{ image.id }}"
        title="{{ image.description }}" href="{{ image.file.url }}">
-      <img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail image.file 131 75 %}" />
+      <img class="img-responsive" alt="Picture Gallery - {{ image.description }}"
+           title="{{ image.description }}" src="{{ MEDIA_URL }}{% thumbnail image.file 131 75 %}" />
     </a>
     </div>
   {% endfor %}
