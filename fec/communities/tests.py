@@ -5,6 +5,7 @@ from mezzanine.blog.models import BlogCategory
 from mezzanine.core.models import CONTENT_STATUS_DRAFT
 
 from .models import Community, CommunityFeed
+from .templatetags.communities_tags import community_newest_communities
 
 
 class CommunityModelTests(TestCase):
@@ -82,6 +83,24 @@ class CommunityFeedModelTests(TestCase):
         bps = self.feed.get_feed_posts()
         post_titles = ['RSS Resources']
         self.assertSequenceEqual([post.title for post in bps], post_titles)
+
+
+class CommunityTagTests(TestCase):
+    '''Test the communities templatetags module.'''
+
+    def setUp(self):
+        '''Create a Community of each membership_status.'''
+        self.member = Community.objects.create(
+            title='member', membership_status=Community.MEMBER)
+        self.in_dialog = Community.objects.create(
+            title='cid', membership_status=Community.COMMUNITY_IN_DIALOG)
+        self.ally = Community.objects.create(
+            title='ally', membership_status=Community.ALLY)
+
+    def test_newest_communities_has_no_allies(self):
+        '''The community_newest_communities tag should not return Allies.'''
+        self.assertSequenceEqual(
+            community_newest_communities(), [self.member, self.in_dialog])
 
 
 class CommunityDetailViewTests(TestCase):

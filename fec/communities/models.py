@@ -69,8 +69,9 @@ class Community(Displayable):
 
     .. attribute:: date_joined
 
-        The day the Community became a Full Member of the FEC. Blank for
-        non-members.
+        The day the Community became a Community in Dialog. Blank for
+        non-members. Used primarily to sort the Newest Communities widget on
+        the homepage.
 
     .. attribute:: address
 
@@ -144,9 +145,11 @@ class Community(Displayable):
     )
     date_joined = models.DateField(
         blank=True, null=True,
-        help_text=('The date this Community joined the FEC. '
-                   'Leave blank if not a member'),
-        verbose_name='FEC Member Since'
+        help_text=('The date this Community became a Community in Dialog. '
+                   'You can leave this blank if it\'s an Ally. '
+                   'This field is used to sort the Newest Communities widget '
+                   'on the homepage.'),
+        verbose_name='In FEC Since'
     )
     address = models.TextField(
         blank=True,
