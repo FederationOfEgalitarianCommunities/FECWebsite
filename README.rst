@@ -116,6 +116,14 @@ You can also run a subset of the tests::
     py.test communities/tests.py -k CommunityDetail
 
 
+Deployment
+----------
+
+The documentation contains a `guide for deploying on Debian 7 (Wheezy)
+<https://fecwebsite.readthedocs.org/en/latest/appendix_debian.html>`_ using
+memcached, postgreSQL, uWSGI and Apache.
+
+
 Contribute
 -----------
 
