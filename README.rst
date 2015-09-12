@@ -116,17 +116,6 @@ You can also run a subset of the tests::
     py.test communities/tests.py -k CommunityDetail
 
 
-Optimizing Images
-------------------
-
-Use the ``optipng`` & ``jpegtran`` programs along with ``cron`` to
-automatically optimize all images once a day::
-
-    # Optimize starting at 23:00
-    0 23 * * * find /path/to/static/media -iname "*.png" -exec optipng -o7 {} \;
-    15 23 * * * find /path/to/static/media -iname "*.jpeg" -o -iname "*.jpg" -exec jpegtran -copy none -optimize -outfile {} {} \;
-
-
 Contribute
 -----------
 

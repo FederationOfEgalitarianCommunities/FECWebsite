@@ -285,7 +285,7 @@ First install the optimizing tools:
 
 .. code-block:: bash
 
-    $ sudo apt-get install optipng libjpeg-progs
+    $ sudo apt-get install optipng jpegoptim
 
 Edit the cronjobs by running ``crontab -e`` and adding the following lines:
 
@@ -293,4 +293,4 @@ Edit the cronjobs by running ``crontab -e`` and adding the following lines:
 
     # Optimize Images Uploaded to the FEC Website
     @daily find /home/thefec/htdocs/static/media -type f -iname "*.png" -exec optipng -o7 {} \; > /dev/null 2>&1
-    @daily find /home/thefec/htdocs/static/media -type f -iname "*.jpeg" -o -iname "*.jpg" -exec jpegtran -copy none -progressive -optimize -outfile {} {} \; > /dev/null 2>&1
+    @daily find /home/thefec/htdocs/static/media -type f -iname "*.jpeg" -o -iname "*.jpg" -exec jpegoptim -t --all-progressive -s {} \; > /dev/null 2>&1
