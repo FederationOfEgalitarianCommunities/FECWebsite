@@ -113,7 +113,9 @@ suite.
 
 You can also run a subset of the tests::
 
-    py.test communities/tests.py -k CommunityDetail
+    py.test communities/tests.py
+    py.test -k CommunityDetail
+    py.test communities/tests.py -k List
 
 
 Deployment
