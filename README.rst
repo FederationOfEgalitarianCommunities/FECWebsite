@@ -21,6 +21,12 @@ The project roadmap lives at http://bugs.sleepanarchy.com/projects/fec/roadmap
     :alt: Documentation Status
 
 
+.. image:: screenshot.png
+    :target: http://www.thefec.org
+    :alt: The FEC Communities Page
+    :align: center
+
+
 Quickstart
 -----------
 
