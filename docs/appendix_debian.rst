@@ -277,20 +277,64 @@ Then enable the site and restart apache:
 The site should now be visible at http://www.thefec.org
 
 
-Setup Cronjobs to Optimize Images
----------------------------------
+Setup Cronjobs
+--------------
 
-We'll run two commands daily to compress & optimize uploaded jpeg & png images.
+We'll setup ``cron`` to run two scripts on a regular basis. One script will
+backup the database and uploads while the other will compress & optimize
+uploaded images.
+
 First install the optimizing tools:
 
 .. code-block:: bash
 
     $ sudo apt-get install optipng jpegoptim
 
-Edit the cronjobs by running ``crontab -e`` and adding the following lines:
+Now make directories for the scripts & backups to live in:
+
+.. code-block:: bash
+
+    $ mkdir ~/bin ~/backups
+
+Create a script called ``backup_website.sh`` in ``~/bin`` containing the
+following:
+
+.. code-block:: bash
+
+    #!/usr/bin/env bash
+    # ~/bin/backup_website.sh
+    mv ~/backups/database.gz ~/backups/database.gz.2
+    pg_dump fec_website | gzip > ~/backups/database.gz
+
+    mv ~/backups/uploads.tar.gz ~/backups/uploads.tar.gz.2
+    tar -cpzf ~/backups/uploads.tar.gz ~/website/fec/static/media/
+
+This will keep 2 days worth of backups in ``~/backups``.
+
+Now create ``optimize_website_images.sh`` in ``~/bin`` containing the
+following:
+
+.. code-block:: bash
+
+    #!/usr/bin/env bash
+    # ~/bin/optimize_website_images.sh
+    find ~/htdocs/static/media -type f -iname "*.png" -exec optipng -o7 {} \;
+    find ~/htdocs/static/media -type f -iname "*.jpeg" -o -iname "*.jpg" -exec jpegoptim -t --all-progressive -s {} \;
+
+Make sure to mark them as executable:
+
+.. code-block:: bash
+
+    chmod +x ~/bin/backup_website.sh ~/bin/optimize_website_images.sh
+
+We'll set the backup script to run daily & the image optimizing to run weekly.
+Edit the enabled cronjobs by running ``crontab -e`` (or something like
+``EDITOR=vim crontab -e``) and add the following lines:
 
 .. code-block:: cron
 
-    # Optimize Images Uploaded to the FEC Website
-    @daily find /home/thefec/htdocs/static/media -type f -iname "*.png" -exec optipng -o7 {} \; > /dev/null 2>&1
-    @daily find /home/thefec/htdocs/static/media -type f -iname "*.jpeg" -o -iname "*.jpg" -exec jpegoptim -t --all-progressive -s {} \; > /dev/null 2>&1
+    # Backup Website Database & Uploads
+    @daily ~/bin/backup_website.sh > /dev/null 2>&1
+
+    # Optimize Images Uploaded to the Website
+    @weekly ~/bin/optimize_website_images.sh > /dev/null 2>&1
