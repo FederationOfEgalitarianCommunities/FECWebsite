@@ -131,11 +131,29 @@ Install & Configure Python Server
 Dynamic requests will be served by the ``uWSGI`` server and proxied by apache.
 Static files like images, CSS and JavaScript will be served by apache.
 
-Start by installing ``uWSGI`` along with some libraries required for gzipping:
+Start by installing ``uWSGI``:
 
 .. code-block:: bash
 
-    $ sudo apt-get install uwsgi uwsgi-plugin-python libpcre3-dev libz-dev
+    $ sudo apt-get install uwsgi uwsgi-plugin-python
+
+.. note::
+
+    You may want a newer version of uWSGI for page caching & gzipping support.
+    There is no uWSGI package in ``wheezy-backports`` so you'll have to build the
+    packages yourself. That's out of the scope of this guide, you should refer to
+    the `SimpleBackportCreation Page on the Debian Wiki <SimpleBackport>`_. Once
+    you've built the packages and have them on your server, install them using
+    ``dpkg`` along with some dependencies for gzipping & uWSGI:
+
+    .. code-block:: bash
+
+        $ sudo apt-get install libpcre3-dev libz-dev
+        $ sudo apt-get -t wheezy-backports install libzmq3-dev
+        $ sudo dpkg -i libapache2-mod-uwsgi_2*.deb
+        $ sudo dpkg -i uwsgi-core_2*.deb
+        $ sudo dpkg -i uwsgi-plugin-python_2*.deb
+        $ sudo apt-get -f install
 
 Add the following configuration to
 ``/etc/uwsgi/apps-available/fec-website.ini``:
@@ -171,6 +189,7 @@ Add the following configuration to
     env = CACHE_PREFIX=FECprod
     wsgi-file = /home/thefec/website/fec/fec/wsgi.py
 
+    # uWSGI v1.9+ only
     # route to gzip if supported
     route-if = contains:${HTTP_ACCEPT_ENCODING};gzip goto:mygzipper
     route-run = last:
@@ -338,3 +357,6 @@ Edit the enabled cronjobs by running ``crontab -e`` (or something like
 
     # Optimize Images Uploaded to the Website
     @weekly ~/bin/optimize_website_images.sh > /dev/null 2>&1
+
+
+.. _SimpleBackport: https://wiki.debian.org/SimpleBackportCreation
