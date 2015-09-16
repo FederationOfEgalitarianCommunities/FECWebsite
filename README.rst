@@ -17,7 +17,7 @@ The project roadmap lives at http://bugs.sleepanarchy.com/projects/fec/roadmap
 
 
 .. image:: https://readthedocs.org/projects/fecwebsite/badge/?version=latest
-    :target: https://readthedocs.org/projects/fecwebsite/?badge=latest
+    :target: https://fecwebsite.rtfd.org/
     :alt: Documentation Status
 
 
