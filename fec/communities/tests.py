@@ -5,7 +5,9 @@ from mezzanine.blog.models import BlogCategory
 from mezzanine.core.models import CONTENT_STATUS_DRAFT
 
 from .models import Community, CommunityFeed
-from .templatetags.communities_tags import community_newest_communities
+from .templatetags.communities_tags import (
+    community_newest_communities, community_fec_members,
+    community_communities_in_dialog)
 
 
 class CommunityModelTests(TestCase):
@@ -101,6 +103,32 @@ class CommunityTagTests(TestCase):
         '''The community_newest_communities tag should not return Allies.'''
         self.assertSequenceEqual(
             community_newest_communities(), [self.member, self.in_dialog])
+
+    def test_fec_members_hides_unpublished(self):
+        '''The community_fec_members tag returns no unpublished Communities.'''
+        unpublished = Community.objects.create(
+            title='unpublished member', membership_status=Community.MEMBER,
+            status=CONTENT_STATUS_DRAFT)
+        published_member = Community.objects.create(
+            title='published member', membership_status=Community.MEMBER)
+
+        self.assertSequenceEqual(
+            community_fec_members(), [self.member, published_member])
+
+    def test_community_in_dialog_hides_unpublished(self):
+        '''
+        The community_communities_in_dialog tag returns no unpublished
+        Communities.
+        '''
+        unpublished = Community.objects.create(
+            title='unpublished cid', status=CONTENT_STATUS_DRAFT,
+            membership_status=Community.COMMUNITY_IN_DIALOG)
+        published_cid = Community.objects.create(
+            membership_status=Community.COMMUNITY_IN_DIALOG,
+            title='published cid')
+
+        self.assertSequenceEqual(
+            community_communities_in_dialog(), [self.in_dialog, published_cid])
 
 
 class CommunityDetailViewTests(TestCase):
