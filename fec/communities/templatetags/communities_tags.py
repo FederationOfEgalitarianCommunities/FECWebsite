@@ -108,5 +108,5 @@ def community_communities_in_dialog():
 @register.assignment_tag
 def community_newest_communities(limit=5):
     """Return a list of FEC Communities ordered by creation date."""
-    return Community.objects.exclude(
+    return Community.objects.published().exclude(
         membership_status=Community.ALLY).order_by('-date_joined')[:limit]

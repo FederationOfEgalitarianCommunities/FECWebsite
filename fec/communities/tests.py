@@ -104,6 +104,21 @@ class CommunityTagTests(TestCase):
         self.assertSequenceEqual(
             community_newest_communities(), [self.member, self.in_dialog])
 
+    def test_newest_communities_hides_unpublished(self):
+        '''
+        The community_newest_communities tag returns no unpublished
+        Communities.
+        '''
+        unpublished = Community.objects.create(
+            title='unpublished member', membership_status=Community.MEMBER,
+            status=CONTENT_STATUS_DRAFT)
+        published_member = Community.objects.create(
+            title='published member', membership_status=Community.MEMBER)
+
+        self.assertSequenceEqual(
+            community_newest_communities(),
+            [self.member, self.in_dialog, published_member])
+
     def test_fec_members_hides_unpublished(self):
         '''The community_fec_members tag returns no unpublished Communities.'''
         unpublished = Community.objects.create(
