@@ -6,7 +6,7 @@ from mezzanine.core.fields import RichTextField
 
 
 class HomepageContent(SiteRelated):
-    """A singelton model for holding the content of the Home Page.
+    """A singleton model for holding the content of the Home Page.
 
     .. attribute:: intro_text
 
