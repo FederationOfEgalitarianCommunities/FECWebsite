@@ -56,7 +56,7 @@ div#site-header .visible-xs .h1 {
 }
 
 /* Reduce the Size & Spacing of the Search Box */
-form#site-search input {
+form input#site-search {
   width: 175px;
   padding: 4px 8px;
   height: 30px;
@@ -70,7 +70,7 @@ form#site-search input {
 }
 
 /* Fix the spacing around the search box */
-form#site-search div.form-group {
+#site-tagline-search div.form-group {
   margin-top: 7.5px;
   margin-bottom: 0;
 }
