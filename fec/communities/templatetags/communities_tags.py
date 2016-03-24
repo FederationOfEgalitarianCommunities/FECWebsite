@@ -74,8 +74,8 @@ def community_random_image():
 
 @register.assignment_tag
 def community_random():
-    """Return a random Community."""
-    communities = Community.objects.exclude(
+    """Return a random Published Community that has a full_description."""
+    communities = Community.objects.published().exclude(
         full_description__exact='').order_by('?')
     return communities[0] if communities else None
 

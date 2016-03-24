@@ -2,12 +2,13 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from mezzanine.blog.models import BlogCategory
-from mezzanine.core.models import CONTENT_STATUS_DRAFT
+from mezzanine.core.models import (
+    CONTENT_STATUS_DRAFT, CONTENT_STATUS_PUBLISHED)
 
 from .models import Community, CommunityFeed
 from .templatetags.communities_tags import (
     community_newest_communities, community_fec_members,
-    community_communities_in_dialog)
+    community_communities_in_dialog, community_random)
 
 
 class CommunityModelTests(TestCase):
@@ -144,6 +145,19 @@ class CommunityTagTests(TestCase):
 
         self.assertSequenceEqual(
             community_communities_in_dialog(), [self.in_dialog, published_cid])
+
+    def test_community_random_hides_unpublished(self):
+        '''The community_random tag returns no unpublished Communities.'''
+        for community in [self.member, self.in_dialog, self.ally]:
+            community.status = CONTENT_STATUS_DRAFT
+            community.full_description = "something"
+            community.save()
+        self.assertEqual(community_random(), None)
+
+        self.member.status = CONTENT_STATUS_PUBLISHED
+        self.member.save()
+        for _ in range(20):
+            self.assertEqual(community_random(), self.member)
 
 
 class CommunityDetailViewTests(TestCase):
