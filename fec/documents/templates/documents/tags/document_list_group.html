@@ -20,9 +20,9 @@
     {# Tags #}
     {% keywords_for document as keywords %}
     {% if keywords and show_tags %}
-    <small>
+    <small class='document-keywords'>
       ({% for keyword in keywords %}<a
-        href="{% url "document_tag_list" tag=keyword.title %}">{{ keyword.title }}</a>{% if not forloop.last %}, {% endif %}{% endfor %})
+        href="{% url "document_tag_list" tag=keyword.slug %}">{{ keyword.title }}</a>{% if not forloop.last %}, {% endif %}{% endfor %})
     </small>
     {% endif %}
   </li>

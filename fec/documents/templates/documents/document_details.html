@@ -42,10 +42,10 @@
 <!-- Tags -->
 {% keywords_for document as keywords %}
 {% if keywords %}
-<h5>
+<h5 class="document-keywords">
   Tags:
   {% for keyword in keywords %}<a
-    href="{% url "document_tag_list" tag=keyword.title %}">{{ keyword.title }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
+    href="{% url "document_tag_list" tag=keyword.slug %}">{{ keyword.title }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
 </h5>
 <br />
 {% endif %}

@@ -1,5 +1,6 @@
 """This module contains functional tests that validate Community Pages."""
 from django.core.urlresolvers import reverse
+from mezzanine.generic.models import Keyword, AssignedKeyword
 
 from communities.models import Community
 from fec.utils import SeleniumTestCase
@@ -125,6 +126,17 @@ class DocumentCategoryDetailPageTests(SeleniumTestCase):
         self.assertIn(self.doc_one.title, docs[0].text)
         self.assertIn(self.doc_two.title, docs[1].text)
 
+    def test_tag_link_is_valid(self):
+        """Entries with a Tag should have a valid link to a Tag page.
+
+        The link should use the Tag's slug, in case there are spaces in the
+        Tag's title. See issue #785.
+        """
+        self.tag, _ = Keyword.objects.get_or_create(title='Tag With Spaces')
+        self.doc_one.keywords.add(AssignedKeyword(keyword=self.tag))
+        self.selenium.refresh()
+        tag_link_is_valid(self)
+
 
 class DocumentDetailPageTests(SeleniumTestCase):
     """Test Expectations for the Document Detail Pages."""
@@ -138,6 +150,7 @@ class DocumentDetailPageTests(SeleniumTestCase):
         self.document = Document.objects.create(
             title="Darmok & Jalad", category=self.category,
             community=self.community, contents="Treaty of Algeron, 2311.")
+
         self.selenium.get(self.live_server_url +
                           self.document.get_absolute_url())
 
@@ -167,3 +180,23 @@ class DocumentDetailPageTests(SeleniumTestCase):
         contents = self.selenium.find_element_by_css_selector(
             "#document-contents")
         self.assertEqual(self.document.contents, contents.text)
+
+    def test_tag_link_is_valid(self):
+        """Entries with a Tag should have a valid link to a Tag page.
+
+        The link should use the Tag's slug, in case there are spaces in the
+        Tag's title. See issue #785.
+        """
+        self.tag, _ = Keyword.objects.get_or_create(title='Tag With Spaces')
+        self.document.keywords.add(AssignedKeyword(keyword=self.tag))
+        self.selenium.refresh()
+        tag_link_is_valid(self)
+
+
+def tag_link_is_valid(obj):
+    """A generic test that ensures a Document's Tag link returns a 200."""
+    tag_link = obj.selenium.find_element_by_css_selector(
+        ".document-keywords a")
+    response = obj.client.get(tag_link.get_attribute('href'))
+
+    obj.assertEqual(response.status_code, 200)
