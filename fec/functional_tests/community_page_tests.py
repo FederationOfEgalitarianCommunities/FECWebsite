@@ -112,7 +112,7 @@ class CommunityDetailPageTests(SeleniumTestCase):
         """The community's image gallery should appear on the page."""
         image = self.selenium.find_element_by_css_selector(".gallery img")
         gallery_image_url = thumbnail(
-            self.darmok.images.all()[0], 600, 375)
+            self.darmok.images.all()[0].file, 600, 375)
         self.assertEqual(image.get_attribute('src'),
                          self.live_server_url + '/static/media/' +
                          gallery_image_url)

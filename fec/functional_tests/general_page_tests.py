@@ -159,7 +159,7 @@ class FooterTests(SeleniumTestCase):
         """A random Community's Gallery Image should be shown."""
         image = self.selenium.find_element_by_css_selector(
             "#footer-random-photo img")
-        thumbnail_url = thumbnail(self.darmok_gallery_image, 360, 215)
+        thumbnail_url = thumbnail(self.darmok_gallery_image.file, 360, 215)
         self.assertEqual(self.live_server_url + '/static/media/' +
                          thumbnail_url,
                          image.get_attribute("src"))
