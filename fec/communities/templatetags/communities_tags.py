@@ -82,12 +82,25 @@ def community_random():
 
 @register.assignment_tag
 def community_all_latest_posts(limit=10):
-    """Return the latest RSS Feed & Blog Posts of all the Communities."""
-    communities = Community.objects.all()
-    posts = []
-    _ = [posts.extend(community.get_latest_posts()) for community in
-         communities]
-    posts.sort(key=lambda post: post['published'], reverse=True)
+    """Return the latest RSS Feed & Blog Posts of all the Communities.
+
+    Posts with duplicate titles are removed, preferring Posts from Member
+    Communities.
+
+    """
+    communities = (
+        list(Community.objects.filter(
+            membership_status=Community.MEMBER).order_by('?')) +
+        list(Community.objects.exclude(membership_status=Community.MEMBER)))
+    feed_posts = []
+    post_titles = []
+    for community in communities:
+        for post in community.get_latest_posts():
+            if post['title'] not in post_titles:
+                post_titles.append(post['title'])
+                feed_posts.append(post)
+    posts = sorted(feed_posts, key=lambda post: post['published'],
+                   reverse=True)
     return posts[:limit]
 
 

@@ -1,14 +1,16 @@
 """This module contains unit tests for the ``communities`` package."""
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-from mezzanine.blog.models import BlogCategory
+from mezzanine.blog.models import BlogCategory, BlogPost
 from mezzanine.core.models import (
     CONTENT_STATUS_DRAFT, CONTENT_STATUS_PUBLISHED)
 
-from .models import Community, CommunityFeed
+from .models import Community, CommunityFeed, convert_to_feed_post
 from .templatetags.communities_tags import (
     community_newest_communities, community_fec_members,
-    community_communities_in_dialog, community_random)
+    community_communities_in_dialog, community_random,
+    community_all_latest_posts)
 
 
 class CommunityModelTests(TestCase):
@@ -158,6 +160,22 @@ class CommunityTagTests(TestCase):
         self.member.save()
         for _ in range(20):
             self.assertEqual(community_random(), self.member)
+
+    def test_latest_posts_are_unique(self):
+        '''
+        The community_all_latest_posts tag returns no duplicate feed posts.
+        Link to Member Communities' BlogCategories are preferred.
+        See Issue #875.
+        '''
+        user = User.objects.create()
+        blog_post = BlogPost.objects.create(
+            title="Thanks for All the Fish", user=user)
+        blog_post.categories.add(self.member.blog_category)
+        blog_post.categories.add(self.in_dialog.blog_category)
+        blog_post.categories.add(self.ally.blog_category)
+        self.assertSequenceEqual(
+            community_all_latest_posts(),
+            [convert_to_feed_post(blog_post, self.member)])
 
 
 class CommunityDetailViewTests(TestCase):
