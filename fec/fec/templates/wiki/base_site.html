@@ -1,0 +1,33 @@
+{% extends "site.html" %}
+
+{% load sekizai_tags i18n wiki_tags static %}
+
+{% block extra_js %}
+  <script src="{% static "wiki/js/core.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    {% block wiki_body %}
+
+    <div class="container">
+      <!-- Messages -->
+      {% include 'includes/messages.html' %}
+
+      <!-- Reserved for breadcrumbs -->
+      {% block wiki_breadcrumbs %}{% endblock %}
+
+      <!-- Main page contents go here -->
+      {% block wiki_contents %}{% endblock %}
+
+      <div id="wiki-footer" class='clearfix'>
+        <hr />
+        {% block wiki_footer_prepend %}{% endblock %}
+      </div>
+
+    </div> <!-- /container -->
+
+    {% endblock %}
+
+{% endblock %}
+

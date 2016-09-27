@@ -47,9 +47,24 @@ INSTALLED_APPS = (
     "axes",
     "email_obfuscator",
 
+    # For Wiki
+    'django_nyt',
+    'mptt',
+    'sekizai',
+    'sorl.thumbnail',
+    'wiki',
+    'wiki.plugins.attachments',
+    'wiki.plugins.help',
+    'wiki.plugins.images',
+    'wiki.plugins.links',
+    'wiki.plugins.macros',
+    'wiki.plugins.notifications',
+
+    # Django/Mezzanine
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
+    "django.contrib.humanize",
     "django.contrib.redirects",
     "django.contrib.sessions",
     "django.contrib.sites",
@@ -140,6 +155,18 @@ AXES_LOGIN_FAILURE_LIMIT = 10
 
 # Lock out IPs for 24 hours
 AXES_COOLOFF_TIME = 24
+
+# Enable Anonymous Wiki Contributions
+WIKI_ANONYMOUS_WRITE = True
+
+# Enable Anonymous Uploads
+WIKI_ANONYMOUS_UPLOAD = True
+
+# Don't Check Non-Wiki Pages for Existing Slugs
+WIKI_CHECK_SLUG_URL_AVAILABLE = False
+
+# Disable Wiki Account Functionality
+WIKI_ACCOUNT_HANDLING = False
 
 
 ######################
@@ -394,6 +421,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "mezzanine.conf.context_processors.settings",
     "mezzanine.pages.context_processors.page",
+    'sekizai.context_processors.sekizai',
 )
 
 # List of middleware classes to use. Order is important; in the request phase,

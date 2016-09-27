@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
-{% load communities_tags pages_tags mezzanine_tags i18n future staticfiles cache email_obfuscator %}
+{% load communities_tags pages_tags mezzanine_tags i18n future staticfiles cache email_obfuscator sekizai_tags %}
 
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -18,6 +18,8 @@
 <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
 {% endifinstalled %}
 
+<link href="{% static "wiki/bootstrap/css/wiki-bootstrap.min.css" %}" rel="stylesheet">
+{% render_block "css" %}
 {% compress css %}
 <link rel="stylesheet" type="text/less" href="{% static "less/fec.less" %}">
 <link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
@@ -236,6 +238,7 @@ $(document).ready(function() {
 
 
 {% include "includes/footer_scripts.html" %}
+{% render_block "js" %}
 
 </body>
 </html>
