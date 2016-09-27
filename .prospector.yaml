@@ -1,17 +1,17 @@
-output_format: text
+output-format: text
 
 inherits:
     - strictness_veryhigh
     - full_pep8
     - no_test_warnings
 
-ignore:
+ignore-patterns:
     - ^docs/
-    - ^fec/core/settings
-    - ^fec/core/urls.py
+    - ^fec/fec/settings
     - ^fec/wsgi.py
     - ^fec/manage.py
     - ^fec/.*/tests.py
+    - ^fec/.*/migrations
     - ^fec/functional_tests/
 
 pylint:
@@ -27,10 +27,11 @@ pyflakes:
     enable:
         - FL0007
     disable:
-        - FL0013    # Variable assigned but never used (pylint's is better)
+        - F841      # Variable assigned but never used (pylint's is better)
 
 frosted:
     enable:
         - E401
     disable:
+        - D203      # 1 blank lines before class docstring
         - E307      # Variable assigned but never used (pylint's is better)
