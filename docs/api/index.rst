@@ -10,6 +10,7 @@ available to contributors.
     :maxdepth: 2
 
     core
+    ciab
     communities
     documents
     functional_tests

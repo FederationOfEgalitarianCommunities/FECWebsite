@@ -1,4 +1,4 @@
-'''This module determines the overall URL structure of the site.'''
+"""This module determines the overall URL structure of the site."""
 from __future__ import unicode_literals
 
 from django.conf.urls import patterns, include, url
@@ -20,6 +20,7 @@ urlpatterns += patterns(
     '',
     url("^$", "homepage.views.index", name="home"),
 
+    ("^commune-in-a-box/", include("ciab.urls")),
     ("^communities/", include("communities.urls")),
     ("^systems-and-structures/", include("documents.urls")),
 

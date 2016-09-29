@@ -1,0 +1,17 @@
+<h4 class="text-center">Your Community</h4>
+<ol class='list-group'>
+  {% for decision, option in sidebar_items %}
+    <li class='list-group-item'>
+      <strong>{{ forloop.counter }} -
+        <a href="{{ sidebar_link }}&currentStep={{ forloop.counter0 }}">
+          {{ decision.name }}
+        </a>
+      </strong>
+      <br />
+      <small>
+        {% if option %}{{ option.name }}{% else %}Undecided{% endif%}
+      </small>
+    </li>
+  {% endfor %}
+</ol>
+<a href="{{ sidebar_link }}&summary=" class='btn btn-default'>Summary</a>

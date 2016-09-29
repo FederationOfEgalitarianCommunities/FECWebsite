@@ -1,0 +1,33 @@
+{% extends "pages/page.html" %}
+
+{% load mezzanine_tags %}
+
+{% block meta_title %}Commune in a Box - Summary{% endblock %}
+{% block meta_keywords %}{{ block.super }}, Commune in a Box{% endblock %}
+
+{% block title %}
+  Summary
+{% endblock %}
+
+<!-- Breadcrumbs -->
+{% block breadcrumb_menu %}
+  {{ block.super }}
+  <li class="active">Summary</li>
+{% endblock %}
+
+
+{% block main %}
+  {% for decision, option in sidebar_items %}
+    <h2>{{ decision.name }}</h2>
+    {{ decision.short_description|richtext_filters|safe }}
+    {% if option %}
+      <h3>{{ option.name }}</h3>
+      {{ option.short_description|richtext_filters|safe }}
+    {% endif %}
+  {% endfor %}
+{% endblock %}
+
+{% block right_panel %}
+  {% include "ciab/includes/sidebar.html" %}
+{% endblock%}
+

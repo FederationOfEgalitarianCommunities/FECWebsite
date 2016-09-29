@@ -40,6 +40,7 @@ COMMENTS_USE_RATINGS = False
 # Add custom apps
 INSTALLED_APPS = (
     "fec",
+    "ciab",
     "communities",
     "documents",
     "homepage",
@@ -96,6 +97,11 @@ ADMIN_MENU_ORDER = (
     ("Systems & Structures",
         ("documents.Document",
          "documents.DocumentCategory",
+         ),
+     ),
+    ("Commune in a Box",
+        ("ciab.Decision",
+         "ciab.Option",
          ),
      ),
     ("Site",

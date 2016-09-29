@@ -1,0 +1,33 @@
+{% extends "pages/page.html" %}
+
+{% load mezzanine_tags %}
+
+{% block meta_title %}{{  decision.name }}{% endblock %}
+{% block meta_description %}{{ decision.short_description }}{% endblock %}
+{% block meta_keywords %}{{ block.super }}, {{ decision.name }}{% endblock %}
+
+{% block title %}
+  {{ decision.name }}
+{% endblock %}
+
+<!-- Breadcrumbs -->
+{% block breadcrumb_menu %}
+  {{ block.super }}
+  <li class="active">Step {{ step_number }} - {{ decision.name }}</li>
+{% endblock %}
+
+
+{% block main %}
+  {{ description.short_description|richtext_filters|safe }}
+  {% for option in decision.option_set.all %}
+    <h2>{{ option.name }}</h2>
+    {{ option.short_description|richtext_filters|safe }}
+    <p>
+      <a href="{{ next_link }}{{ option.id }}" class='btn btn-primary'>Choose</a>
+    </p>
+  {% endfor %}
+{% endblock %}
+
+{% block right_panel %}
+  {% include "ciab/includes/sidebar.html" %}
+{% endblock%}
