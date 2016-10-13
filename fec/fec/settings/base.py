@@ -174,6 +174,11 @@ WIKI_CHECK_SLUG_URL_AVAILABLE = False
 # Disable Wiki Account Functionality
 WIKI_ACCOUNT_HANDLING = False
 
+# Allow HTML in Wiki Pages
+WIKI_MARKDOWN_KWARGS = {
+    'safe_mode': False,
+}
+
 
 ######################
 # MEZZANINE SETTINGS #
